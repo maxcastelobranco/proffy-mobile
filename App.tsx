@@ -1,21 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import React, { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { ThemeProvider } from "@shopify/restyle";
+
+import { fonts } from "./assets/fonts";
+import { assets } from "./assets/images";
+import LoadAssets from "./src/components/LoadAssets";
+import theme, { darkTheme } from "./src/theme";
+import { AppStackNavigator } from "./src/routes";
 
 export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <LoadAssets {...{ fonts, assets }}>
+      <ThemeProvider theme={darkMode ? darkTheme : theme}>
+        <StatusBar hidden />
+        <AppStackNavigator />
+      </ThemeProvider>
+    </LoadAssets>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

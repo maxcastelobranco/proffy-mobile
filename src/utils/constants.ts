@@ -1,0 +1,2 @@
+export const GOLDEN_RATIO = 1.61803;
+export const ONE_OVER_GOLDEN_RATIO = 1 / GOLDEN_RATIO;
