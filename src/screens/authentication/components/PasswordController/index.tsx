@@ -2,7 +2,7 @@ import React from "react";
 import { TextInput } from "react-native";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
-import Input from "../../../../../../../components/animated/Input";
+import Input from "../../../../components/animated/Input";
 
 interface PasswordControllerProps {
   control: Control;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Control, Controller } from "react-hook-form";
 
-import { FormValues } from "../Form";
-import CheckBox from "../../../../../components/animated/Checkbox";
+import { FormValues } from "../../Login/components/Form";
+import CheckBox from "../../../../components/animated/Checkbox";
 
 interface CheckBoxControllerProps {
   control: Control<FormValues>;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
-import Input from "../../../../../components/animated/Input";
+import Input from "../../../../components/animated/Input";
 
 interface EmailControllerProps {
   control: Control;
