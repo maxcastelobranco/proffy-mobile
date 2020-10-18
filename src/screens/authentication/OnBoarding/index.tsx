@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -15,7 +15,7 @@ import { useNavigationState } from "@react-navigation/native";
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import { Box, Theme } from "../../../theme";
-import { useManageIllustration } from "../../../hooks/useManageIllustration";
+import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -27,7 +27,7 @@ const { width } = Dimensions.get("window");
 const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
   navigation,
 }) => {
-  const { setOnBoarding, onBoarding } = useManageIllustration();
+  const { setOnBoarding, onBoarding, setLogin } = useManageIllustrations();
   const slideData = useSlideData();
   const styles = useStyles(slideData.length);
   const theme = useTheme<Theme>();
@@ -63,6 +63,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     const isLast = index === slideData.length - 1;
 
     if (isLast) {
+      setLogin(true);
       navigation.navigate("Login");
       setOnBoarding(false);
     } else {
@@ -74,18 +75,14 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     }
   };
 
-  const navigationIndex = useNavigationState((state) => state.index);
-
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setOnBoarding(navigation.isFocused());
     // @ts-ignore
     scrollViewRef.current?.scrollTo({
       x: 0,
       animated: true,
     });
-    if (navigationIndex === 0) {
-      setOnBoarding(true);
-    }
-  }, [navigationIndex, scrollViewRef, setOnBoarding]);
+  }, [navigation, scrollViewRef, setOnBoarding]);
 
   return (
     <>

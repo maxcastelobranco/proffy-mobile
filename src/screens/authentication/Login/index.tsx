@@ -1,15 +1,17 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
-import { useFocusEffect, useNavigationState } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
-import { useManageIllustration } from "../../../hooks/useManageIllustration";
+import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
 
 import Illustration from "./components/Illustration";
 import Form from "./components/Form";
 
-const Login: React.FC<AuthenticationNavigationProps<"Login">> = () => {
-  const { setOnBoarding, login, setLogin } = useManageIllustration();
+const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
+  navigation,
+}) => {
+  const { setOnBoarding, login, setLogin } = useManageIllustrations();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -26,13 +28,9 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = () => {
     }, [setLogin, setOnBoarding])
   );
 
-  const navigationIndex = useNavigationState((state) => state.index);
-
-  useLayoutEffect(() => {
-    if (navigationIndex === 1) {
-      setLogin(true);
-    }
-  }, [navigationIndex, setLogin]);
+  useEffect(() => {
+    setLogin(navigation.isFocused());
+  }, [navigation, setLogin]);
 
   return (
     <>

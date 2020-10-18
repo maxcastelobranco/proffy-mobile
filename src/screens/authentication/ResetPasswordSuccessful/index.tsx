@@ -6,25 +6,26 @@ import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import Success from "../../../components/animated/Success";
 import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
 
-const SignUpSuccessful: React.FC<AuthenticationNavigationProps<
-  "SignUpSuccessful"
+const ResetPasswordSuccessful: React.FC<AuthenticationNavigationProps<
+  "ResetPasswordSuccessful"
 >> = ({ navigation }) => {
   const {
-    signUpSuccess,
-    setSignUpSuccess,
+    forgotPasswordSuccess,
+    setForgotPasswordSuccess,
     setLogin,
+    setForgotPassword,
   } = useManageIllustrations();
-
   const onPress = () => {
     setLogin(true);
     navigation.navigate("Login");
-    setSignUpSuccess(false);
+    setForgotPasswordSuccess(false);
   };
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        setSignUpSuccess(false);
+        setForgotPassword(true);
+        setForgotPasswordSuccess(false);
         return false;
       };
 
@@ -32,25 +33,25 @@ const SignUpSuccessful: React.FC<AuthenticationNavigationProps<
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, [setSignUpSuccess])
+    }, [setForgotPassword, setForgotPasswordSuccess])
   );
 
   useEffect(() => {
-    setSignUpSuccess(navigation.isFocused());
-  }, [navigation, setSignUpSuccess]);
+    setForgotPasswordSuccess(navigation.isFocused());
+  }, [navigation, setForgotPasswordSuccess]);
 
   return (
     <>
-      {signUpSuccess && (
+      {forgotPasswordSuccess && (
         <Success
-          {...{ onPress }}
-          title="Registration completed!"
-          description="Now you're a member of the Proffy platform"
+          title="Reset password email successfully sent!"
+          description="Nice, now just heck your inbox to reset your password and enjoy your studies."
           buttonLabel="Back to Login"
+          {...{ onPress }}
         />
       )}
     </>
   );
 };
 
-export default React.memo(SignUpSuccessful);
+export default ResetPasswordSuccessful;

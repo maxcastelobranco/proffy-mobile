@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Dimensions, KeyboardAvoidingView } from "react-native";
+import { BackHandler, Dimensions, KeyboardAvoidingView } from "react-native";
 import { useTheme } from "@shopify/restyle";
 import { Feather } from "@expo/vector-icons";
 import Animated, {
@@ -9,12 +9,14 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { Control, SubmitHandler, useForm, FieldErrors } from "react-hook-form";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import { Box, Text, Theme } from "../../../theme";
 import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import Button from "../../../components/static/Button";
+import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -36,6 +38,7 @@ const { width } = Dimensions.get("window");
 const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   navigation,
 }) => {
+  const { setLogin, setSignUpSuccess } = useManageIllustrations();
   const theme = useTheme<Theme>();
   const {
     headerStyles,
@@ -73,9 +76,10 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   const onSubmit: SubmitHandler<FormValues> = useCallback(
     (data) => {
       console.log(data);
+      setSignUpSuccess(true);
       navigation.navigate("SignUpSuccessful");
     },
-    [navigation]
+    [navigation, setSignUpSuccess]
   );
   const onPress = useCallback(
     (index: number) => {
@@ -98,6 +102,20 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   }, [navigation]);
 
   const currentIndex = useDerivedValue(() => translationX.value / width);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        setLogin(true);
+        return false;
+      };
+
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [setLogin])
+  );
 
   return (
     <KeyboardAvoidingView behavior="position">

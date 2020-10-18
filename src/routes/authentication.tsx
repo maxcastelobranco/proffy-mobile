@@ -9,16 +9,18 @@ import OnBoarding from "../screens/authentication/OnBoarding";
 import Login from "../screens/authentication/Login";
 import SignUp from "../screens/authentication/SignUp";
 import SignUpSuccessful from "../screens/authentication/SignUpSuccessful";
+import ResetPassword from "../screens/authentication/ResetPassword";
+import ResetPasswordSuccessful from "../screens/authentication/ResetPasswordSuccessful";
 
 import { HomeRoutes } from "./home";
 
 export type AuthenticationRoutes = {
-  OnBoarding: undefined;
-  Login: undefined;
-  SignUp: undefined;
-  SignUpSuccessful: undefined;
-  ResetPassword: undefined;
-  ResetPasswordSuccessful: undefined;
+  OnBoarding: undefined; // 0
+  Login: undefined; // 1
+  SignUp: undefined; // 2
+  SignUpSuccessful: undefined; // 3
+  ResetPassword: undefined; // 4
+  ResetPasswordSuccessful: undefined; // 5
 };
 
 export interface AuthenticationNavigationProps<
@@ -43,14 +45,14 @@ const AuthenticationNavigator = () => {
         name="SignUpSuccessful"
         component={SignUpSuccessful}
       />
-      {/*<AuthenticationStack.Screen*/}
-      {/*    name="ResetPassword"*/}
-      {/*    component={ResetPassword}*/}
-      {/*/>*/}
-      {/*<AuthenticationStack.Screen*/}
-      {/*    name="ResetPasswordSuccessful"*/}
-      {/*    component={ResetPasswordSuccessful}*/}
-      {/*/>*/}
+      <AuthenticationStack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+      />
+      <AuthenticationStack.Screen
+        name="ResetPasswordSuccessful"
+        component={ResetPasswordSuccessful}
+      />
     </AuthenticationStack.Navigator>
   );
 };

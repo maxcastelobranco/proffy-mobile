@@ -8,7 +8,7 @@ import { assets } from "./assets/images";
 import LoadAssets from "./src/components/static/LoadAssets";
 import theme, { darkTheme } from "./src/theme";
 import { AppStackNavigator } from "./src/routes";
-import { ManageIllustrationsProvider } from "./src/hooks/useManageIllustration";
+import { ManageIllustrationsProvider } from "./src/hooks/useManageIllustrations";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);

@@ -59,8 +59,8 @@ const ManageIllustrationsProvider: React.FC = ({ children }) => {
   );
 };
 
-function useManageIllustration(): ManageIllustrationsContextData {
+function useManageIllustrations(): ManageIllustrationsContextData {
   return useContext(ManageIllustrationsContext);
 }
 
-export { ManageIllustrationsProvider, useManageIllustration };
+export { ManageIllustrationsProvider, useManageIllustrations };
