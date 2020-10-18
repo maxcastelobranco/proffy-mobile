@@ -78,7 +78,7 @@ const theme = createTheme({
     logo: {
       fontFamily: "Archivo-SemiBold",
       fontSize: responsivePixelSize(20),
-      color: "melrose",
+      color: "baseText",
     },
     successTitle: {
       fontFamily: "Archivo-Bold",
@@ -97,6 +97,12 @@ const theme = createTheme({
       fontSize: responsivePixelSize(28),
       lineHeight: responsivePixelSize(34),
       color: "title",
+    },
+    regularTitleDark: {
+      fontFamily: "Poppins-SemiBold",
+      fontSize: responsivePixelSize(28),
+      lineHeight: responsivePixelSize(34),
+      color: "titleDark",
     },
     smallTitle: {
       fontFamily: "Archivo-Bold",

@@ -45,12 +45,11 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       [0.4, 1, 0.4],
       Extrapolate.CLAMP
     ),
-    // @ts-ignore
     backgroundColor: interpolateColor(
       currentIndex.value,
       inputRange,
       outputRange
-    ),
+    ) as string,
     transform: [
       {
         scale: interpolate(

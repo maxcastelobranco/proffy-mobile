@@ -12,13 +12,18 @@ const Slide: React.FC<SlideProps> = ({
   opacity,
   descriptionText,
   index,
+  shouldDisplayIllustration,
 }) => {
   return (
     <Box flex={1}>
-      <Illustration {...{ SvgComponent, svgParticleColor, backgroundColor }} />
+      {shouldDisplayIllustration && (
+        <Illustration
+          {...{ SvgComponent, svgParticleColor, backgroundColor }}
+        />
+      )}
       <Description {...{ descriptionText, index, opacity }} />
     </Box>
   );
 };
 
-export default Slide;
+export default React.memo(Slide);

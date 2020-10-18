@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Animated, {
   interpolate,
-  scrollTo,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -11,10 +10,12 @@ import Animated, {
 import { Dimensions } from "react-native";
 import { interpolateColor } from "react-native-redash";
 import { BoxProps, useTheme } from "@shopify/restyle";
+import { useNavigationState } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
-import ProgressIndicator from "../../../components/animatedComponents/ProgressIndicator";
+import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import { Box, Theme } from "../../../theme";
+import { useDisplayOnBoardingIllustration } from "../../../hooks/useDisplayOnBoardingIllustration";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -26,6 +27,10 @@ const { width } = Dimensions.get("window");
 const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
   navigation,
 }) => {
+  const {
+    setShouldDisplayIllustration,
+    shouldDisplayIllustration,
+  } = useDisplayOnBoardingIllustration();
   const slideData = useSlideData();
   const styles = useStyles(slideData.length);
   const theme = useTheme<Theme>();
@@ -62,6 +67,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
 
     if (isLast) {
       navigation.navigate("Login");
+      setShouldDisplayIllustration(false);
     } else {
       scrollViewRef.current?.getNode().scrollTo({
         x: width * (index + 1),
@@ -71,6 +77,14 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
       // scrollTo(scrollViewRef, width * (index + 1), 0, true);
     }
   };
+
+  const index = useNavigationState((state) => state.index);
+
+  useEffect(() => {
+    if (index !== 0) {
+      setShouldDisplayIllustration(false);
+    }
+  }, [index, setShouldDisplayIllustration]);
 
   return (
     <>
@@ -104,6 +118,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
                   opacity,
                   descriptionText,
                   index,
+                  shouldDisplayIllustration,
                 }}
               />
             );
@@ -137,4 +152,4 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
   );
 };
 
-export default OnBoarding;
+export default React.memo(OnBoarding);

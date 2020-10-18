@@ -6,6 +6,7 @@ import {
 } from "@react-navigation/stack";
 
 import OnBoarding from "../screens/authentication/OnBoarding";
+import Login from "../screens/authentication/Login";
 
 import { HomeRoutes } from "./home";
 
@@ -34,7 +35,7 @@ const AuthenticationNavigator = () => {
   return (
     <AuthenticationStack.Navigator headerMode="none">
       <AuthenticationStack.Screen name="OnBoarding" component={OnBoarding} />
-      {/*<AuthenticationStack.Screen name="Login" component={Login} />*/}
+      <AuthenticationStack.Screen name="Login" component={Login} />
       {/*<AuthenticationStack.Screen name="SignUp" component={SignUp} />*/}
       {/*<AuthenticationStack.Screen*/}
       {/*    name="SignUpSuccessful"*/}

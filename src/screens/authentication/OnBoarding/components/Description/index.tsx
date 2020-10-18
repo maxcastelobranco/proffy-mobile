@@ -22,4 +22,4 @@ const Description: React.FC<DescriptionProps> = ({
   );
 };
 
-export default Description;
+export default React.memo(Description);

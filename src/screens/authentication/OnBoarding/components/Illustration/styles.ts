@@ -27,34 +27,14 @@ export const styles = StyleSheet.create({
     top: responsivePixelSize(72),
     left: responsivePixelSize(72),
   },
-  outlinedCircle4: {
-    position: "absolute",
-    bottom: responsivePixelSize(44),
-    left: responsivePixelSize(220),
-  },
-  outlinedCircle5: {
-    position: "absolute",
-    bottom: responsivePixelSize(36),
-    right: responsivePixelSize(200),
-  },
-  union1: {
+  x1: {
     position: "absolute",
     top: responsivePixelSize(181),
     left: responsivePixelSize(62),
   },
-  union2: {
+  x2: {
     position: "absolute",
     bottom: responsivePixelSize(45),
-    left: responsivePixelSize(138),
-  },
-  union3: {
-    position: "absolute",
-    bottom: responsivePixelSize(52),
-    right: responsivePixelSize(138),
-  },
-  union4: {
-    position: "absolute",
-    top: responsivePixelSize(52),
     left: responsivePixelSize(138),
   },
   search1: {

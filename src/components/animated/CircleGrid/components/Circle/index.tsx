@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
   repeat,
@@ -28,21 +28,16 @@ const Circle: React.FC<CircleProps> = ({
   i,
   j,
 }) => {
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        circle: {
-          width: circleSize,
-          height: circleSize,
-          borderRadius: circleSize / 2,
-          backgroundColor: circleColor,
-          marginTop: i === 0 ? 0 : circleSize * 3,
-          marginLeft: j === 0 ? 0 : circleSize * 3,
-        },
-      }),
-    [circleColor, circleSize, i, j]
-  );
-
+  const styles = StyleSheet.create({
+    circle: {
+      width: circleSize,
+      height: circleSize,
+      borderRadius: circleSize / 2,
+      backgroundColor: circleColor,
+      marginTop: i === 0 ? 0 : circleSize * 3,
+      marginLeft: j === 0 ? 0 : circleSize * 3,
+    },
+  });
   const circleAnimationDriver = useSharedValue(0);
   const circleAnimatedStyles = useAnimatedStyle(() => ({
     transform: [

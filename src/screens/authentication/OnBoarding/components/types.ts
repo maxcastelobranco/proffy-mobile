@@ -2,7 +2,7 @@ import Animated from "react-native-reanimated";
 import { Color } from "react-native-redash";
 import React from "react";
 
-import { AnimatedSvgProps } from "../../../../components/svgs/animatedSvgs/types";
+import { AnimatedSvgProps } from "../../../../components/svgs/animated/types";
 
 export interface SlideProps {
   SvgComponent: React.FC<AnimatedSvgProps>;
@@ -11,13 +11,19 @@ export interface SlideProps {
   opacity: Animated.SharedValue<number>;
   descriptionText: string;
   index: number;
+  shouldDisplayIllustration: boolean;
 }
 
-type UnusedIllustrationProps = "opacity" | "descriptionText" | "index";
+type UnusedIllustrationProps =
+  | "opacity"
+  | "descriptionText"
+  | "index"
+  | "shouldDisplayIllustration";
 export type IllustrationProps = Omit<SlideProps, UnusedIllustrationProps>;
 
 type UnusedDescriptionProps =
   | "backgroundColor"
   | "SvgComponent"
-  | "svgParticleColor";
+  | "svgParticleColor"
+  | "shouldDisplayIllustration";
 export type DescriptionProps = Omit<SlideProps, UnusedDescriptionProps>;

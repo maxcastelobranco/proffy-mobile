@@ -2,10 +2,10 @@ import React from "react";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
 import { IllustrationProps } from "../types";
-import CircleGrid from "../../../../../components/animatedComponents/CircleGrid";
-import X from "../../../../../components/svgs/animatedSvgs/X";
-import OutlinedCircle from "../../../../../components/svgs/animatedSvgs/OutlinedCircle";
-import Search from "../../../../../components/svgs/animatedSvgs/Search";
+import CircleGrid from "../../../../../components/animated/CircleGrid";
+import X from "../../../../../components/svgs/animated/X";
+import OutlinedCircle from "../../../../../components/svgs/animated/OutlinedCircle";
+import Search from "../../../../../components/svgs/animated/Search";
 
 import { styles } from "./styles";
 
@@ -15,16 +15,11 @@ const Illustration: React.FC<IllustrationProps> = ({
   backgroundColor,
 }) => {
   const animatedStyle = useAnimatedStyle(() => ({
-    // @ts-ignore
-    backgroundColor: backgroundColor.value,
+    backgroundColor: backgroundColor.value as string,
   }));
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
-      <OutlinedCircle
-        viewProps={{ style: styles.outlinedCircle1 }}
-        svgProps={{ stroke: "white" }}
-      />
       <OutlinedCircle
         viewProps={{ style: styles.outlinedCircle1 }}
         svgProps={{ stroke: "white" }}
@@ -37,24 +32,12 @@ const Illustration: React.FC<IllustrationProps> = ({
         viewProps={{ style: styles.outlinedCircle3 }}
         svgProps={{ stroke: "white" }}
       />
-      <OutlinedCircle
-        viewProps={{ style: styles.outlinedCircle4 }}
-        svgProps={{ stroke: "white" }}
-      />
       <X
-        viewProps={{ style: styles.union1 }}
+        viewProps={{ style: styles.x1 }}
         svgProps={{ stroke: svgParticleColor, fill: svgParticleColor }}
       />
       <X
-        viewProps={{ style: styles.union2 }}
-        svgProps={{ stroke: svgParticleColor, fill: svgParticleColor }}
-      />
-      <X
-        viewProps={{ style: styles.union3 }}
-        svgProps={{ stroke: svgParticleColor, fill: svgParticleColor }}
-      />
-      <X
-        viewProps={{ style: styles.union4 }}
+        viewProps={{ style: styles.x2 }}
         svgProps={{ stroke: svgParticleColor, fill: svgParticleColor }}
       />
       <Search
@@ -63,16 +46,10 @@ const Illustration: React.FC<IllustrationProps> = ({
         }}
         svgProps={{ stroke: svgParticleColor }}
       />
-      <Search
-        viewProps={{
-          style: styles.search2,
-        }}
-        svgProps={{ stroke: svgParticleColor }}
-      />
       <CircleGrid
         circleColor={svgParticleColor}
-        rows={4}
-        columns={7}
+        rows={3}
+        columns={6}
         {...styles.circleGrid1}
       />
       <CircleGrid

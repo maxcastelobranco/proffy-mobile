@@ -1030,7 +1030,7 @@
     xcode "^3.0.0"
     xml-js "^1.6.11"
 
-"@expo/vector-icons@^10.0.2":
+"@expo/vector-icons@^10.0.0", "@expo/vector-icons@^10.0.2":
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.2.1.tgz#47fb2fa12d7ad601835babde6bd3ddea7f6fde89"
   integrity sha512-clYQZFLeU2y23n03hXg18EEsZS5c73sJJnfderztfSAqkUXkfUtv07fwuprYwbHIvgFkw6L7R6xJOCVYtS85iQ==
@@ -5457,10 +5457,10 @@ react-native-reanimated@2.0.0-alpha.6.1:
     fbjs "^1.0.0"
     string-hash-64 "^1.0.3"
 
-react-native-redash@^15.5.4:
-  version "15.5.4"
-  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-15.5.4.tgz#1fe8adc6794fc6fe5e3425b0713b82cc54a9d643"
-  integrity sha512-q5LH0l93fROuSx67txtgB6MOaUw8QzEMzdkPZb/DyOlD0ly/x1f5eZleslxSNjvniV6bAAlFGs1AAFdbwMsewg==
+react-native-redash@^15.7.3:
+  version "15.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-15.7.3.tgz#40524976857aa7edbed9225985df8f8958505821"
+  integrity sha512-L/Ku5mUtOhobQAVt5fMHlvV1tcB2n3Aqg6JxrZBGOuNHYEovocxXiHSY5ZgHpmYwfMpTTgPWIBOWbXRJ/XymWQ==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
