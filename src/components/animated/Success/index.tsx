@@ -107,4 +107,4 @@ const Success: React.FC<SuccessProps> = ({
   );
 };
 
-export default Success;
+export default React.memo(Success);

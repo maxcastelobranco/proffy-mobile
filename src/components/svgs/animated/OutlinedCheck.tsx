@@ -33,7 +33,7 @@ const OutlinedCheck: React.FC = () => {
 
   const animatedPathProps = useAnimatedProps(() => {
     return {
-      strokeWidth: mix(animationDriver.value, SVG_SIZE * 0.8, SVG_SIZE),
+      strokeWidth: mix(animationDriver.value, 3.2, 4),
     };
   });
 
@@ -51,27 +51,23 @@ const OutlinedCheck: React.FC = () => {
 
   return (
     <AnimatedSvg
-      viewBox="0 0 60 60"
-      stroke={theme.colors.secondary}
       animatedProps={animatedSvgProps}
+      viewBox="0 0 80 80"
+      fill="none"
     >
-      {/*outline*/}
       <AnimatedPath
-        d="M55 27.7V30c-.008 13.807-11.207 24.994-25.014 24.986C16.179 54.978 4.992 43.779 5 29.971 5.008 16.164 16.207 4.978 30.014 4.986A25 25 0 0140.175 7.15"
-        fill="none"
+        animatedProps={animatedPathProps}
+        d="M53.333 70H26.667C17.463 70 10 62.537 10 53.333V26.667C10 17.463 17.463 10 26.667 10h26.666C62.537 10 70 17.463 70 26.667v26.666C70 62.537 62.537 70 53.333 70z"
+        stroke={theme.colors.secondary}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeMiterlimit={10}
-        animatedProps={animatedPathProps}
       />
-      {/*check*/}
       <AnimatedPath
-        d="M55 10L30 35.025l-7.5-7.5"
-        fill="none"
+        animatedProps={animatedPathProps}
+        d="M47.556 36.667l-9.443 9.443-5.667-5.667"
+        stroke={theme.colors.secondary}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeMiterlimit={10}
-        animatedProps={animatedPathProps}
       />
     </AnimatedSvg>
   );

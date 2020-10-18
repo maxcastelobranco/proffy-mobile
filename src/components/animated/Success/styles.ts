@@ -12,6 +12,8 @@ export const useStyles = () => {
       width: "100%",
       alignItems: "center",
       justifyContent: "center",
+      padding: theme.spacing.s,
+      borderRadius: theme.borderRadii.default,
       position: "absolute",
       bottom: theme.spacing.l,
       left: theme.spacing.l,
@@ -21,7 +23,7 @@ export const useStyles = () => {
 
   const containerStyles: BoxProps<Theme> = {
     flex: 1,
-    backgroundColor: "purple",
+    backgroundColor: "primary",
     paddingHorizontal: "l",
     alignItems: "center",
     justifyContent: "center",
@@ -34,7 +36,7 @@ export const useStyles = () => {
   };
   const descriptionStyles: TextProps<Theme> = {
     variant: "regularTextMedium",
-    color: "melrose",
+    color: "baseText",
     textAlign: "center",
   };
   const buttonLabelStyles: TextProps<Theme> = {

@@ -7,10 +7,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Box, Text, Theme } from "../../../../../theme";
 import Button from "../../../../../components/static/Button";
 import AnimatedBackgroundButton from "../../../../../components/animated/AnimatedBackgroundButton";
-import EmailController from "../EmailController";
-import CheckBoxController from "../CheckboxController";
+import EmailController from "../../../components/EmailController";
+import CheckBoxController from "../../../components/CheckboxController";
+import PasswordController from "../../../components/PasswordController";
+import { useManageIllustration } from "../../../../../hooks/useManageIllustration";
 
-import PasswordController from "./components/PasswordController";
 import { useStyles } from "./styles";
 
 export type FormValues = {
@@ -37,6 +38,8 @@ const Form: React.FC = () => {
     forgotPasswordStyles,
   } = useStyles();
 
+  const { setLogin } = useManageIllustration();
+
   const focusPasswordInput = useCallback(() => {
     passwordInputRef.current?.focus();
   }, []);
@@ -50,16 +53,18 @@ const Form: React.FC = () => {
     () => navigation.navigate("ResetPassword"),
     [navigation]
   );
-  const navigateToSignUp = useCallback(() => navigation.navigate("SignUp"), [
-    navigation,
-  ]);
+  const navigateToSignUp = useCallback(() => {
+    navigation.navigate("SignUp");
+    setLogin(false);
+  }, [navigation, setLogin]);
 
   const onSubmit: SubmitHandler<FormValues> = useCallback(
     (data) => {
       console.log(data);
+      setLogin(false);
       navigation.navigate("Home");
     },
-    [navigation]
+    [navigation, setLogin]
   );
 
   const enabled =

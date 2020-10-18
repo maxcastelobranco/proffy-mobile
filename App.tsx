@@ -8,7 +8,7 @@ import { assets } from "./assets/images";
 import LoadAssets from "./src/components/static/LoadAssets";
 import theme, { darkTheme } from "./src/theme";
 import { AppStackNavigator } from "./src/routes";
-import { DisplayOnBoardingIllustrationProvider } from "./src/hooks/useDisplayOnBoardingIllustration";
+import { ManageIllustrationsProvider } from "./src/hooks/useManageIllustration";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -16,10 +16,10 @@ export default function App() {
   return (
     <LoadAssets {...{ fonts, assets }}>
       <ThemeProvider theme={darkMode ? darkTheme : theme}>
-        <DisplayOnBoardingIllustrationProvider>
+        <ManageIllustrationsProvider>
           <StatusBar hidden />
           <AppStackNavigator />
-        </DisplayOnBoardingIllustrationProvider>
+        </ManageIllustrationsProvider>
       </ThemeProvider>
     </LoadAssets>
   );

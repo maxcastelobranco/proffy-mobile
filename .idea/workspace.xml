@@ -28,62 +28,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec9836bd-abbc-4581-a9f4-99994cc98839" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/AnimatedBackgroundButton/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/AnimatedBackgroundButton/styles.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Checkbox/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Checkbox/styles.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Input/components/FocusIndicator/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Input/components/Placeholder/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Input/components/Tooltip/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Input/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/ProgressIndicator/styles.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Success/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/Success/styles.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/animated/reanimatedAnimatedComponents.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/svgs/animated/OutlinedCheck.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useDisplayOnBoardingIllustration.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/CheckboxController/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/EmailController/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/Form/components/PasswordController/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/Form/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/Form/styles.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/Illustration/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/authentication/Login/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/transformOrigin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/authentication/SignUp/Forms/EmailPassword/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/authentication/SignUp/Forms/WhoAreYou/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/authentication/SignUp/hooks/useSlideData.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/authentication/SignUp/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/authentication/SignUp/styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/authentication/SignUpSuccessful/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/static/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoadAssets.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/static/LoadAssets.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animatedComponents/CircleGrid/components/Circle/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/CircleGrid/components/Circle/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animatedComponents/CircleGrid/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/CircleGrid/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animatedComponents/ProgressIndicator/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/ProgressIndicator/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animatedComponents/ProgressIndicator/styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/HomeIllustration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/static/HomeIllustration.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/LongArrow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/static/LongArrow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/Proffy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/static/Proffy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/Book.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/Book.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/OutlinedCircle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/OutlinedCircle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/Search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/Search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/Television.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/Television.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/X.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/X.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/reanimatedSvgComponents.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/reanimatedSvgComponents.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/svgs/animatedSvgs/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animated/AnimatedBackgroundButton/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/AnimatedBackgroundButton/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animated/Success/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/Success/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animated/Success/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/Success/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animated/reanimatedAnimatedComponents.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animated/reanimatedAnimatedComponents.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/svgs/animated/OutlinedCheck.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/svgs/animated/OutlinedCheck.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useDisplayOnBoardingIllustration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useManageIllustration.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/authentication.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/authentication.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Description/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Description/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Description/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Description/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Illustration/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Illustration/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Illustration/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Illustration/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/LongArrowContainer/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/LongArrowContainer/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Slide/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/Slide/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/components/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/hooks/useSlideData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/hooks/useSlideData.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/authentication/Login/components/CheckboxController/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/components/CheckboxController/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/authentication/Login/components/EmailController/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/components/EmailController/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/authentication/Login/components/Form/components/PasswordController/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/components/PasswordController/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/authentication/Login/components/Form/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/Login/components/Form/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/authentication/Login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/Login/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/authentication/OnBoarding/styles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theme/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/randomBetween.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/randomBetween.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +80,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/svgs/animated" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/screens/authentication" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -128,22 +93,23 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\node_modules\typescript\lib" />
+    <property name="ts.rename.search.for.dynamic.occurrences" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication" />
+      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication\SignUp" />
+      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\svgs\animated" />
+      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\animated" />
+      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication\Login\components" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication\components" />
       <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication\Login\components" />
       <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\animated\AnimatedBackgroundButton" />
       <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\svgs\animated" />
       <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\svgs\static" />
-      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\static" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\svgs\animated" />
-      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\animated" />
-      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication\Login\components" />
-      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\screens\authentication\Login" />
-      <recent name="C:\Users\max_c\OneDrive\Desktop\PortfolioWorthy\Proffy3.0\proffy-mobile\src\components\svgs\animatedSvgs" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -160,7 +126,8 @@
       <workItem from="1602466499501" duration="27492000" />
       <workItem from="1602612329137" duration="2187000" />
       <workItem from="1602617469795" duration="34411000" />
-      <workItem from="1602949309285" duration="23102000" />
+      <workItem from="1602949309285" duration="25527000" />
+      <workItem from="1603036260670" duration="15063000" />
     </task>
     <servers />
   </component>
@@ -200,23 +167,23 @@
       <screen x="1280" y="0" width="1280" height="1024" />
     </state>
     <state x="1737" y="421" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1603033522872" />
-    <state x="1628" y="87" width="583" height="849" key="find.popup" timestamp="1602973845798">
+    <state x="1529" y="87" width="851" height="849" key="find.popup" timestamp="1603051025417">
       <screen x="1280" y="0" width="1280" height="1024" />
     </state>
     <state x="348" y="87" width="583" height="849" key="find.popup/0.0.1280.1024/1280.0.1280.1024@0.0.1280.1024" timestamp="1602713380459" />
-    <state x="1628" y="87" width="583" height="849" key="find.popup/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1602973845798" />
-    <state x="1561" y="238" width="700" height="530" key="recent.locations.popup" timestamp="1603033517969">
+    <state x="1529" y="87" width="851" height="849" key="find.popup/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1603051025417" />
+    <state x="1561" y="238" width="700" height="530" key="recent.locations.popup" timestamp="1603039530560">
       <screen x="1280" y="0" width="1280" height="1024" />
     </state>
-    <state x="1561" y="238" width="700" height="530" key="recent.locations.popup/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1603033517969" />
+    <state x="1561" y="238" width="700" height="530" key="recent.locations.popup/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1603039530560" />
     <state x="296" y="236" key="run.anything.popup" timestamp="1601982246551">
       <screen x="0" y="0" width="1280" height="1024" />
     </state>
     <state x="296" y="236" key="run.anything.popup/0.0.1280.1024/1280.0.1280.1024@0.0.1280.1024" timestamp="1601982246551" />
-    <state x="1583" y="221" width="672" height="160" key="search.everywhere.popup" timestamp="1603032019098">
+    <state x="1583" y="221" width="672" height="644" key="search.everywhere.popup" timestamp="1603051756954">
       <screen x="1280" y="0" width="1280" height="1024" />
     </state>
     <state x="303" y="221" width="672" height="678" key="search.everywhere.popup/0.0.1280.1024/1280.0.1280.1024@0.0.1280.1024" timestamp="1602538863928" />
-    <state x="1583" y="221" width="672" height="160" key="search.everywhere.popup/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1603032019098" />
+    <state x="1583" y="221" width="672" height="644" key="search.everywhere.popup/0.0.1280.1024/1280.0.1280.1024@1280.0.1280.1024" timestamp="1603051756954" />
   </component>
 </project>

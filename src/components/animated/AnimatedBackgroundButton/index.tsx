@@ -19,7 +19,7 @@ interface AnimatedBackgroundButtonProps {
   enabledLabelColor: string;
   disabledLabelColor: string;
   label: string;
-  disabledLabel: string;
+  disabledLabel?: string;
   onPress(): void;
   extraStyles?: ViewStyle;
 }
@@ -94,7 +94,7 @@ const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
             animatedTextStyle,
           ]}
         >
-          {enabled ? label : disabledLabel}
+          {disabledLabel ? (enabled ? label : disabledLabel) : label}
         </Animated.Text>
       </Animated.View>
     </Pressable>
