@@ -1,11 +1,11 @@
-import React, { useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import { useTheme } from "@shopify/restyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { Box, Text, Theme } from "../../../../../theme";
-import Button from "../../../../../components/static/Button";
+import RippleButton from "../../../../../components/static/RippleButton";
 import AnimatedBackgroundButton from "../../../../../components/animated/AnimatedBackgroundButton";
 import EmailController from "../../../components/EmailController";
 import CheckBoxController from "../../../components/CheckboxController";
@@ -38,36 +38,45 @@ const Form: React.FC = () => {
     forgotPasswordStyles,
   } = useStyles();
 
-  const { setLogin, setForgotPassword, setHome } = useManageIllustrations();
+  const {
+    setLogin,
+    setForgotPassword,
+    setHome,
+    setForgotPasswordSuccess,
+    setSignUpSuccess,
+    setOnBoarding,
+    setProfile,
+    setTeacherSignUp,
+  } = useManageIllustrations();
 
-  const focusPasswordInput = useCallback(() => {
+  const focusPasswordInput = () => {
     passwordInputRef.current?.focus();
-  }, []);
-  const toggleCheckBox = useCallback(
-    (value: boolean) => {
-      setValue("remember", !value);
-    },
-    [setValue]
-  );
-  const navigateToResetPassword = useCallback(() => {
+  };
+  const toggleCheckBox = (value: boolean) => {
+    setValue("remember", !value);
+  };
+  const navigateToResetPassword = () => {
     setForgotPassword(true);
     navigation.navigate("ResetPassword");
     setLogin(false);
-  }, [navigation, setForgotPassword, setLogin]);
-  const navigateToSignUp = useCallback(() => {
+  };
+  const navigateToSignUp = () => {
     navigation.navigate("SignUp");
     setLogin(false);
-  }, [navigation, setLogin]);
+  };
 
-  const onSubmit: SubmitHandler<FormValues> = useCallback(
-    (data) => {
-      console.log(data);
-      setHome(true);
-      navigation.navigate("Home");
-      setLogin(false);
-    },
-    [navigation, setHome, setLogin]
-  );
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
+    setHome(true);
+    navigation.navigate("Home");
+    setLogin(false);
+    setForgotPassword(false);
+    setForgotPasswordSuccess(false);
+    setSignUpSuccess(false);
+    setOnBoarding(false);
+    setProfile(false);
+    setTeacherSignUp(false);
+  };
 
   const enabled =
     Object.keys(formState.touched).length === 2 && !Object.keys(errors).length;
@@ -76,9 +85,9 @@ const Form: React.FC = () => {
     <Box {...containerStyles}>
       <Box {...rowStyles}>
         <Text variant="regularTitleDark">Login</Text>
-        <Button onPress={navigateToSignUp}>
+        <RippleButton onPress={navigateToSignUp}>
           <Text {...createAccountStyles}>Create an account</Text>
-        </Button>
+        </RippleButton>
       </Box>
       <EmailController
         {...{ control, errors }}
@@ -88,14 +97,14 @@ const Form: React.FC = () => {
       <PasswordController {...{ control, errors, passwordInputRef }} />
       <Box {...rowStyles}>
         <CheckBoxController {...{ control, toggleCheckBox }} />
-        <Button
+        <RippleButton
           onPress={navigateToResetPassword}
           extraButtonStyles={{
             marginTop: theme.spacing.s,
           }}
         >
           <Text {...forgotPasswordStyles}>Forgot password?</Text>
-        </Button>
+        </RippleButton>
       </Box>
       <AnimatedBackgroundButton
         {...{ enabled }}

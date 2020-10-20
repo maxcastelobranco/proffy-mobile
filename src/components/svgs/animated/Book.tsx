@@ -14,7 +14,11 @@ import { mix } from "react-native-redash";
 import { AnimatedSvgProps } from "./types";
 import { AnimatedPath, AnimatedSvg } from "./reanimatedSvgComponents";
 
-const Book: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
+interface BookProps extends AnimatedSvgProps {
+  reverse?: boolean;
+}
+
+const Book: React.FC<BookProps> = ({ viewProps, svgProps, reverse }) => {
   const animationDriver = useSharedValue(0);
   const animatedProps = useAnimatedProps(() => ({
     strokeWidth: mix(animationDriver.value, 4.5, 5.5),
@@ -23,7 +27,9 @@ const Book: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
     transform: [
       { scale: withSpring(mix(animationDriver.value, 0.9, 1.1)) },
       {
-        translateY: mix(animationDriver.value, -5, 5),
+        translateY: reverse
+          ? mix(animationDriver.value, 5, -5)
+          : mix(animationDriver.value, -5, 5),
       },
     ],
   }));
@@ -61,4 +67,4 @@ const Book: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
   );
 };
 
-export default React.memo(Book);
+export default Book;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -23,12 +23,13 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
 
       BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-      return () =>
+      return () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      };
     }, [setLogin, setOnBoarding])
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLogin(navigation.isFocused());
   }, [navigation, setLogin]);
 

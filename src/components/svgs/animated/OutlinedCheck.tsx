@@ -73,4 +73,4 @@ const OutlinedCheck: React.FC = () => {
   );
 };
 
-export default React.memo(OutlinedCheck);
+export default OutlinedCheck;

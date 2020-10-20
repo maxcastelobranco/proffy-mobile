@@ -1,10 +1,10 @@
 import { Vector } from "react-native-redash";
-import { Transforms2d } from "react-native-redash/lib/typescript/v1";
+import Animated from "react-native-reanimated";
 
 export const transformOrigin = (
   { x, y }: Vector,
-  ...transformations: Transforms2d
-): Transforms2d => {
+  ...transformations: Animated.AnimatedTransform
+): Animated.AnimatedTransform => {
   "worklet";
   return [
     { translateX: x },

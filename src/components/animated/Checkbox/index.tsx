@@ -4,7 +4,7 @@ import { mix, mixColor, useSpring } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 
 import { Theme, Text } from "../../../theme";
-import Button from "../../static/Button";
+import RippleButton from "../../static/RippleButton";
 import { AnimatedFeatherIcon } from "../reanimatedAnimatedComponents";
 import responsivePixelSize from "../../../utils/responsivePixelSize";
 
@@ -36,7 +36,10 @@ const CheckBox: React.FC<CheckboxProps> = ({ value, onChange }) => {
   }));
 
   return (
-    <Button onPress={onChange} extraButtonStyles={styles.contentContainer}>
+    <RippleButton
+      onPress={onChange}
+      extraButtonStyles={styles.contentContainer}
+    >
       <Animated.View style={[styles.checkbox, animatedIconContainerStyle]}>
         <AnimatedFeatherIcon
           name="check"
@@ -46,7 +49,7 @@ const CheckBox: React.FC<CheckboxProps> = ({ value, onChange }) => {
         />
       </Animated.View>
       <Text {...textStyles}>Remember me</Text>
-    </Button>
+    </RippleButton>
   );
 };
 

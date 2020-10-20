@@ -7,7 +7,7 @@ import X from "../../../../../components/svgs/animated/X";
 import OutlinedCircle from "../../../../../components/svgs/animated/OutlinedCircle";
 import Search from "../../../../../components/svgs/animated/Search";
 
-import { styles } from "./styles";
+import { stylesheet } from "./styles";
 
 const Illustration: React.FC<IllustrationProps> = ({
   SvgComponent,
@@ -19,30 +19,30 @@ const Illustration: React.FC<IllustrationProps> = ({
   }));
 
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
+    <Animated.View style={[stylesheet.container, animatedStyle]}>
       <OutlinedCircle
-        viewProps={{ style: styles.outlinedCircle1 }}
+        viewProps={{ style: stylesheet.outlinedCircle1 }}
         svgProps={{ stroke: "white" }}
       />
       <OutlinedCircle
-        viewProps={{ style: styles.outlinedCircle2 }}
+        viewProps={{ style: stylesheet.outlinedCircle2 }}
         svgProps={{ stroke: "white" }}
       />
       <OutlinedCircle
-        viewProps={{ style: styles.outlinedCircle3 }}
+        viewProps={{ style: stylesheet.outlinedCircle3 }}
         svgProps={{ stroke: "white" }}
       />
       <X
-        viewProps={{ style: styles.x1 }}
+        viewProps={{ style: stylesheet.x1 }}
         svgProps={{ stroke: svgParticleColor, fill: svgParticleColor }}
       />
       <X
-        viewProps={{ style: styles.x2 }}
+        viewProps={{ style: stylesheet.x2 }}
         svgProps={{ stroke: svgParticleColor, fill: svgParticleColor }}
       />
       <Search
         viewProps={{
-          style: styles.search1,
+          style: stylesheet.search1,
         }}
         svgProps={{ stroke: svgParticleColor }}
       />
@@ -50,17 +50,17 @@ const Illustration: React.FC<IllustrationProps> = ({
         circleColor={svgParticleColor}
         rows={3}
         columns={6}
-        {...styles.circleGrid1}
+        {...stylesheet.circleGrid1}
       />
       <CircleGrid
         circleColor={svgParticleColor}
         rows={3}
         columns={2}
-        {...styles.circleGrid2}
+        {...stylesheet.circleGrid2}
       />
       <SvgComponent />
     </Animated.View>
   );
 };
 
-export default React.memo(Illustration);
+export default Illustration;

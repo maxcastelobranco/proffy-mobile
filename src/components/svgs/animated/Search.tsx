@@ -57,4 +57,4 @@ const Search: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
   );
 };
 
-export default React.memo(Search);
+export default Search;

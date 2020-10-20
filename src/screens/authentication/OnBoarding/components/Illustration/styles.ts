@@ -4,7 +4,7 @@ import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 
 const { width } = Dimensions.get("window");
 
-export const styles = StyleSheet.create({
+export const stylesheet = StyleSheet.create({
   container: {
     minHeight: responsivePixelSize(350),
     width,

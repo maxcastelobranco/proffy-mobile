@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -10,7 +10,6 @@ import Animated, {
 import { Dimensions } from "react-native";
 import { interpolateColor } from "react-native-redash";
 import { BoxProps, useTheme } from "@shopify/restyle";
-import { useNavigationState } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
@@ -75,14 +74,18 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     }
   };
 
-  useEffect(() => {
-    setOnBoarding(navigation.isFocused());
+  useLayoutEffect(() => {
+    setOnBoarding(true);
     // @ts-ignore
     scrollViewRef.current?.scrollTo({
       x: 0,
       animated: true,
     });
-  }, [navigation, scrollViewRef, setOnBoarding]);
+
+    return () => {
+      setOnBoarding(false);
+    };
+  }, [scrollViewRef, setOnBoarding]);
 
   return (
     <>
@@ -150,4 +153,4 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
   );
 };
 
-export default React.memo(OnBoarding);
+export default OnBoarding;

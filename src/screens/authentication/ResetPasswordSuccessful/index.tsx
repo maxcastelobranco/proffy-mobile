@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { BackHandler } from "react-native";
 
@@ -31,12 +31,13 @@ const ResetPasswordSuccessful: React.FC<AuthenticationNavigationProps<
 
       BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-      return () =>
+      return () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      };
     }, [setForgotPassword, setForgotPasswordSuccess])
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setForgotPasswordSuccess(navigation.isFocused());
   }, [navigation, setForgotPasswordSuccess]);
 

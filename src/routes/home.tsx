@@ -6,6 +6,8 @@ import {
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { RouteProp, CompositeNavigationProp } from "@react-navigation/native";
 
+import Landing from "../screens/home/Landing";
+
 import { Tabs } from "./tabs";
 
 export type HomeRoutes = {
@@ -29,7 +31,7 @@ const HomeStack = createStackNavigator<HomeRoutes>();
 const HomeNavigator: React.FC = () => {
   return (
     <HomeStack.Navigator headerMode="none">
-      {/*<HomeStack.Screen name="Landing" component={Landing} />*/}
+      <HomeStack.Screen name="Landing" component={Landing} />
       {/*<HomeStack.Screen name="Profile" component={Profile} />*/}
       {/*<HomeStack.Screen name="Study" component={StudyTabsNavigator} />*/}
       {/*<HomeStack.Screen name="Teach" component={Teach} />*/}

@@ -42,4 +42,4 @@ const CircleGrid: React.FC<CircleGridProps> = ({
   );
 };
 
-export default React.memo(CircleGrid);
+export default CircleGrid;

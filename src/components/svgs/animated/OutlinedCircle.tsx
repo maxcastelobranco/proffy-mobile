@@ -54,4 +54,4 @@ const OutlinedCircle: React.FC<AnimatedSvgProps> = ({
   );
 };
 
-export default React.memo(OutlinedCircle);
+export default OutlinedCircle;

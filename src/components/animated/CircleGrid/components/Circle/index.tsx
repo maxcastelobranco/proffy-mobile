@@ -65,4 +65,4 @@ const Circle: React.FC<CircleProps> = ({
   return <Animated.View style={[styles.circle, circleAnimatedStyles]} />;
 };
 
-export default React.memo(Circle);
+export default Circle;

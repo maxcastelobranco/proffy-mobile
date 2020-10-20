@@ -26,4 +26,4 @@ const Slide: React.FC<SlideProps> = ({
   );
 };
 
-export default React.memo(Slide);
+export default Slide;

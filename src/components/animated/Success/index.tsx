@@ -6,7 +6,7 @@ import CircleGrid from "../CircleGrid";
 import Search from "../../svgs/animated/Search";
 import OutlinedCircle from "../../svgs/animated/OutlinedCircle";
 import X from "../../svgs/animated/X";
-import Button from "../../static/Button";
+import RippleButton from "../../static/RippleButton";
 import OutlinedCheck from "../../svgs/animated/OutlinedCheck";
 
 import { useStyles } from "./styles";
@@ -100,11 +100,11 @@ const Success: React.FC<SuccessProps> = ({
       <OutlinedCheck />
       <Text {...titleStyles}>{title}</Text>
       <Text {...descriptionStyles}>{description}</Text>
-      <Button {...{ onPress }} extraButtonStyles={stylesheet.button}>
+      <RippleButton {...{ onPress }} extraButtonStyles={stylesheet.button}>
         <Text {...buttonLabelStyles}>{buttonLabel}</Text>
-      </Button>
+      </RippleButton>
     </Box>
   );
 };
 
-export default React.memo(Success);
+export default Success;

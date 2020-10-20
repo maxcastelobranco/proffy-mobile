@@ -55,4 +55,4 @@ const X: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
   );
 };
 
-export default React.memo(X);
+export default X;

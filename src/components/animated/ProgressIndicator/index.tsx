@@ -65,4 +65,4 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   return <Animated.View style={[styles.progressIndicator, animatedStyle]} />;
 };
 
-export default React.memo(ProgressIndicator);
+export default ProgressIndicator;

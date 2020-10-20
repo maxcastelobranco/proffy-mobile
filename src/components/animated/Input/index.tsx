@@ -9,10 +9,10 @@ import { BoxProps, useTheme } from "@shopify/restyle";
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
 import { FieldError } from "react-hook-form";
 import { Feather } from "@expo/vector-icons";
-import { useSpring } from "react-native-redash";
+import { bin, useSpring } from "react-native-redash";
 
 import responsivePixelSize from "../../../utils/responsivePixelSize";
-import Button from "../../static/Button";
+import RippleButton from "../../static/RippleButton";
 import { Theme, Box } from "../../../theme";
 
 import Placeholder from "./components/Placeholder";
@@ -114,9 +114,11 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     theme.colors.primary,
   ]);
 
+  const binError = bin(!!error);
+
   return (
     <Box {...containerStyles}>
-      <FocusIndicator {...{ focused }} />
+      <FocusIndicator {...{ focused }} error={binError} />
       <Tooltip errorMessage={error?.message} {...{ showTooltip }} />
       <Placeholder
         animationDriver={placeholderAnimationDriver}
@@ -131,7 +133,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         onChangeText={onChange}
         {...inputProps}
       />
-      <Button
+      <RippleButton
         onPress={toggleTooltip}
         extraButtonStyles={{
           padding: theme.spacing.s,
@@ -142,7 +144,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
           size={responsivePixelSize(24)}
           color={iconColor}
         />
-      </Button>
+      </RippleButton>
     </Box>
   );
 };

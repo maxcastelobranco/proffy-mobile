@@ -13,7 +13,15 @@ import { mix } from "react-native-redash";
 import { AnimatedSvgProps } from "./types";
 import { AnimatedPath, AnimatedSvg } from "./reanimatedSvgComponents";
 
-const Television: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
+interface TelevisionProps extends AnimatedSvgProps {
+  reverse?: boolean;
+}
+
+const Television: React.FC<TelevisionProps> = ({
+  viewProps,
+  svgProps,
+  reverse,
+}) => {
   const animationDriver = useSharedValue(0);
   const animatedProps = useAnimatedProps(() => ({
     strokeWidth: mix(animationDriver.value, 4.5, 5.5),
@@ -22,7 +30,9 @@ const Television: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
     transform: [
       { scale: mix(animationDriver.value, 0.9, 1.1) },
       {
-        translateY: mix(animationDriver.value, -5, 5),
+        translateY: reverse
+          ? mix(animationDriver.value, 5, -5)
+          : mix(animationDriver.value, -5, 5),
       },
     ],
   }));
@@ -65,4 +75,4 @@ const Television: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
   );
 };
 
-export default React.memo(Television);
+export default Television;

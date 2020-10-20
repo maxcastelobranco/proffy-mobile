@@ -59,4 +59,4 @@ const Illustration: React.FC = () => {
   );
 };
 
-export default React.memo(Illustration);
+export default Illustration;

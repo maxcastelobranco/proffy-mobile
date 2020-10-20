@@ -7,7 +7,7 @@ const { width } = Dimensions.get("window");
 
 export const useStyles = () => {
   const theme = useTheme<Theme>();
-  const styles = StyleSheet.create({
+  const stylesheet = StyleSheet.create({
     container: {
       flex: 1,
       maxWidth: width,
@@ -26,7 +26,7 @@ export const useStyles = () => {
   };
 
   return {
-    styles,
+    stylesheet,
     numerationStyles,
     titleStyles,
   };

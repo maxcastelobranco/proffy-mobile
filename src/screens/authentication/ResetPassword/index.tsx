@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
@@ -8,7 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import Illustration from "../Login/components/Illustration";
 import { Box, Text, Theme } from "../../../theme";
-import Button from "../../../components/static/Button";
+import RippleButton from "../../../components/static/RippleButton";
 import EmailController from "../components/EmailController";
 import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
 import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
@@ -44,15 +44,12 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
   const enabled =
     Object.keys(formState.touched).length === 1 && !Object.keys(errors).length;
 
-  const onSubmit: SubmitHandler<FormValues> = useCallback(
-    (data) => {
-      console.log(data);
-      setForgotPasswordSuccess(true);
-      navigation.navigate("ResetPasswordSuccessful");
-      setForgotPassword(false);
-    },
-    [navigation, setForgotPassword, setForgotPasswordSuccess]
-  );
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
+    setForgotPasswordSuccess(true);
+    navigation.navigate("ResetPasswordSuccessful");
+    setForgotPassword(false);
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -64,12 +61,13 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
 
       BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-      return () =>
+      return () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      };
     }, [setForgotPassword, setLogin])
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setForgotPassword(navigation.isFocused());
   }, [navigation, setForgotPassword]);
 
@@ -80,7 +78,7 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
           <Illustration />
           <Box {...containerStyles}>
             <Box {...chevronContainerStyles}>
-              <Button
+              <RippleButton
                 onPress={() => navigation.goBack()}
                 extraButtonStyles={{ paddingLeft: 0 }}
               >
@@ -89,7 +87,7 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
                   size={24}
                   color={theme.colors.complementTextDark}
                 />
-              </Button>
+              </RippleButton>
             </Box>
             <Box {...pageDescriptionStyles}>
               <Text {...titleStyles}>Forgot your password?</Text>

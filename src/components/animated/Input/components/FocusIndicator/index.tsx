@@ -1,15 +1,16 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import { useSpring } from "react-native-redash";
+import { mixColor, useSpring } from "react-native-redash";
 
 import theme from "../../../../../theme";
 
 interface FocusIndicatorProps {
   focused: boolean;
+  error: 0 | 1;
 }
 
-const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused }) => {
+const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused, error }) => {
   const styles = StyleSheet.create({
     focusIndicator: {
       flex: 1,
@@ -18,7 +19,6 @@ const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused }) => {
       bottom: 12,
       left: 0,
       width: 2,
-      backgroundColor: theme.colors.primary,
       borderRadius: theme.borderRadii.default,
     },
   });
@@ -27,6 +27,11 @@ const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused }) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
+      backgroundColor: mixColor(
+        error,
+        theme.colors.primary,
+        theme.colors.danger
+      ) as string,
       opacity: focusedTransition.value,
       transform: [{ scale: focusedTransition.value }],
     };

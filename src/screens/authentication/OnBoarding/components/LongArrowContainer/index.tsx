@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { useTheme } from "@shopify/restyle";
 
 import LongArrow from "../../../../../components/svgs/static/LongArrow";
-import Button from "../../../../../components/static/Button";
+import RippleButton from "../../../../../components/static/RippleButton";
 import { Theme } from "../../../../../theme";
 
 interface LongArrowContainerProps {
@@ -29,16 +29,16 @@ const LongArrowContainer: React.FC<LongArrowContainerProps> = ({
 
   return (
     <Animated.View style={[containerStyle, animatedStyle]}>
-      <Button
+      <RippleButton
         {...{ onPress }}
         extraButtonStyles={{
           padding: theme.spacing.m,
         }}
       >
         <LongArrow />
-      </Button>
+      </RippleButton>
     </Animated.View>
   );
 };
 
-export default React.memo(LongArrowContainer);
+export default LongArrowContainer;

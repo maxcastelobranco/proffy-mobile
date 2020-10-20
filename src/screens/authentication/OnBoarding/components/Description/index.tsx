@@ -12,14 +12,14 @@ const Description: React.FC<DescriptionProps> = ({
   opacity,
 }) => {
   const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
-  const { styles, titleStyles, numerationStyles } = useStyles();
+  const { stylesheet, titleStyles, numerationStyles } = useStyles();
 
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
+    <Animated.View style={[stylesheet.container, animatedStyle]}>
       <Text {...numerationStyles}>{`0${index + 1}.`}</Text>
       <Text {...titleStyles}>{descriptionText}</Text>
     </Animated.View>
   );
 };
 
-export default React.memo(Description);
+export default Description;

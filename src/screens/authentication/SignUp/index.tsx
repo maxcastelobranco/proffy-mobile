@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { BackHandler, Dimensions, KeyboardAvoidingView } from "react-native";
 import { useTheme } from "@shopify/restyle";
 import { Feather } from "@expo/vector-icons";
@@ -15,7 +15,7 @@ import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import { Box, Text, Theme } from "../../../theme";
 import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
-import Button from "../../../components/static/Button";
+import RippleButton from "../../../components/static/RippleButton";
 import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
 
 import useSlideData from "./hooks/useSlideData";
@@ -73,33 +73,28 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
 
   const slideData = useSlideData(scrollEnabled, submitEnabled);
 
-  const onSubmit: SubmitHandler<FormValues> = useCallback(
-    (data) => {
-      console.log(data);
-      setSignUpSuccess(true);
-      navigation.navigate("SignUpSuccessful");
-    },
-    [navigation, setSignUpSuccess]
-  );
-  const onPress = useCallback(
-    (index: number) => {
-      const last = index === slideData.length - 1;
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
+    setSignUpSuccess(true);
+    navigation.navigate("SignUpSuccessful");
+  };
+  const onPress = (index: number) => {
+    const last = index === slideData.length - 1;
 
-      if (last) {
-        handleSubmit(onSubmit)();
-      } else {
-        // @ts-ignore
-        scrollViewRef.current?.scrollTo({
-          x: width * (index + 1),
-          animated: true,
-        });
-      }
-    },
-    [handleSubmit, onSubmit, scrollViewRef, slideData.length]
-  );
-  const handleGoBack = useCallback(() => {
+    if (last) {
+      handleSubmit(onSubmit)();
+    } else {
+      // @ts-ignore
+      scrollViewRef.current?.scrollTo({
+        x: width * (index + 1),
+        animated: true,
+      });
+    }
+  };
+  const handleGoBack = () => {
+    setLogin(true);
     navigation.goBack();
-  }, [navigation]);
+  };
 
   const currentIndex = useDerivedValue(() => translationX.value / width);
 
@@ -120,13 +115,16 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   return (
     <KeyboardAvoidingView behavior="position">
       <Box {...headerStyles}>
-        <Button onPress={handleGoBack} extraButtonStyles={{ paddingLeft: 0 }}>
+        <RippleButton
+          onPress={handleGoBack}
+          extraButtonStyles={{ paddingLeft: 0 }}
+        >
           <Feather
             name="chevrons-left"
             size={24}
             color={theme.colors.complementTextDark}
           />
-        </Button>
+        </RippleButton>
         <Box {...progressIndicatorContainerStyles}>
           {slideData.map((_, index) => (
             <ProgressIndicator key={index} {...{ index, currentIndex }} />
