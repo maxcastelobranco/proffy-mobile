@@ -1,51 +1,36 @@
-import React, { useLayoutEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { BackHandler } from "react-native";
+import React, { useEffect } from "react";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import Success from "../../../components/animated/Success";
-import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../context";
 
 const SignUpSuccessful: React.FC<AuthenticationNavigationProps<
   "SignUpSuccessful"
 >> = ({ navigation }) => {
-  const {
-    signUpSuccess,
-    setSignUpSuccess,
-    setLogin,
-  } = useManageIllustrations();
+  const { state, dispatch } = useAppContext();
 
   const onPress = () => {
-    setLogin(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "loginIllustration",
+      },
+    });
     navigation.navigate("Login");
-    setSignUpSuccess(false);
   };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setSignUpSuccess(true);
-
-      const onBackPress = () => {
-        setSignUpSuccess(false);
-        return false;
-      };
-
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
-
-      return () => {
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-        setSignUpSuccess(false);
-      };
-    }, [setSignUpSuccess])
-  );
-
-  useLayoutEffect(() => {
-    setSignUpSuccess(navigation.isFocused());
-  }, [navigation, setSignUpSuccess]);
+  useEffect(() => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "signUpSuccessIllustration",
+      },
+    });
+  }, [dispatch]);
 
   return (
     <>
-      {signUpSuccess && (
+      {state.activeIllustration.name === "signUpSuccessIllustration" && (
         <Success
           {...{ onPress }}
           title="Registration completed!"

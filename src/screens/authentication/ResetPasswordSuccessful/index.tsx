@@ -1,31 +1,34 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { BackHandler } from "react-native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import Success from "../../../components/animated/Success";
-import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../context";
 
 const ResetPasswordSuccessful: React.FC<AuthenticationNavigationProps<
   "ResetPasswordSuccessful"
 >> = ({ navigation }) => {
-  const {
-    forgotPasswordSuccess,
-    setForgotPasswordSuccess,
-    setLogin,
-    setForgotPassword,
-  } = useManageIllustrations();
+  const { state, dispatch } = useAppContext();
   const onPress = () => {
-    setLogin(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "loginIllustration",
+      },
+    });
     navigation.navigate("Login");
-    setForgotPasswordSuccess(false);
   };
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        setForgotPassword(true);
-        setForgotPasswordSuccess(false);
+        dispatch({
+          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          payload: {
+            name: "forgotPasswordIllustration",
+          },
+        });
         return false;
       };
 
@@ -34,16 +37,22 @@ const ResetPasswordSuccessful: React.FC<AuthenticationNavigationProps<
       return () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
       };
-    }, [setForgotPassword, setForgotPasswordSuccess])
+    }, [dispatch])
   );
 
-  useLayoutEffect(() => {
-    setForgotPasswordSuccess(navigation.isFocused());
-  }, [navigation, setForgotPasswordSuccess]);
+  useEffect(() => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "forgotPasswordSuccessIllustration",
+      },
+    });
+  }, [dispatch]);
 
   return (
     <>
-      {forgotPasswordSuccess && (
+      {state.activeIllustration.name ===
+        "forgotPasswordSuccessIllustration" && (
         <Success
           title="Reset password email successfully sent!"
           description="Nice, now just heck your inbox to reset your password and enjoy your studies."

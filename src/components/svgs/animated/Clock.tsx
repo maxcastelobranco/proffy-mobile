@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Animated, {
   Easing,
   repeat,
@@ -79,23 +79,25 @@ const Clock: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
     };
   });
 
-  runOnUI(() => {
-    "worklet";
-    shortPointerAnimationDriver.value = repeat(
-      withTiming(1, {
-        duration: 1000,
-        easing: Easing.linear,
-      }),
-      -1
-    );
-    longPointerAnimationDriver.value = repeat(
-      withTiming(1, {
-        duration: 60000,
-        easing: Easing.linear,
-      }),
-      -1
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      shortPointerAnimationDriver.value = repeat(
+        withTiming(1, {
+          duration: 1000,
+          easing: Easing.linear,
+        }),
+        -1
+      );
+      longPointerAnimationDriver.value = repeat(
+        withTiming(1, {
+          duration: 6000,
+          easing: Easing.linear,
+        }),
+        -1
+      );
+    })();
+  }, [longPointerAnimationDriver, shortPointerAnimationDriver]);
 
   return (
     <Animated.View {...viewProps} style={[viewProps?.style]}>

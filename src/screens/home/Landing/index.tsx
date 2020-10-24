@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { HomeNavigationProps } from "../../../routes/home";
 import { Box, Text } from "../../../theme";
 import responsivePixelSize from "../../../utils/responsivePixelSize";
 import RippleButton from "../../../components/static/RippleButton";
-import { randomBetween } from "../../../utils/randomBetween";
 import Book from "../../../components/svgs/animated/Book";
 import Television from "../../../components/svgs/animated/Television";
+import { useAppContext } from "../../../context";
 
 import Illustration from "./components/Illustration";
 import Header from "./components/Header";
@@ -15,6 +15,7 @@ import { useStyles } from "./styles";
 const ICON_SIZE = responsivePixelSize(56);
 
 const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
+  const { state, dispatch } = useAppContext();
   const {
     containerStyles,
     welcomeStyles,
@@ -34,10 +35,19 @@ const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
     navigation.navigate("Teach");
   };
 
+  useEffect(() => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "homeIllustration",
+      },
+    });
+  }, [dispatch]);
+
   return (
     <Box {...containerStyles}>
       <Header />
-      <Illustration />
+      {state.activeIllustration.name === "homeIllustration" && <Illustration />}
       <Box {...welcomeStyles}>
         <Text {...titleStyles}>Welcome.</Text>
         <Text {...semiBoldTitleStyles}>What you wanna do?</Text>

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
@@ -11,7 +11,7 @@ import { Box, Text, Theme } from "../../../theme";
 import RippleButton from "../../../components/static/RippleButton";
 import EmailController from "../components/EmailController";
 import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
-import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../context";
 
 import { useStyles } from "./styles";
 
@@ -30,12 +30,7 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
     descriptionStyles,
   } = useStyles();
 
-  const {
-    forgotPassword,
-    setForgotPassword,
-    setForgotPasswordSuccess,
-    setLogin,
-  } = useManageIllustrations();
+  const { state, dispatch } = useAppContext();
 
   const { control, errors, formState, handleSubmit } = useForm<FormValues>({
     mode: "onBlur",
@@ -46,16 +41,24 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
-    setForgotPasswordSuccess(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "forgotPasswordSuccessIllustration",
+      },
+    });
     navigation.navigate("ResetPasswordSuccessful");
-    setForgotPassword(false);
   };
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        setLogin(true);
-        setForgotPassword(false);
+        dispatch({
+          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          payload: {
+            name: "loginIllustration",
+          },
+        });
         return false;
       };
 
@@ -64,51 +67,54 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
       return () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
       };
-    }, [setForgotPassword, setLogin])
+    }, [dispatch])
   );
 
-  useLayoutEffect(() => {
-    setForgotPassword(navigation.isFocused());
-  }, [navigation, setForgotPassword]);
+  useEffect(() => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "forgotPasswordIllustration",
+      },
+    });
+  }, [dispatch]);
 
   return (
-    <>
-      {forgotPassword && (
-        <KeyboardAvoidingView behavior="position">
-          <Illustration />
-          <Box {...containerStyles}>
-            <Box {...chevronContainerStyles}>
-              <RippleButton
-                onPress={() => navigation.goBack()}
-                extraButtonStyles={{ paddingLeft: 0 }}
-              >
-                <Feather
-                  name="chevrons-left"
-                  size={24}
-                  color={theme.colors.complementTextDark}
-                />
-              </RippleButton>
-            </Box>
-            <Box {...pageDescriptionStyles}>
-              <Text {...titleStyles}>Forgot your password?</Text>
-              <Text {...descriptionStyles}>Chill, we can fix that.</Text>
-            </Box>
-            <EmailController {...{ control, errors }} />
-            <AnimatedBackgroundButton
-              {...{ enabled }}
-              enabledBackgroundColor={theme.colors.secondary}
-              disabledBackgroundColor={theme.colors.background5}
-              enabledLabelColor={theme.colors.title}
-              disabledLabelColor={theme.colors.complementTextDark}
-              label="Reset password"
-              disabledLabel="Fill out your email"
-              extraStyles={{ marginTop: theme.spacing.m }}
-              onPress={handleSubmit(onSubmit)}
-            />
-          </Box>
-        </KeyboardAvoidingView>
+    <KeyboardAvoidingView behavior="position">
+      {state.activeIllustration.name === "forgotPasswordIllustration" && (
+        <Illustration />
       )}
-    </>
+      <Box {...containerStyles}>
+        <Box {...chevronContainerStyles}>
+          <RippleButton
+            onPress={() => navigation.goBack()}
+            extraButtonStyles={{ paddingLeft: 0 }}
+          >
+            <Feather
+              name="chevrons-left"
+              size={24}
+              color={theme.colors.complementTextDark}
+            />
+          </RippleButton>
+        </Box>
+        <Box {...pageDescriptionStyles}>
+          <Text {...titleStyles}>Forgot your password?</Text>
+          <Text {...descriptionStyles}>Chill, we can fix that.</Text>
+        </Box>
+        <EmailController {...{ control, errors }} />
+        <AnimatedBackgroundButton
+          {...{ enabled }}
+          enabledBackgroundColor={theme.colors.secondary}
+          disabledBackgroundColor={theme.colors.background5}
+          enabledLabelColor={theme.colors.title}
+          disabledLabelColor={theme.colors.complementTextDark}
+          label="Reset password"
+          disabledLabel="Fill out your email"
+          extraStyles={{ marginTop: theme.spacing.m }}
+          onPress={handleSubmit(onSubmit)}
+        />
+      </Box>
+    </KeyboardAvoidingView>
   );
 };
 

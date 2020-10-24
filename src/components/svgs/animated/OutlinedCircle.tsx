@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Animated, {
   Easing,
   repeat,
@@ -27,17 +27,19 @@ const OutlinedCircle: React.FC<AnimatedSvgProps> = ({
     transform: [{ scale: mix(animationDriver.value, 0.2, 3) }],
   }));
 
-  runOnUI(() => {
-    "worklet";
-    animationDriver.value = repeat(
-      withTiming(1, {
-        duration: 3000,
-        easing: Easing.bezier(0.16, 1, 0.3, 1),
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      animationDriver.value = repeat(
+        withTiming(1, {
+          duration: 3000,
+          easing: Easing.bezier(0.16, 1, 0.3, 1),
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [animationDriver]);
 
   return (
     <Animated.View {...viewProps} style={[viewProps?.style, animatedStyles]}>

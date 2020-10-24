@@ -5,10 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import theme, { Box, Text } from "../../../../../theme";
 import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 import RippleButton from "../../../../../components/static/RippleButton";
+import { useAppContext } from "../../../../../context";
 
 import { useStyles } from "./styles";
 
 const Header: React.FC = () => {
+  const { dispatch } = useAppContext();
   const navigation = useNavigation();
 
   const {
@@ -20,7 +22,15 @@ const Header: React.FC = () => {
     logoutButtonStyles,
   } = useStyles();
 
-  const onPress = () => navigation.navigate("Profile");
+  const onPress = () => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "profileIllustration",
+      },
+    });
+    navigation.navigate("Profile");
+  };
 
   return (
     <Box {...containerStyles}>

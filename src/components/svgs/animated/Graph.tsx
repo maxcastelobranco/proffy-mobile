@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Animated, {
   Easing,
   repeat,
@@ -36,17 +36,19 @@ const Graph: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
     };
   });
 
-  runOnUI(() => {
-    "worklet";
-    animationDriver.value = repeat(
-      withTiming(1, {
-        duration: 2400,
-        easing: Easing.bezier(0.65, 0, 0.35, 1),
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      animationDriver.value = repeat(
+        withTiming(1, {
+          duration: 2400,
+          easing: Easing.bezier(0.65, 0, 0.35, 1),
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [animationDriver]);
 
   const stylesheet = StyleSheet.create({
     container: {

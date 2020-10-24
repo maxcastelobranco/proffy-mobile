@@ -1,9 +1,9 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
-import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../context";
 
 import Illustration from "./components/Illustration";
 import Form from "./components/Form";
@@ -11,13 +11,17 @@ import Form from "./components/Form";
 const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
   navigation,
 }) => {
-  const { setOnBoarding, login, setLogin } = useManageIllustrations();
+  const { state, dispatch } = useAppContext();
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        setOnBoarding(true);
-        setLogin(false);
+        dispatch({
+          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          payload: {
+            name: "onBoardingIllustration",
+          },
+        });
         return false;
       };
 
@@ -26,16 +30,21 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
       return () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
       };
-    }, [setLogin, setOnBoarding])
+    }, [dispatch])
   );
 
-  useLayoutEffect(() => {
-    setLogin(navigation.isFocused());
-  }, [navigation, setLogin]);
+  useEffect(() => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "loginIllustration",
+      },
+    });
+  }, [dispatch, navigation]);
 
   return (
     <>
-      {login && (
+      {state.activeIllustration.name === "loginIllustration" && (
         <KeyboardAvoidingView behavior="position">
           <Illustration />
           <Form />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Animated, {
   Easing,
   repeat,
@@ -22,18 +22,19 @@ const Play: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
       opacity: opacity.value,
     };
   });
-
-  runOnUI(() => {
-    "worklet";
-    opacity.value = repeat(
-      withTiming(1, {
-        duration: 1000,
-        easing: Easing.linear,
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      opacity.value = repeat(
+        withTiming(1, {
+          duration: 1000,
+          easing: Easing.linear,
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [opacity]);
 
   return (
     <Animated.View

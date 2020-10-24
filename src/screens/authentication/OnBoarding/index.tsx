@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -14,7 +14,7 @@ import { BoxProps, useTheme } from "@shopify/restyle";
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import { Box, Theme } from "../../../theme";
-import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../context";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -26,7 +26,7 @@ const { width } = Dimensions.get("window");
 const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
   navigation,
 }) => {
-  const { setOnBoarding, onBoarding, setLogin } = useManageIllustrations();
+  const { state, dispatch } = useAppContext();
   const slideData = useSlideData();
   const styles = useStyles(slideData.length);
   const theme = useTheme<Theme>();
@@ -62,9 +62,13 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     const isLast = index === slideData.length - 1;
 
     if (isLast) {
-      setLogin(true);
+      dispatch({
+        type: "UPDATE_ACTIVE_ILLUSTRATION",
+        payload: {
+          name: "loginIllustration",
+        },
+      });
       navigation.navigate("Login");
-      setOnBoarding(false);
     } else {
       // @ts-ignore
       scrollViewRef.current?.scrollTo({
@@ -74,18 +78,22 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     }
   };
 
-  useLayoutEffect(() => {
-    setOnBoarding(true);
+  useEffect(() => {
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "onBoardingIllustration",
+      },
+    });
     // @ts-ignore
     scrollViewRef.current?.scrollTo({
       x: 0,
       animated: true,
     });
+  }, [dispatch, scrollViewRef]);
 
-    return () => {
-      setOnBoarding(false);
-    };
-  }, [scrollViewRef, setOnBoarding]);
+  const shouldDisplayIllustration =
+    state.activeIllustration.name === "onBoardingIllustration";
 
   return (
     <>
@@ -112,7 +120,6 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
             return (
               <Slide
                 key={index}
-                shouldDisplayIllustration={onBoarding}
                 {...{
                   SvgComponent,
                   svgParticleColor,
@@ -120,6 +127,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
                   opacity,
                   descriptionText,
                   index,
+                  shouldDisplayIllustration,
                 }}
               />
             );

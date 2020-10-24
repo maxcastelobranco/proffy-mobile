@@ -16,7 +16,7 @@ import { Box, Text, Theme } from "../../../theme";
 import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import RippleButton from "../../../components/static/RippleButton";
-import { useManageIllustrations } from "../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../context";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -38,7 +38,7 @@ const { width } = Dimensions.get("window");
 const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   navigation,
 }) => {
-  const { setLogin, setSignUpSuccess } = useManageIllustrations();
+  const { dispatch } = useAppContext();
   const theme = useTheme<Theme>();
   const {
     headerStyles,
@@ -54,6 +54,7 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translationX.value = event.contentOffset.x;
   });
+  const currentIndex = useDerivedValue(() => translationX.value / width);
   const { control, errors, formState, handleSubmit } = useForm<FormValues>({
     mode: "onBlur",
     criteriaMode: "all",
@@ -75,7 +76,12 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
-    setSignUpSuccess(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "signUpSuccessIllustration",
+      },
+    });
     navigation.navigate("SignUpSuccessful");
   };
   const onPress = (index: number) => {
@@ -92,16 +98,24 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
     }
   };
   const handleGoBack = () => {
-    setLogin(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "loginIllustration",
+      },
+    });
     navigation.goBack();
   };
-
-  const currentIndex = useDerivedValue(() => translationX.value / width);
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        setLogin(true);
+        dispatch({
+          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          payload: {
+            name: "loginIllustration",
+          },
+        });
         return false;
       };
 
@@ -109,7 +123,7 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, [setLogin])
+    }, [dispatch])
   );
 
   return (

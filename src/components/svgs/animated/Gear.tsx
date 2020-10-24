@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Animated, {
   Easing,
   repeat,
@@ -36,17 +36,19 @@ const Gear: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
     },
   });
 
-  runOnUI(() => {
-    "worklet";
-    animationDriver.value = repeat(
-      withTiming(1, {
-        duration: 3000,
-        easing: Easing.bezier(0.76, 0, 0.24, 1),
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      animationDriver.value = repeat(
+        withTiming(1, {
+          duration: 3000,
+          easing: Easing.bezier(0.76, 0, 0.24, 1),
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [animationDriver]);
 
   return (
     <Animated.View

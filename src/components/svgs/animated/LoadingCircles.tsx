@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BoxProps } from "@shopify/restyle";
 import Animated, {
   Easing,
@@ -40,33 +40,35 @@ const LoadingCircles: React.FC<LoadingCirclesProps> = ({ extraStyles }) => {
   const circle2AnimationDriver = useSharedValue(0);
   const circle3AnimationDriver = useSharedValue(0);
 
-  runOnUI(() => {
-    "worklet";
-    circle1AnimationDriver.value = repeat(
-      withTiming(1, {
-        duration: 2000,
-        easing: Easing.bezier(0.76, 0, 0.24, 1),
-      }),
-      -1,
-      true
-    );
-    circle2AnimationDriver.value = repeat(
-      withTiming(1, {
-        duration: 2100,
-        easing: Easing.bezier(0.76, 0, 0.24, 1),
-      }),
-      -1,
-      true
-    );
-    circle3AnimationDriver.value = repeat(
-      withTiming(1, {
-        duration: 2200,
-        easing: Easing.bezier(0.76, 0, 0.24, 1),
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      circle1AnimationDriver.value = repeat(
+        withTiming(1, {
+          duration: 2000,
+          easing: Easing.bezier(0.76, 0, 0.24, 1),
+        }),
+        -1,
+        true
+      );
+      circle2AnimationDriver.value = repeat(
+        withTiming(1, {
+          duration: 2100,
+          easing: Easing.bezier(0.76, 0, 0.24, 1),
+        }),
+        -1,
+        true
+      );
+      circle3AnimationDriver.value = repeat(
+        withTiming(1, {
+          duration: 2200,
+          easing: Easing.bezier(0.76, 0, 0.24, 1),
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [circle1AnimationDriver, circle2AnimationDriver, circle3AnimationDriver]);
 
   const circle1animatedStyles = useAnimatedStyle(() => {
     const circle1Scale = mix(circle1AnimationDriver.value, 0.2, 1.2);

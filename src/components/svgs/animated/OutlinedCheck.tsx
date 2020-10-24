@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Easing,
   repeat,
@@ -37,17 +37,19 @@ const OutlinedCheck: React.FC = () => {
     };
   });
 
-  runOnUI(() => {
-    "worklet";
-    animationDriver.value = repeat(
-      withTiming(1, {
-        duration: 1000,
-        easing: Easing.bezier(0.65, 0, 0.35, 1),
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      animationDriver.value = repeat(
+        withTiming(1, {
+          duration: 1000,
+          easing: Easing.bezier(0.65, 0, 0.35, 1),
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [animationDriver]);
 
   return (
     <AnimatedSvg

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Animated, {
   Easing,
   repeat,
@@ -37,17 +37,19 @@ const Television: React.FC<TelevisionProps> = ({
     ],
   }));
 
-  runOnUI(() => {
-    "worklet";
-    animationDriver.value = repeat(
-      withTiming(1, {
-        duration: 1200,
-        easing: Easing.bezier(0.37, 0, 0.63, 1),
-      }),
-      -1,
-      true
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      animationDriver.value = repeat(
+        withTiming(1, {
+          duration: 1200,
+          easing: Easing.bezier(0.37, 0, 0.63, 1),
+        }),
+        -1,
+        true
+      );
+    })();
+  }, [animationDriver]);
 
   return (
     <Animated.View style={[viewProps?.style, animatedStyles]}>

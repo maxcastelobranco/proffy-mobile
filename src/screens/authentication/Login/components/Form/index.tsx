@@ -10,7 +10,7 @@ import AnimatedBackgroundButton from "../../../../../components/animated/Animate
 import EmailController from "../../../components/EmailController";
 import CheckBoxController from "../../../components/CheckboxController";
 import PasswordController from "../../../components/PasswordController";
-import { useManageIllustrations } from "../../../../../hooks/useManageIllustrations";
+import { useAppContext } from "../../../../../context";
 
 import { useStyles } from "./styles";
 
@@ -38,16 +38,7 @@ const Form: React.FC = () => {
     forgotPasswordStyles,
   } = useStyles();
 
-  const {
-    setLogin,
-    setForgotPassword,
-    setHome,
-    setForgotPasswordSuccess,
-    setSignUpSuccess,
-    setOnBoarding,
-    setProfile,
-    setTeacherSignUp,
-  } = useManageIllustrations();
+  const { dispatch } = useAppContext();
 
   const focusPasswordInput = () => {
     passwordInputRef.current?.focus();
@@ -56,26 +47,27 @@ const Form: React.FC = () => {
     setValue("remember", !value);
   };
   const navigateToResetPassword = () => {
-    setForgotPassword(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "forgotPasswordIllustration",
+      },
+    });
     navigation.navigate("ResetPassword");
-    setLogin(false);
   };
   const navigateToSignUp = () => {
     navigation.navigate("SignUp");
-    setLogin(false);
   };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
-    setHome(true);
+    dispatch({
+      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      payload: {
+        name: "homeIllustration",
+      },
+    });
     navigation.navigate("Home");
-    setLogin(false);
-    setForgotPassword(false);
-    setForgotPasswordSuccess(false);
-    setSignUpSuccess(false);
-    setOnBoarding(false);
-    setProfile(false);
-    setTeacherSignUp(false);
   };
 
   const enabled =

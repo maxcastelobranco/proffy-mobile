@@ -14,29 +14,17 @@ import { useStyles } from "./styles";
 interface ProgressIndicatorProps {
   index: number;
   currentIndex: Animated.SharedValue<number>;
-  startColor?: string;
-  middleColor?: string;
-  endColor?: string;
 }
 
 const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   index,
   currentIndex,
-  startColor,
-  middleColor,
-  endColor,
 }) => {
   const theme = useTheme<Theme>();
   const styles = useStyles(index);
 
-  const inputRange =
-    startColor && middleColor && endColor
-      ? [index - 1, index, index + 1]
-      : [0, 1];
-  const outputRange =
-    startColor && middleColor && endColor
-      ? [startColor, middleColor, endColor]
-      : [theme.colors.primary, theme.colors.secondary];
+  const inputRange = [0, 1];
+  const outputRange = [theme.colors.primary, theme.colors.secondary];
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
