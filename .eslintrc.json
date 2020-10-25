@@ -5,6 +5,7 @@
     "max-len": 0,
     "react-native/no-unused-styles": 0,
     "no-nested-ternary": 0,
-    "@typescript-eslint/ban-ts-comment": 0
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-explicit-any": 0
   }
 }

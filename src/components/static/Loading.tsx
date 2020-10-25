@@ -7,7 +7,6 @@ import { Box, Theme } from "../../theme";
 const Loading: React.FC = () => {
   const theme = useTheme<Theme>();
   const containerStyles: BoxProps<Theme> = {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "background1",

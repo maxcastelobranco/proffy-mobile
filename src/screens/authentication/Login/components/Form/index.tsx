@@ -30,6 +30,8 @@ const Form: React.FC = () => {
     mode: "onBlur",
     criteriaMode: "all",
   });
+  const enabled =
+    Object.keys(formState.touched).length === 2 && !Object.keys(errors).length;
 
   const {
     containerStyles,
@@ -69,9 +71,6 @@ const Form: React.FC = () => {
     });
     navigation.navigate("Home");
   };
-
-  const enabled =
-    Object.keys(formState.touched).length === 2 && !Object.keys(errors).length;
 
   return (
     <Box {...containerStyles}>

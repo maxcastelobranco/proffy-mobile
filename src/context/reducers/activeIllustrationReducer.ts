@@ -1,3 +1,7 @@
+import { Reducer } from "react";
+
+import { ActionMap, AppActions } from "../types";
+
 type IllustrationNames =
   | "onBoardingIllustration"
   | "loginIllustration"
@@ -12,26 +16,28 @@ export type ActiveIllustrationState = {
   name: IllustrationNames;
 };
 
-export type ActiveIllustrationAction = {
-  type: "UPDATE_ACTIVE_ILLUSTRATION";
-  payload: {
+enum ActiveIllustrationActionTypes {
+  Update = "UPDATE_ACTIVE_ILLUSTRATION",
+}
+
+type ActiveIllustrationActionPayloads = {
+  [ActiveIllustrationActionTypes.Update]: {
     name: IllustrationNames;
   };
 };
 
-export const activeIllustrationReducer = (
-  state: ActiveIllustrationState,
-  action: ActiveIllustrationAction
-): ActiveIllustrationState => {
-  const {
-    type,
-    payload: { name },
-  } = action;
+export type ActiveIllustrationActions = ActionMap<
+  ActiveIllustrationActionPayloads
+>[keyof ActiveIllustrationActionPayloads];
 
-  switch (type) {
-    case "UPDATE_ACTIVE_ILLUSTRATION":
+export const activeIllustrationReducer: Reducer<
+  ActiveIllustrationState,
+  AppActions
+> = (state, action) => {
+  switch (action.type) {
+    case ActiveIllustrationActionTypes.Update:
       return {
-        name,
+        name: action.payload.name,
       };
     default:
       return state;

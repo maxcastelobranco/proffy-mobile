@@ -32,7 +32,6 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
       };
     }, [dispatch])
   );
-
   useEffect(() => {
     dispatch({
       type: "UPDATE_ACTIVE_ILLUSTRATION",

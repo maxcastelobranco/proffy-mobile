@@ -7,35 +7,46 @@ import React, {
 } from "react";
 
 import {
-  ActiveIllustrationState,
-  ActiveIllustrationAction,
+  ActiveIllustrationActions,
   activeIllustrationReducer,
 } from "./reducers/activeIllustrationReducer";
-
-type AppActions = ActiveIllustrationAction;
-type InitialAppState = {
-  activeIllustration: ActiveIllustrationState;
-};
+import { authenticationReducer } from "./reducers/authenticationReducer";
+import { AppActions, InitialAppState } from "./types";
 
 const initialState: InitialAppState = {
   activeIllustration: {
     name: "onBoardingIllustration",
   },
+  authentication: {
+    error: "",
+    loading: false,
+    user: {
+      id: "",
+      name: "",
+      lastName: "",
+      email: "",
+      password: "",
+      whatsapp: "",
+      bio: "",
+      isTeacher: false,
+    },
+  },
 };
 
 const AppContext = createContext<{
   state: InitialAppState;
-  dispatch: Dispatch<ActiveIllustrationAction>;
+  dispatch: Dispatch<ActiveIllustrationActions>;
 }>({
   state: initialState,
   dispatch: () => null,
 });
 
 const mainReducer: Reducer<InitialAppState, AppActions> = (
-  { activeIllustration }: InitialAppState,
-  action: ActiveIllustrationAction
+  { activeIllustration, authentication }: InitialAppState,
+  action: AppActions
 ) => ({
   activeIllustration: activeIllustrationReducer(activeIllustration, action),
+  authentication: authenticationReducer(authentication, action),
 });
 
 const AppProvider: React.FC = ({ children }) => {
