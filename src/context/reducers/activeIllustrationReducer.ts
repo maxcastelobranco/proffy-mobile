@@ -16,7 +16,7 @@ export type ActiveIllustrationState = {
   name: IllustrationNames;
 };
 
-enum ActiveIllustrationActionTypes {
+export enum ActiveIllustrationActionTypes {
   Update = "UPDATE_ACTIVE_ILLUSTRATION",
 }
 

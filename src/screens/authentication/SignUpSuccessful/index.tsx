@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import Success from "../../../components/animated/Success";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 const SignUpSuccessful: React.FC<AuthenticationNavigationProps<
   "SignUpSuccessful"
@@ -11,7 +12,7 @@ const SignUpSuccessful: React.FC<AuthenticationNavigationProps<
 
   const onPress = () => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "loginIllustration",
       },
@@ -21,7 +22,7 @@ const SignUpSuccessful: React.FC<AuthenticationNavigationProps<
 
   useEffect(() => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "signUpSuccessIllustration",
       },

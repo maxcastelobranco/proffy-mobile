@@ -4,6 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 import Illustration from "./components/Illustration";
 import Form from "./components/Form";
@@ -17,7 +18,7 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
     React.useCallback(() => {
       const onBackPress = () => {
         dispatch({
-          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          type: ActiveIllustrationActionTypes.Update,
           payload: {
             name: "onBoardingIllustration",
           },
@@ -34,7 +35,7 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
   );
   useEffect(() => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "loginIllustration",
       },
@@ -42,14 +43,12 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
   }, [dispatch, navigation]);
 
   return (
-    <>
+    <KeyboardAvoidingView behavior="position">
       {state.activeIllustration.name === "loginIllustration" && (
-        <KeyboardAvoidingView behavior="position">
-          <Illustration />
-          <Form />
-        </KeyboardAvoidingView>
+        <Illustration />
       )}
-    </>
+      <Form />
+    </KeyboardAvoidingView>
   );
 };
 

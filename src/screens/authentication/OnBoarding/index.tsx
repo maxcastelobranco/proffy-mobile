@@ -15,6 +15,7 @@ import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import { Box, Theme } from "../../../theme";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -63,7 +64,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
 
     if (isLast) {
       dispatch({
-        type: "UPDATE_ACTIVE_ILLUSTRATION",
+        type: ActiveIllustrationActionTypes.Update,
         payload: {
           name: "loginIllustration",
         },
@@ -80,7 +81,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
 
   useEffect(() => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "onBoardingIllustration",
       },

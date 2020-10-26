@@ -18,7 +18,7 @@ export type ActionMap<M extends { [index: string]: any }> = {
       };
 };
 
-export type AppActions = ActiveIllustrationActions | AuthenticationActions;
+export type AppActions = AuthenticationActions | ActiveIllustrationActions;
 export type InitialAppState = {
   activeIllustration: ActiveIllustrationState;
   authentication: AuthenticationState;

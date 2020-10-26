@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useTheme } from "@shopify/restyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSharedValue, withSpring } from "react-native-reanimated";
 
 import { Box, Text, Theme } from "../../../../../theme";
 import RippleButton from "../../../../../components/static/RippleButton";
@@ -11,6 +12,13 @@ import EmailController from "../../../components/EmailController";
 import CheckBoxController from "../../../components/CheckboxController";
 import PasswordController from "../../../components/PasswordController";
 import { useAppContext } from "../../../../../context";
+import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
+import { api } from "../../../../../services/api";
+import {
+  AuthenticationActionTypes,
+  User,
+} from "../../../../../context/reducers/authenticationReducer";
+import Notification from "../../../../../components/animated/Notification";
 
 import { useStyles } from "./styles";
 
@@ -21,13 +29,14 @@ export type FormValues = {
 };
 
 const Form: React.FC = () => {
+  const { state, dispatch } = useAppContext();
   const navigation = useNavigation();
   const theme = useTheme<Theme>();
   const passwordInputRef = useRef<TextInput>(null);
   const { control, errors, setValue, formState, handleSubmit } = useForm<
     FormValues
   >({
-    mode: "onBlur",
+    mode: "onChange",
     criteriaMode: "all",
   });
   const enabled =
@@ -40,8 +49,6 @@ const Form: React.FC = () => {
     forgotPasswordStyles,
   } = useStyles();
 
-  const { dispatch } = useAppContext();
-
   const focusPasswordInput = () => {
     passwordInputRef.current?.focus();
   };
@@ -50,7 +57,7 @@ const Form: React.FC = () => {
   };
   const navigateToResetPassword = () => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "forgotPasswordIllustration",
       },
@@ -61,15 +68,47 @@ const Form: React.FC = () => {
     navigation.navigate("SignUp");
   };
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const shouldRenderNotification = useSharedValue(0);
+
+  const onSubmit: SubmitHandler<FormValues> = async (formData) => {
+    console.log(formData);
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
-      payload: {
-        name: "homeIllustration",
+      type: AuthenticationActionTypes.Login,
+    });
+
+    const { email, password, remember } = formData;
+
+    const { data } = await api.get<User[] | []>("users", {
+      params: {
+        email,
+        password,
       },
     });
-    navigation.navigate("Home");
+
+    if (data.length) {
+      dispatch({
+        type: AuthenticationActionTypes.LoginSucceeded,
+        payload: {
+          user: data[0],
+          shouldRememberUser: remember,
+        },
+      });
+      dispatch({
+        type: ActiveIllustrationActionTypes.Update,
+        payload: {
+          name: "homeIllustration",
+        },
+      });
+      navigation.navigate("Home");
+    } else {
+      dispatch({
+        type: AuthenticationActionTypes.LoginFailed,
+      });
+      shouldRenderNotification.value = withSpring(1);
+      setTimeout(() => {
+        shouldRenderNotification.value = withSpring(0);
+      }, 3000);
+    }
   };
 
   return (
@@ -106,6 +145,13 @@ const Form: React.FC = () => {
         label="Login"
         disabledLabel="Fill out your credentials to login"
         onPress={handleSubmit(onSubmit)}
+        loading={state.authentication.loading}
+      />
+      <Notification
+        {...{ shouldRenderNotification }}
+        message={state.authentication.error}
+        color="title"
+        iconName="alert-triangle"
       />
     </Box>
   );

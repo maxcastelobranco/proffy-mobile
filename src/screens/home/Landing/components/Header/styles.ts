@@ -21,6 +21,7 @@ export const useStyles = () => {
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
     backgroundColor: "primaryDark",
+    overflow: "hidden",
   };
   const usernameStyles: TextProps<Theme> = {
     variant: "usernameSmall",

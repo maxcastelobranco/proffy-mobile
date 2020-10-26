@@ -25,7 +25,7 @@ const RippleButton: React.FC<ButtonProps> = ({
       ...extraButtonStyles,
     },
     pressed: {
-      opacity: 0.4,
+      opacity: 0.6,
       shadowColor: theme.colors.titleDark,
       shadowOffset: {
         width: 0,

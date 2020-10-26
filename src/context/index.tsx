@@ -6,10 +6,7 @@ import React, {
   useReducer,
 } from "react";
 
-import {
-  ActiveIllustrationActions,
-  activeIllustrationReducer,
-} from "./reducers/activeIllustrationReducer";
+import { activeIllustrationReducer } from "./reducers/activeIllustrationReducer";
 import { authenticationReducer } from "./reducers/authenticationReducer";
 import { AppActions, InitialAppState } from "./types";
 
@@ -22,20 +19,22 @@ const initialState: InitialAppState = {
     loading: false,
     user: {
       id: "",
-      name: "",
+      firstName: "",
       lastName: "",
       email: "",
       password: "",
+      avatarUrl: "",
       whatsapp: "",
       bio: "",
       isTeacher: false,
     },
+    shouldRememberUser: false,
   },
 };
 
 const AppContext = createContext<{
   state: InitialAppState;
-  dispatch: Dispatch<ActiveIllustrationActions>;
+  dispatch: Dispatch<AppActions>;
 }>({
   state: initialState,
   dispatch: () => null,

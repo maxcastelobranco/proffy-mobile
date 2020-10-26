@@ -7,6 +7,7 @@ import RippleButton from "../../../components/static/RippleButton";
 import Book from "../../../components/svgs/animated/Book";
 import Television from "../../../components/svgs/animated/Television";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 import Illustration from "./components/Illustration";
 import Header from "./components/Header";
@@ -37,7 +38,7 @@ const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
 
   useEffect(() => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "homeIllustration",
       },

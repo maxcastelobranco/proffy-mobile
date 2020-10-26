@@ -10,15 +10,16 @@ export interface TeacherSchedule {
 
 export interface User {
   id: string;
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
+  avatarUrl: string;
   whatsapp: string;
   bio: string;
   isTeacher: boolean;
-  subject?: boolean;
-  perHourCost?: boolean;
+  subject?: string;
+  perHourCost?: number;
   schedule?: TeacherSchedule[];
   favoriteTeachersIds?: string[];
 }
@@ -27,20 +28,26 @@ export type AuthenticationState = {
   loading: boolean;
   error: string;
   user: User;
+  shouldRememberUser: boolean;
 };
 
-enum AuthenticationActionTypes {
+export enum AuthenticationActionTypes {
   Login = "LOGIN",
   LoginFailed = "LOGIN_FAILED",
   LoginSucceeded = "LOGIN_SUCCEEDED",
   UpdateUser = "UPDATE_USER",
+  Logout = "LOGOUT",
 }
 
 type AuthenticationActionPayloads = {
   [AuthenticationActionTypes.Login]: undefined;
   [AuthenticationActionTypes.LoginFailed]: undefined;
-  [AuthenticationActionTypes.LoginSucceeded]: User;
+  [AuthenticationActionTypes.LoginSucceeded]: {
+    user: User;
+    shouldRememberUser: boolean;
+  };
   [AuthenticationActionTypes.UpdateUser]: Partial<User>;
+  [AuthenticationActionTypes.Logout]: undefined;
 };
 
 export type AuthenticationActions = ActionMap<
@@ -68,7 +75,8 @@ export const authenticationReducer: Reducer<AuthenticationState, AppActions> = (
         ...state,
         loading: false,
         error: "",
-        user: action.payload,
+        user: action.payload.user,
+        shouldRememberUser: action.payload.shouldRememberUser,
       };
     case AuthenticationActionTypes.UpdateUser:
       return {
@@ -77,6 +85,22 @@ export const authenticationReducer: Reducer<AuthenticationState, AppActions> = (
           ...state.user,
           ...action.payload,
         },
+      };
+    case AuthenticationActionTypes.Logout:
+      return {
+        ...state,
+        user: {
+          id: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          avatarUrl: "",
+          whatsapp: "",
+          bio: "",
+          isTeacher: false,
+        },
+        shouldRememberUser: false,
       };
     default:
       return state;

@@ -2,9 +2,13 @@ import React from "react";
 import { BoxProps, useTheme } from "@shopify/restyle";
 import { ActivityIndicator } from "react-native";
 
-import { Box, Theme } from "../../theme";
+import { Box, Colors, Theme } from "../../theme";
 
-const Loading: React.FC = () => {
+interface LoadingProps {
+  color?: Colors;
+}
+
+const Loading: React.FC<LoadingProps> = ({ color }) => {
   const theme = useTheme<Theme>();
   const containerStyles: BoxProps<Theme> = {
     alignItems: "center",
@@ -12,9 +16,13 @@ const Loading: React.FC = () => {
     backgroundColor: "background1",
   };
 
+  const activityIndicatorColor = color
+    ? theme.colors[color]
+    : theme.colors.title;
+
   return (
     <Box {...containerStyles}>
-      <ActivityIndicator size="large" color={theme.colors.primary} />
+      <ActivityIndicator size="large" color={activityIndicatorColor} />
     </Box>
   );
 };

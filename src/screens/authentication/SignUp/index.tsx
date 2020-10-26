@@ -17,6 +17,7 @@ import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackg
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import RippleButton from "../../../components/static/RippleButton";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -77,7 +78,7 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "signUpSuccessIllustration",
       },
@@ -99,7 +100,7 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   };
   const handleGoBack = () => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "loginIllustration",
       },
@@ -111,7 +112,7 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
     React.useCallback(() => {
       const onBackPress = () => {
         dispatch({
-          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          type: ActiveIllustrationActionTypes.Update,
           payload: {
             name: "loginIllustration",
           },

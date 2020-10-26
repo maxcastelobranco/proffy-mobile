@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
@@ -12,6 +12,7 @@ import RippleButton from "../../../components/static/RippleButton";
 import EmailController from "../components/EmailController";
 import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 import { useStyles } from "./styles";
 
@@ -30,19 +31,18 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
     descriptionStyles,
   } = useStyles();
 
+  const [enabled, setEnabled] = useState(false);
   const { state, dispatch } = useAppContext();
 
   const { control, errors, formState, handleSubmit } = useForm<FormValues>({
     mode: "onBlur",
     criteriaMode: "all",
   });
-  const enabled =
-    Object.keys(formState.touched).length === 1 && !Object.keys(errors).length;
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "forgotPasswordSuccessIllustration",
       },
@@ -50,11 +50,21 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
     navigation.navigate("ResetPasswordSuccessful");
   };
 
+  const onPress = () => {
+    dispatch({
+      type: ActiveIllustrationActionTypes.Update,
+      payload: {
+        name: "loginIllustration",
+      },
+    });
+    navigation.goBack();
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
         dispatch({
-          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          type: ActiveIllustrationActionTypes.Update,
           payload: {
             name: "loginIllustration",
           },
@@ -72,12 +82,18 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
 
   useEffect(() => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "forgotPasswordIllustration",
       },
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    setEnabled(
+      Object.keys(formState.touched).length === 1 && !Object.keys(errors).length
+    );
+  }, [errors, formState.touched]);
 
   return (
     <KeyboardAvoidingView behavior="position">
@@ -86,10 +102,7 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
       )}
       <Box {...containerStyles}>
         <Box {...chevronContainerStyles}>
-          <RippleButton
-            onPress={() => navigation.goBack()}
-            extraButtonStyles={{ paddingLeft: 0 }}
-          >
+          <RippleButton {...{ onPress }} extraButtonStyles={{ paddingLeft: 0 }}>
             <Feather
               name="chevrons-left"
               size={24}

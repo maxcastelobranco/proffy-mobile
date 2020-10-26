@@ -1,16 +1,23 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import { Image } from "react-native";
 
 import theme, { Box, Text } from "../../../../../theme";
 import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 import RippleButton from "../../../../../components/static/RippleButton";
 import { useAppContext } from "../../../../../context";
+import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
 
 import { useStyles } from "./styles";
 
 const Header: React.FC = () => {
-  const { dispatch } = useAppContext();
+  const {
+    state: {
+      authentication: { user },
+    },
+    dispatch,
+  } = useAppContext();
   const navigation = useNavigation();
 
   const {
@@ -24,7 +31,7 @@ const Header: React.FC = () => {
 
   const onPress = () => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "profileIllustration",
       },
@@ -41,8 +48,15 @@ const Header: React.FC = () => {
             style={{
               borderRadius: AVATAR_SIZE / 2,
             }}
-          />
-          <Text {...usernameStyles}>Max Branco</Text>
+          >
+            <Image
+              source={{ uri: user.avatarUrl }}
+              style={{ width: AVATAR_SIZE, height: AVATAR_SIZE }}
+            />
+          </Box>
+          <Text
+            {...usernameStyles}
+          >{`${user.firstName} ${user.lastName}`}</Text>
         </Box>
       </RippleButton>
       <Box {...logoutButtonStyles}>

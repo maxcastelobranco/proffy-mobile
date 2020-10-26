@@ -12,6 +12,7 @@ import X from "../../../components/svgs/animated/X";
 import OutlinedCircle from "../../../components/svgs/animated/OutlinedCircle";
 import TeacherForm from "../components/TeacherForm";
 import { useAppContext } from "../../../context";
+import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
 import Avatar from "./components/Avatar";
 
@@ -25,7 +26,7 @@ const Profile: React.FC = () => {
     React.useCallback(() => {
       const onBackPress = () => {
         dispatch({
-          type: "UPDATE_ACTIVE_ILLUSTRATION",
+          type: ActiveIllustrationActionTypes.Update,
           payload: {
             name: "homeIllustration",
           },
@@ -42,7 +43,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     dispatch({
-      type: "UPDATE_ACTIVE_ILLUSTRATION",
+      type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "profileIllustration",
       },

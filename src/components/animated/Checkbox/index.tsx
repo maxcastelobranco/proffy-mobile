@@ -1,9 +1,16 @@
-import React from "react";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import React, { useEffect } from "react";
+import Animated, {
+  runOnUI,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { mix, mixColor, useSpring } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
+import { bin } from "react-native-redash/src/Math";
 
-import { Theme, Text } from "../../../theme";
+import { Text, Theme } from "../../../theme";
 import RippleButton from "../../static/RippleButton";
 import { AnimatedFeatherIcon } from "../reanimatedAnimatedComponents";
 import responsivePixelSize from "../../../utils/responsivePixelSize";
@@ -31,7 +38,7 @@ const CheckBox: React.FC<CheckboxProps> = ({ value, onChange }) => {
 
   const animatedIconStyle = useAnimatedStyle(() => ({
     transform: [
-      { rotate: `${mix(animationDriver.value, (-Math.PI / 2) * 2, 0)}rad` },
+      { rotateZ: `${mix(animationDriver.value, (-Math.PI / 2) * 2, 0)}rad` },
     ],
   }));
 
