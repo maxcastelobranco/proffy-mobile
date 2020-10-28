@@ -30,8 +30,6 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
     titleStyles,
     descriptionStyles,
   } = useStyles();
-
-  const [enabled, setEnabled] = useState(false);
   const { state, dispatch } = useAppContext();
 
   const { control, errors, formState, handleSubmit } = useForm<FormValues>({
@@ -89,11 +87,8 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    setEnabled(
-      Object.keys(formState.touched).length === 1 && !Object.keys(errors).length
-    );
-  }, [errors, formState.touched]);
+  const enabled =
+    Object.keys(formState.touched).length === 1 && !Object.keys(errors).length;
 
   return (
     <KeyboardAvoidingView behavior="position">

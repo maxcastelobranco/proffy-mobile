@@ -9,6 +9,8 @@ import RippleButton from "../../../../components/static/RippleButton";
 import Proffy, {
   PROFFY_ASPECT_RATIO,
 } from "../../../../components/svgs/static/Proffy";
+import { useAppContext } from "../../../../context";
+import { ActiveIllustrationActionTypes } from "../../../../context/reducers/activeIllustrationReducer";
 
 import { useStyles } from "./styles";
 
@@ -21,17 +23,25 @@ interface MainHeaderProps {
 }
 
 const MainHeader: React.FC<MainHeaderProps> = ({ label }) => {
+  const { dispatch } = useAppContext();
   const navigation = useNavigation();
   const theme = useTheme<Theme>();
 
   const { containerStyles, labelStyles } = useStyles();
 
+  const onPress = () => {
+    dispatch({
+      type: ActiveIllustrationActionTypes.Update,
+      payload: {
+        name: "homeIllustration",
+      },
+    });
+    navigation.goBack();
+  };
+
   return (
     <Box {...containerStyles}>
-      <RippleButton
-        onPress={() => navigation.goBack()}
-        extraButtonStyles={{ padding: 0 }}
-      >
+      <RippleButton {...{ onPress }} extraButtonStyles={{ padding: 0 }}>
         <Feather
           name="chevrons-left"
           color={theme.colors.baseText}

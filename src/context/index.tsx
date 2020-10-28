@@ -28,7 +28,6 @@ const initialState: InitialAppState = {
       bio: "",
       isTeacher: false,
     },
-    shouldRememberUser: false,
   },
 };
 

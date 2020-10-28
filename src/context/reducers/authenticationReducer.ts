@@ -28,7 +28,6 @@ export type AuthenticationState = {
   loading: boolean;
   error: string;
   user: User;
-  shouldRememberUser: boolean;
 };
 
 export enum AuthenticationActionTypes {
@@ -42,10 +41,7 @@ export enum AuthenticationActionTypes {
 type AuthenticationActionPayloads = {
   [AuthenticationActionTypes.Login]: undefined;
   [AuthenticationActionTypes.LoginFailed]: undefined;
-  [AuthenticationActionTypes.LoginSucceeded]: {
-    user: User;
-    shouldRememberUser: boolean;
-  };
+  [AuthenticationActionTypes.LoginSucceeded]: User;
   [AuthenticationActionTypes.UpdateUser]: Partial<User>;
   [AuthenticationActionTypes.Logout]: undefined;
 };
@@ -75,8 +71,7 @@ export const authenticationReducer: Reducer<AuthenticationState, AppActions> = (
         ...state,
         loading: false,
         error: "",
-        user: action.payload.user,
-        shouldRememberUser: action.payload.shouldRememberUser,
+        user: action.payload,
       };
     case AuthenticationActionTypes.UpdateUser:
       return {
@@ -100,7 +95,6 @@ export const authenticationReducer: Reducer<AuthenticationState, AppActions> = (
           bio: "",
           isTeacher: false,
         },
-        shouldRememberUser: false,
       };
     default:
       return state;

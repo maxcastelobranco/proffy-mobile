@@ -1,13 +1,15 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import { Image } from "react-native";
+import { Image, Pressable } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import theme, { Box, Text } from "../../../../../theme";
 import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 import RippleButton from "../../../../../components/static/RippleButton";
 import { useAppContext } from "../../../../../context";
 import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
+import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
 
 import { useStyles } from "./styles";
 
@@ -29,7 +31,7 @@ const Header: React.FC = () => {
     logoutButtonStyles,
   } = useStyles();
 
-  const onPress = () => {
+  const navigateToProfile = () => {
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {
@@ -38,10 +40,16 @@ const Header: React.FC = () => {
     });
     navigation.navigate("Profile");
   };
+  const logout = async () => {
+    await AsyncStorage.clear();
+    dispatch({
+      type: AuthenticationActionTypes.Logout,
+    });
+  };
 
   return (
     <Box {...containerStyles}>
-      <RippleButton {...{ onPress }}>
+      <RippleButton onPress={navigateToProfile}>
         <Box {...userStyles}>
           <Box
             {...avatarStyles}
@@ -49,23 +57,27 @@ const Header: React.FC = () => {
               borderRadius: AVATAR_SIZE / 2,
             }}
           >
-            <Image
-              source={{ uri: user.avatarUrl }}
-              style={{ width: AVATAR_SIZE, height: AVATAR_SIZE }}
-            />
+            {!!user.avatarUrl && (
+              <Image
+                source={{ uri: user.avatarUrl }}
+                style={{ width: AVATAR_SIZE, height: AVATAR_SIZE }}
+              />
+            )}
           </Box>
           <Text
             {...usernameStyles}
           >{`${user.firstName} ${user.lastName}`}</Text>
         </Box>
       </RippleButton>
-      <Box {...logoutButtonStyles}>
-        <Feather
-          name="power"
-          size={responsivePixelSize(20)}
-          color={theme.colors.title}
-        />
-      </Box>
+      <Pressable onPress={logout}>
+        <Box {...logoutButtonStyles}>
+          <Feather
+            name="power"
+            size={responsivePixelSize(20)}
+            color={theme.colors.title}
+          />
+        </Box>
+      </Pressable>
     </Box>
   );
 };

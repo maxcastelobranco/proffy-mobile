@@ -5,12 +5,15 @@ import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
 
-interface BioControllerProps {
+interface SubjectControllerProps {
   control: Control;
   errors: FieldErrors;
 }
 
-const BioController: React.FC<BioControllerProps> = ({ control, errors }) => {
+const SubjectController: React.FC<SubjectControllerProps> = ({
+  control,
+  errors,
+}) => {
   const {
     state: {
       authentication: { user },
@@ -20,8 +23,8 @@ const BioController: React.FC<BioControllerProps> = ({ control, errors }) => {
   return (
     <Controller
       {...{ control }}
-      name="bio"
-      defaultValue={user.bio}
+      name="subject"
+      defaultValue={user.subject}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{
@@ -29,9 +32,9 @@ const BioController: React.FC<BioControllerProps> = ({ control, errors }) => {
             onBlur,
             onChange,
             extraContainerStyles,
-            error: errors.bio,
-            iconName: "file-text",
-            placeholderText: "Biography",
+            error: errors.subject,
+            iconName: "book",
+            placeholderText: "Subject",
           }}
         />
       )}
@@ -39,4 +42,4 @@ const BioController: React.FC<BioControllerProps> = ({ control, errors }) => {
   );
 };
 
-export default BioController;
+export default SubjectController;

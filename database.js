@@ -337,7 +337,7 @@ module.exports = () => {
       lastName,
       email: faker.internet.email(firstName, lastName),
       password: "123456",
-      avatarUrl: faker.image.people(),
+      avatarUrl: faker.random.image(),
       whatsapp: faker.phone.phoneNumber(),
       bio: faker.lorem.words(20),
       isTeacher: faker.random.boolean(),
@@ -347,19 +347,5 @@ module.exports = () => {
       favoriteTeachersIds,
     });
   }
-
-  data.users.push({
-    id: faker.random.uuid(),
-    firstName: "Max",
-    lastName: "Branco",
-    email: "maxbranco08@gmail.com",
-    password: "123456",
-    avatarUrl:
-      "https://avatars0.githubusercontent.com/u/22625386?s=460&u=484f3d6678bd715e3b9c3c96b13b9f438ea7ef04&v=4",
-    whatsapp: faker.phone.phoneNumber(),
-    bio: faker.lorem.words(20),
-    isTeacher: false,
-  });
-
   return data;
 };

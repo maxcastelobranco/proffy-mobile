@@ -3,6 +3,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
+import { useAppContext } from "../../../../../../../../context";
 
 interface WhatsappControllerProps {
   control: Control;
@@ -13,11 +14,17 @@ const WhatsappController: React.FC<WhatsappControllerProps> = ({
   control,
   errors,
 }) => {
+  const {
+    state: {
+      authentication: { user },
+    },
+  } = useAppContext();
+
   return (
     <Controller
       {...{ control }}
       name="whatsapp"
-      defaultValue="(22) 99994-6599"
+      defaultValue={user.whatsapp}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{

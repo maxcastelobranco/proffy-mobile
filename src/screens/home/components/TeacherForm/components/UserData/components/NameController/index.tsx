@@ -3,6 +3,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
+import { useAppContext } from "../../../../../../../../context";
 
 interface NameControllerProps {
   control: Control;
@@ -10,11 +11,17 @@ interface NameControllerProps {
 }
 
 const NameController: React.FC<NameControllerProps> = ({ control, errors }) => {
+  const {
+    state: {
+      authentication: { user },
+    },
+  } = useAppContext();
+
   return (
     <Controller
       {...{ control }}
       name="name"
-      defaultValue="Max"
+      defaultValue={user.firstName}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{

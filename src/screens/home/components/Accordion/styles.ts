@@ -19,7 +19,6 @@ export const useStyles = () => {
   };
 
   const childrenContainerStyles: ViewStyle = {
-    paddingVertical: theme.spacing.s,
     paddingHorizontal: theme.spacing.l,
   };
 

@@ -15,12 +15,12 @@ import ResetPasswordSuccessful from "../screens/authentication/ResetPasswordSucc
 import { HomeRoutes } from "./home";
 
 export type AuthenticationRoutes = {
-  OnBoarding: undefined; // 0
-  Login: undefined; // 1
-  SignUp: undefined; // 2
-  SignUpSuccessful: undefined; // 3
-  ResetPassword: undefined; // 4
-  ResetPasswordSuccessful: undefined; // 5
+  OnBoarding: undefined;
+  Login: undefined;
+  SignUp: undefined;
+  SignUpSuccessful: undefined;
+  ResetPassword: undefined;
+  ResetPasswordSuccessful: undefined;
 };
 
 export interface AuthenticationNavigationProps<

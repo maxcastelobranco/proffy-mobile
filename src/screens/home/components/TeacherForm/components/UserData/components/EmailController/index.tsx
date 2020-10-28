@@ -3,6 +3,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
+import { useAppContext } from "../../../../../../../../context";
 
 interface EmailControllerProps {
   control: Control;
@@ -13,11 +14,17 @@ const EmailController: React.FC<EmailControllerProps> = ({
   control,
   errors,
 }) => {
+  const {
+    state: {
+      authentication: { user },
+    },
+  } = useAppContext();
+
   return (
     <Controller
       {...{ control }}
       name="email"
-      defaultValue="max_castelo_branco@hotmail.com"
+      defaultValue={user.email}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{

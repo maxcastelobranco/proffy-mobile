@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "@shopify/restyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSharedValue, withSpring } from "react-native-reanimated";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import { Box, Text, Theme } from "../../../../../theme";
 import RippleButton from "../../../../../components/static/RippleButton";
@@ -71,7 +72,6 @@ const Form: React.FC = () => {
   const shouldRenderNotification = useSharedValue(0);
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
-    console.log(formData);
     dispatch({
       type: AuthenticationActionTypes.Login,
     });
@@ -86,12 +86,11 @@ const Form: React.FC = () => {
     });
 
     if (data.length) {
+      const [user] = data;
+
       dispatch({
         type: AuthenticationActionTypes.LoginSucceeded,
-        payload: {
-          user: data[0],
-          shouldRememberUser: remember,
-        },
+        payload: user,
       });
       dispatch({
         type: ActiveIllustrationActionTypes.Update,
@@ -99,7 +98,10 @@ const Form: React.FC = () => {
           name: "homeIllustration",
         },
       });
-      navigation.navigate("Home");
+
+      if (remember) {
+        await AsyncStorage.setItem("@proffy:user", JSON.stringify(user));
+      }
     } else {
       dispatch({
         type: AuthenticationActionTypes.LoginFailed,

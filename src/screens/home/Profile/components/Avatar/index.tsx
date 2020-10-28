@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Animated, {
+  Easing,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -16,12 +17,22 @@ import { Dimensions, Pressable } from "react-native";
 
 import { Box, Theme } from "../../../../../theme";
 import { transformOrigin } from "../../../../../utils/transformOrigin";
+import { useAppContext } from "../../../../../context";
 
 import { useStyles } from "./styles";
 
 const { width: wWidth } = Dimensions.get("window");
 
-const Avatar: React.FC = () => {
+interface AvatarProps {
+  isFullScreen: Animated.SharedValue<number>;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
+  const {
+    state: {
+      authentication: { user },
+    },
+  } = useAppContext();
   const [aspectRatio, setAspectRatio] = useState(-1);
   const theme = useTheme<Theme>();
   const { IMAGE_SIZE, containerStyles } = useStyles();
@@ -29,6 +40,7 @@ const Avatar: React.FC = () => {
   const imageScale = useSharedValue(1);
   const imageWidth = useSharedValue(IMAGE_SIZE);
   const imageHeight = useSharedValue(IMAGE_SIZE);
+  const translateY = useSharedValue(0);
   const borderRadius = useSharedValue(IMAGE_SIZE / 2);
   const origin = useVector();
 
@@ -60,37 +72,52 @@ const Avatar: React.FC = () => {
         { x: x.value, y: y.value },
         {
           scale: imageScale.value,
-        }
+        },
+        { translateY: translateY.value }
       ),
     };
   });
 
+  const timingConfig = { easing: Easing.bezier(0.22, 1, 0.36, 1) };
+
   const onPress = () => {
+    isFullScreen.value =
+      isFullScreen.value === 1 ? withTiming(0) : withTiming(1);
+
     if (imageWidth.value === IMAGE_SIZE) {
-      imageWidth.value = withSpring(wWidth);
-      imageHeight.value = withSpring(wWidth * aspectRatio);
+      translateY.value = withSpring(48);
+      imageWidth.value = withTiming(wWidth, timingConfig);
+      imageHeight.value = withTiming(wWidth * aspectRatio, timingConfig);
     } else {
-      imageWidth.value = withSpring(IMAGE_SIZE);
-      imageHeight.value = withSpring(IMAGE_SIZE);
+      translateY.value = withSpring(0);
+      imageWidth.value = withTiming(IMAGE_SIZE, timingConfig);
+      imageHeight.value = withTiming(IMAGE_SIZE, timingConfig);
     }
   };
 
   return (
     <Box {...containerStyles}>
       <Pressable {...{ onPress }}>
-        <PinchGestureHandler onGestureEvent={gestureHandler}>
+        <PinchGestureHandler
+          enabled={!!isFullScreen.value}
+          onGestureEvent={gestureHandler}
+        >
           <Animated.View>
-            <Animated.Image
-              onLayout={({
-                nativeEvent: {
-                  layout: { width, height },
-                },
-              }) => {
-                setAspectRatio(width / height);
-              }}
-              style={animatedStyle}
-              source={require("../../../../../../assets/images/scorpion.jpg")}
-            />
+            {!!user.avatarUrl && (
+              <Animated.Image
+                onLayout={({
+                  nativeEvent: {
+                    layout: { width, height },
+                  },
+                }) => {
+                  setAspectRatio(width / height);
+                }}
+                style={animatedStyle}
+                source={{
+                  uri: user.avatarUrl,
+                }}
+              />
+            )}
           </Animated.View>
         </PinchGestureHandler>
       </Pressable>

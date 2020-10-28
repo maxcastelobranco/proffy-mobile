@@ -7,7 +7,7 @@ import theme from "../../../../../theme";
 
 interface FocusIndicatorProps {
   focused: boolean;
-  error: 0 | 1;
+  error?: 0 | 1;
 }
 
 const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused, error }) => {
@@ -27,11 +27,14 @@ const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused, error }) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: mixColor(
-        error,
-        theme.colors.primary,
-        theme.colors.danger
-      ) as string,
+      backgroundColor:
+        error === undefined
+          ? theme.colors.primary
+          : (mixColor(
+              error,
+              theme.colors.primary,
+              theme.colors.danger
+            ) as string),
       opacity: focusedTransition.value,
       transform: [{ scale: focusedTransition.value }],
     };
