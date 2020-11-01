@@ -14,7 +14,8 @@ export const useStyles = () => {
       flexDirection: "row",
       alignItems: "center",
       borderRadius: theme.borderRadii.default,
-      marginTop: theme.spacing.s,
+      paddingTop: theme.spacing.ml,
+      paddingBottom: theme.spacing.ms,
     },
     checkbox: {
       alignItems: "center",

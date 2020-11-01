@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useTheme } from "@shopify/restyle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TextInput } from "react-native";
@@ -129,12 +129,7 @@ const Form: React.FC = () => {
       <PasswordController {...{ control, errors, passwordInputRef }} />
       <Box {...rowStyles}>
         <CheckBoxController {...{ control, toggleCheckBox }} />
-        <RippleButton
-          onPress={navigateToResetPassword}
-          extraButtonStyles={{
-            marginTop: theme.spacing.s,
-          }}
-        >
+        <RippleButton onPress={navigateToResetPassword}>
           <Text {...forgotPasswordStyles}>Forgot password?</Text>
         </RippleButton>
       </Box>

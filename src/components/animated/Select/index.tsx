@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { useTheme } from "@shopify/restyle";
-import { mix } from "react-native-redash";
+import { mix, useSpring, useTiming } from "react-native-redash";
 import { ScrollView, TouchableOpacity } from "react-native";
-import {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import { Feather } from "@expo/vector-icons";
 
 import responsivePixelSize from "../../../utils/responsivePixelSize";
 import { Box, Text, Theme } from "../../../theme";
-import { AnimatedFeatherIcon } from "../reanimatedAnimatedComponents";
+import { INPUT_HEIGHT } from "../Input";
+import { Weekday } from "../../../screens/home/components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
 
 import FocusIndicator from "./components/FocusIndicator";
 import { useStyles } from "./styles";
@@ -19,68 +17,85 @@ interface SelectProps {
   options: string[];
   label: string;
   onChange(value: string): void;
+  defaultValue?: Weekday;
 }
 
 const ICON_SIZE = responsivePixelSize(24);
 
-const Select: React.FC<SelectProps> = ({ options, label, onChange }) => {
+const Select: React.FC<SelectProps> = ({
+  options,
+  label,
+  onChange,
+  defaultValue,
+}) => {
   const theme = useTheme<Theme>();
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(
+    defaultValue ? defaultValue : ""
+  );
 
-  const openTimingTransition = useSharedValue(0);
+  const {
+    containerStyles,
+    labelStyles,
+    chooseTextStyles,
+    optionTextStyles,
+    selectedOptionTextStyles,
+  } = useStyles();
+
+  const openTimingTransition = useTiming(open);
+  const openSpringTransition = useSpring(open);
 
   const animatedIconStyle = useAnimatedStyle(() => {
-    const rotate = mix(openTimingTransition.value, 0, Math.PI);
+    const rotate = mix(openSpringTransition.value, 0, Math.PI);
 
     return { transform: [{ rotate: `${rotate}rad` }] };
   });
+  const animatedOptionsStyle = useAnimatedStyle(() => {
+    return {
+      height: mix(openTimingTransition.value, 0, INPUT_HEIGHT / 2),
+      transform: [
+        { translateY: mix(openSpringTransition.value, -INPUT_HEIGHT / 3, 0) },
+        { scale: mix(openTimingTransition.value, 0, 1) },
+      ],
+    };
+  });
 
   const toggleOpen = () => {
-    if (open) {
-      openTimingTransition.value = withTiming(0, {}, () => {
-        setOpen(false);
-      });
-    } else {
-      setOpen(true);
-      openTimingTransition.value = withTiming(1);
-    }
+    setOpen((prevState) => !prevState);
   };
   const updateOption = (option: string) => {
     onChange(option);
     setSelectedOption(option);
   };
 
-  const {
-    containerStyles,
-    contentContainerStyle,
-    labelStyles,
-    chooseTextStyles,
-    optionTextStyles,
-    selectedOptionTextStyles,
-  } = useStyles(open);
-
   return (
-    <Box>
+    <>
       <Text {...labelStyles}>{label}</Text>
       <TouchableOpacity onPress={toggleOpen}>
         <Box {...containerStyles}>
           <Text {...chooseTextStyles}>
             {selectedOption === "" ? "Choose" : selectedOption}
           </Text>
-          <AnimatedFeatherIcon
-            name="chevrons-up"
-            size={ICON_SIZE}
-            color={theme.colors.titleDark}
-            style={animatedIconStyle}
-          />
+          <Animated.View style={animatedIconStyle}>
+            <Feather
+              name="chevrons-up"
+              size={ICON_SIZE}
+              color={theme.colors.titleDark}
+            />
+          </Animated.View>
         </Box>
       </TouchableOpacity>
-      {open && (
-        <ScrollView {...{ contentContainerStyle }}>
-          {options.map((option, index) => {
+      <Animated.View style={animatedOptionsStyle}>
+        <ScrollView
+          horizontal
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+          }}
+        >
+          {options.map((option) => {
             const isSelected = option === selectedOption;
-            const isLast = index === options.length - 1;
 
             return (
               <TouchableOpacity
@@ -89,10 +104,8 @@ const Select: React.FC<SelectProps> = ({ options, label, onChange }) => {
               >
                 <Box
                   {...containerStyles}
-                  borderRadius="zero"
-                  borderTopWidth={0}
-                  borderBottomRightRadius={isLast ? "default" : "zero"}
-                  borderBottomLeftRadius={isLast ? "default" : "zero"}
+                  height={INPUT_HEIGHT * 0.6}
+                  backgroundColor="title"
                 >
                   {isSelected ? (
                     <Text {...selectedOptionTextStyles}>{option}</Text>
@@ -105,8 +118,8 @@ const Select: React.FC<SelectProps> = ({ options, label, onChange }) => {
             );
           })}
         </ScrollView>
-      )}
-    </Box>
+      </Animated.View>
+    </>
   );
 };
 

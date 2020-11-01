@@ -5,12 +5,15 @@ import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
 
-interface NameControllerProps {
+interface FirstNameControllerProps {
   control: Control;
   errors: FieldErrors;
 }
 
-const NameController: React.FC<NameControllerProps> = ({ control, errors }) => {
+const FirstNameController: React.FC<FirstNameControllerProps> = ({
+  control,
+  errors,
+}) => {
   const {
     state: {
       authentication: { user },
@@ -20,7 +23,7 @@ const NameController: React.FC<NameControllerProps> = ({ control, errors }) => {
   return (
     <Controller
       {...{ control }}
-      name="name"
+      name="firstName"
       defaultValue={user.firstName}
       render={({ value, onBlur, onChange }) => (
         <Input
@@ -39,4 +42,4 @@ const NameController: React.FC<NameControllerProps> = ({ control, errors }) => {
   );
 };
 
-export default NameController;
+export default FirstNameController;

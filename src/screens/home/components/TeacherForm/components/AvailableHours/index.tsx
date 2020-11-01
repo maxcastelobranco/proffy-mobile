@@ -1,72 +1,125 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Control, FieldErrors } from "react-hook-form";
-import { Feather } from "@expo/vector-icons";
-import { useTheme } from "@shopify/restyle";
 import * as faker from "faker";
+import { useSharedValue, withTiming } from "react-native-reanimated";
 
 import Accordion from "../../../Accordion";
-import { Theme, Text, Box } from "../../../../../../theme";
+import { Box } from "../../../../../../theme";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
-import RippleButton from "../../../../../../components/static/RippleButton";
+import SlideInView, {
+  MountState,
+} from "../../../../../../components/animated/SlideInView";
+import { useAppContext } from "../../../../../../context";
 
 import Schedule from "./components/Schedule";
 import { useStyles } from "./styles";
+import { Weekday } from "./components/WeekdayController/weekdays";
+import AddButton from "./components/AddButton";
+import DeleteButton from "./components/DeleteButton";
 
 interface AvailableHoursProps {
   control: Control;
   errors: FieldErrors;
 }
 
+export interface ScheduleItem {
+  id: string;
+  mountState: MountState;
+  weekday: Weekday;
+  from: number;
+  to: number;
+}
+
 const ICON_SIZE = responsivePixelSize(24);
-const initialId = faker.random.uuid();
 
 const AvailableHours: React.FC<AvailableHoursProps> = ({ control }) => {
-  const theme = useTheme<Theme>();
-  const { containerStyles, buttonStyles, buttonTextStyles } = useStyles();
-
-  const [scheduleItemIds, setScheduleItemIds] = useState([initialId]);
+  const {
+    state: {
+      authentication: { user },
+    },
+  } = useAppContext();
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>(() =>
+    user.schedule
+      ? user.schedule.map(({ weekday, from, to }) => ({
+          id: faker.random.uuid(),
+          mountState: "mounting",
+          weekday,
+          from,
+          to,
+        }))
+      : [
+          {
+            id: faker.random.uuid(),
+            mountState: "mounting",
+            weekday: "monday",
+            from: 8,
+            to: 18,
+          },
+        ]
+  );
 
   const addScheduleItem = () => {
-    const newScheduleItemId = faker.random.uuid();
-    setScheduleItemIds((prevState) => [...prevState, newScheduleItemId]);
+    setScheduleItems((prevState) => [
+      ...prevState,
+      {
+        id: faker.random.uuid(),
+        mountState: "mounting",
+        weekday: "monday",
+        from: 8,
+        to: 18,
+      },
+    ]);
   };
   const deleteScheduleItem = (id: string) => {
-    setScheduleItemIds((prevState) =>
-      prevState.filter((prevId) => prevId !== id)
+    setScheduleItems((prevState) =>
+      prevState?.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              mountState: "unmounting",
+            }
+          : item
+      )
     );
   };
 
-  const labelButton = (
-    <RippleButton onPress={addScheduleItem} extraButtonStyles={buttonStyles}>
-      <Feather
-        name="plus-square"
-        size={ICON_SIZE}
-        color={theme.colors.primaryDark}
-      />
-      <Text {...buttonTextStyles} color="primaryDark">
-        New
-      </Text>
-    </RippleButton>
-  );
+  const { containerStyles, CONTAINER_HEIGHT } = useStyles();
+
+  const childrenHeight = scheduleItems.length * CONTAINER_HEIGHT;
+  const height = useSharedValue(0);
+
+  useEffect(() => {
+    const toValue =
+      scheduleItems.filter(({ mountState }) => mountState !== "unmounted")
+        .length * CONTAINER_HEIGHT;
+
+    height.value = withTiming(toValue);
+  }, [CONTAINER_HEIGHT, height, scheduleItems, scheduleItems.length]);
 
   return (
-    <Accordion label="Available hours" {...{ labelButton }}>
-      {scheduleItemIds.map((id) => (
-        <Box key={id} {...containerStyles}>
-          <Schedule {...{ control, id }} />
-          <RippleButton
-            onPress={() => deleteScheduleItem(id)}
-            extraButtonStyles={buttonStyles}
-          >
-            <Feather
-              name="trash-2"
-              size={ICON_SIZE}
-              color={theme.colors.danger}
-            />
-            <Text {...buttonTextStyles} color="danger">
-              Delete
-            </Text>
-          </RippleButton>
+    <Accordion
+      label="Available hours"
+      labelButton={<AddButton onPress={addScheduleItem} iconSize={ICON_SIZE} />}
+      {...{ height, childrenHeight }}
+    >
+      {scheduleItems.map(({ id, mountState, weekday, from, to }) => (
+        <Box key={id}>
+          {mountState !== "unmounted" && (
+            <SlideInView<ScheduleItem>
+              state={scheduleItems}
+              setState={setScheduleItems}
+              viewHeight={CONTAINER_HEIGHT}
+              {...{ id }}
+            >
+              <Box {...containerStyles}>
+                <Schedule {...{ control, id, weekday, from, to }} />
+                <DeleteButton
+                  onPress={() => deleteScheduleItem(id)}
+                  iconSize={ICON_SIZE}
+                />
+              </Box>
+            </SlideInView>
+          )}
         </Box>
       ))}
     </Accordion>

@@ -1,13 +1,13 @@
 import { Reducer } from "react";
 
 import { ActionMap, AppActions } from "../types";
+import { Weekday } from "../../screens/home/components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
 
 export interface TeacherSchedule {
-  weekday: string;
+  weekday: Weekday;
   from: number;
   to: number;
 }
-
 export interface User {
   id: string;
   firstName: string;

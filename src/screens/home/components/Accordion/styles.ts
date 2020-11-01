@@ -8,7 +8,8 @@ export const useStyles = () => {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "m",
+    paddingVertical: "xs",
+    paddingHorizontal: "s",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "baseTextDark",
   };

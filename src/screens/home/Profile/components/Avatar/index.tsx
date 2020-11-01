@@ -11,11 +11,11 @@ import {
   PinchGestureHandler,
   PinchGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
-import { useVector } from "react-native-redash";
+import { mix, useVector } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 import { Dimensions, Pressable } from "react-native";
 
-import { Box, Theme } from "../../../../../theme";
+import { Theme } from "../../../../../theme";
 import { transformOrigin } from "../../../../../utils/transformOrigin";
 import { useAppContext } from "../../../../../context";
 
@@ -61,7 +61,12 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
     },
   });
 
-  const animatedStyle = useAnimatedStyle(() => {
+  const animatedContainerStyle = useAnimatedStyle(() => {
+    return {
+      flex: mix(isFullScreen.value, 1, 8),
+    };
+  });
+  const animatedImageStyle = useAnimatedStyle(() => {
     const { x, y } = origin;
 
     return {
@@ -79,7 +84,6 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
   });
 
   const timingConfig = { easing: Easing.bezier(0.22, 1, 0.36, 1) };
-
   const onPress = () => {
     isFullScreen.value =
       isFullScreen.value === 1 ? withTiming(0) : withTiming(1);
@@ -96,7 +100,7 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
   };
 
   return (
-    <Box {...containerStyles}>
+    <Animated.View style={[containerStyles, animatedContainerStyle]}>
       <Pressable {...{ onPress }}>
         <PinchGestureHandler
           enabled={!!isFullScreen.value}
@@ -112,7 +116,7 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
                 }) => {
                   setAspectRatio(width / height);
                 }}
-                style={animatedStyle}
+                style={animatedImageStyle}
                 source={{
                   uri: user.avatarUrl,
                 }}
@@ -121,7 +125,7 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
           </Animated.View>
         </PinchGestureHandler>
       </Pressable>
-    </Box>
+    </Animated.View>
   );
 };
 

@@ -1,6 +1,9 @@
 import React, { ReactNode, useState } from "react";
 import Animated, {
   Easing,
+  measure,
+  runOnUI,
+  useAnimatedRef,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -18,12 +21,16 @@ import { useStyles } from "./styles";
 interface AccordionProps {
   label: string;
   labelButton?: ReactNode;
+  height: Animated.SharedValue<number>;
+  childrenHeight: number;
 }
 const ICON_SIZE = responsivePixelSize(24);
 
 const Accordion: React.FC<AccordionProps> = ({
   label,
   labelButton,
+  height,
+  childrenHeight,
   children,
 }) => {
   const [open, setOpen] = useState(false);
@@ -32,6 +39,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
   const animatedChildrenContainerStyle = useAnimatedStyle(() => {
     return {
+      height: height.value,
       opacity: openTimingTransition.value,
     };
   });
@@ -50,12 +58,14 @@ const Accordion: React.FC<AccordionProps> = ({
 
   const toggleOpen = () => {
     if (open) {
+      height.value = withTiming(0);
       openTimingTransition.value = withTiming(0, timingConfig, () => {
         setOpen(false);
       });
       openSpringTransition.value = withSpring(0);
     } else {
       setOpen(true);
+      height.value = withTiming(childrenHeight);
       openTimingTransition.value = withTiming(1, timingConfig);
       openSpringTransition.value = withSpring(1);
     }
@@ -87,7 +97,7 @@ const Accordion: React.FC<AccordionProps> = ({
       <Animated.View
         style={[childrenContainerStyles, animatedChildrenContainerStyle]}
       >
-        {open && children}
+        {children}
       </Animated.View>
     </>
   );

@@ -7,6 +7,7 @@ export const useStyles = () => {
   const theme = useTheme<Theme>();
 
   const flatListStyles: ViewStyle = {
+    flexGrow: 1,
     marginTop: -theme.spacing.l,
     marginHorizontal: theme.spacing.s,
     borderRadius: theme.borderRadii.default,

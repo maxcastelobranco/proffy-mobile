@@ -1,6 +1,5 @@
 import React from "react";
 import { Control, FieldErrors } from "react-hook-form";
-import * as faker from "faker";
 import { FlatList } from "react-native";
 
 import { useStyles } from "./styles";
@@ -15,15 +14,15 @@ interface TeacherFormProps {
 
 const data = [
   {
-    id: faker.random.uuid(),
+    id: "UserData",
     Component: UserData,
   },
   {
-    id: faker.random.uuid(),
+    id: "AboutTheLesson",
     Component: AboutTheLesson,
   },
   {
-    id: faker.random.uuid(),
+    id: "AvailableHours",
     Component: AvailableHours,
   },
 ];
@@ -31,14 +30,17 @@ const data = [
 const TeacherForm: React.FC<TeacherFormProps> = ({ control, errors }) => {
   const { flatListStyles } = useStyles();
 
+  const renderItem = React.useCallback(
+    ({ item: { Component } }) => <Component {...{ control, errors }} />,
+    [control, errors]
+  );
+
   return (
     <FlatList
       {...{ data }}
       style={flatListStyles}
       keyExtractor={({ id }) => id}
-      renderItem={({ item: { Component } }) => (
-        <Component {...{ control, errors }} />
-      )}
+      {...{ renderItem }}
     />
   );
 };

@@ -35,7 +35,7 @@ interface InputRef {
   focus(): void;
 }
 
-export const INPUT_HEIGHT = responsivePixelSize(70);
+export const INPUT_HEIGHT = responsivePixelSize(80);
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
   { privateProps, inputProps },

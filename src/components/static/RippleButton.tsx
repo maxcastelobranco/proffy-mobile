@@ -22,7 +22,7 @@ const RippleButton: React.FC<ButtonProps> = ({
       alignItems: "center",
       justifyContent: "center",
       borderRadius: theme.borderRadii.default,
-      padding: theme.spacing.xs,
+      padding: theme.spacing.s,
       ...extraButtonStyles,
     },
   });

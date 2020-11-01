@@ -1,25 +1,18 @@
-import { BoxProps, TextProps, useTheme } from "@shopify/restyle";
-import { StyleSheet, ViewStyle } from "react-native";
+import { BoxProps, TextProps } from "@shopify/restyle";
+import { StyleSheet } from "react-native";
 
 import { Theme } from "../../../theme";
 import { INPUT_HEIGHT } from "../Input";
 
-export const useStyles = (open: boolean) => {
-  const theme = useTheme<Theme>();
-
+export const useStyles = () => {
   const containerStyles: BoxProps<Theme> = {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "default",
     borderWidth: StyleSheet.hairlineWidth,
-    borderBottomRightRadius: open ? "zero" : "default",
-    borderBottomLeftRadius: open ? "zero" : "default",
     padding: "s",
-    height: INPUT_HEIGHT,
-  };
-  const contentContainerStyle: ViewStyle = {
-    paddingBottom: theme.spacing.m,
+    height: INPUT_HEIGHT * 0.6,
   };
   const labelStyles: TextProps<Theme> = {
     variant: "regularTextSmall",
@@ -42,7 +35,6 @@ export const useStyles = (open: boolean) => {
 
   return {
     containerStyles,
-    contentContainerStyle,
     labelStyles,
     chooseTextStyles,
     optionTextStyles,

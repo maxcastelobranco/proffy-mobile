@@ -3,20 +3,29 @@ import { Control, Controller } from "react-hook-form";
 
 import Select from "../../../../../../../../components/animated/Select";
 
-import { weekdays } from "./weekdays";
+import { Weekday, weekdays } from "./weekdays";
 
 interface WeekdayControllerProps {
   control: Control;
+  id: string;
+  defaultValue: Weekday;
 }
 
-const WeekdayController: React.FC<WeekdayControllerProps> = ({ control }) => {
+const WeekdayController: React.FC<WeekdayControllerProps> = ({
+  control,
+  id,
+  defaultValue,
+}) => {
   return (
     <Controller
-      {...{ control }}
-      name="weekday"
-      defaultValue={weekdays[0]}
+      {...{ control, defaultValue }}
+      name={`weekday:${id}`}
       render={({ onChange }) => (
-        <Select options={weekdays} label="Weekday" {...{ onChange }} />
+        <Select
+          options={weekdays}
+          label="Weekday"
+          {...{ onChange, defaultValue }}
+        />
       )}
     />
   );
