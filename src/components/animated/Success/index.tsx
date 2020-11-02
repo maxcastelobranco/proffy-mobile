@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "@shopify/restyle";
+import { RectButton } from "react-native-gesture-handler";
 
 import { Theme, Box, Text } from "../../../theme";
 import CircleGrid from "../CircleGrid";
@@ -100,9 +101,9 @@ const Success: React.FC<SuccessProps> = ({
       <OutlinedCheck />
       <Text {...titleStyles}>{title}</Text>
       <Text {...descriptionStyles}>{description}</Text>
-      <RippleButton {...{ onPress }} extraButtonStyles={stylesheet.button}>
+      <RectButton {...{ onPress }} style={stylesheet.button}>
         <Text {...buttonLabelStyles}>{buttonLabel}</Text>
-      </RippleButton>
+      </RectButton>
     </Box>
   );
 };

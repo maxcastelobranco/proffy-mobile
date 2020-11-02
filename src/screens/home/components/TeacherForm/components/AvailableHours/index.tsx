@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Control, FieldErrors } from "react-hook-form";
 import * as faker from "faker";
 import { useSharedValue, withTiming } from "react-native-reanimated";
+import { FlatList } from "react-native";
 
 import Accordion from "../../../Accordion";
 import { Box } from "../../../../../../theme";
@@ -20,6 +21,7 @@ import DeleteButton from "./components/DeleteButton";
 interface AvailableHoursProps {
   control: Control;
   errors: FieldErrors;
+  flatListRef: React.RefObject<FlatList>;
 }
 
 export interface ScheduleItem {
@@ -32,31 +34,41 @@ export interface ScheduleItem {
 
 const ICON_SIZE = responsivePixelSize(24);
 
-const AvailableHours: React.FC<AvailableHoursProps> = ({ control }) => {
-  const {
-    state: {
-      authentication: { user },
+const AvailableHours: React.FC<AvailableHoursProps> = ({
+  control,
+  flatListRef,
+}) => {
+  // const {
+  //   state: {
+  //     authentication: { user },
+  //   },
+  // } = useAppContext();
+  // user.schedule
+  //     ? user.schedule.map(({ weekday, from, to }) => ({
+  //       id: faker.random.uuid(),
+  //       mountState: "mounting",
+  //       weekday,
+  //       from,
+  //       to,
+  //     }))
+  //     : [
+  //       {
+  //         id: faker.random.uuid(),
+  //         mountState: "mounting",
+  //         weekday: "monday",
+  //         from: 8,
+  //         to: 18,
+  //       },
+  //     ]
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([
+    {
+      id: faker.random.uuid(),
+      mountState: "mounting",
+      weekday: "monday",
+      from: 8,
+      to: 18,
     },
-  } = useAppContext();
-  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>(() =>
-    user.schedule
-      ? user.schedule.map(({ weekday, from, to }) => ({
-          id: faker.random.uuid(),
-          mountState: "mounting",
-          weekday,
-          from,
-          to,
-        }))
-      : [
-          {
-            id: faker.random.uuid(),
-            mountState: "mounting",
-            weekday: "monday",
-            from: 8,
-            to: 18,
-          },
-        ]
-  );
+  ]);
 
   const addScheduleItem = () => {
     setScheduleItems((prevState) => [
@@ -89,6 +101,12 @@ const AvailableHours: React.FC<AvailableHoursProps> = ({ control }) => {
   const height = useSharedValue(0);
 
   useEffect(() => {
+    setScheduleItems((prevState) =>
+      prevState.filter(({ mountState }) => mountState !== "unmounted")
+    );
+  }, []);
+
+  useEffect(() => {
     const toValue =
       scheduleItems.filter(({ mountState }) => mountState !== "unmounted")
         .length * CONTAINER_HEIGHT;
@@ -109,7 +127,7 @@ const AvailableHours: React.FC<AvailableHoursProps> = ({ control }) => {
               state={scheduleItems}
               setState={setScheduleItems}
               viewHeight={CONTAINER_HEIGHT}
-              {...{ id }}
+              {...{ id, flatListRef }}
             >
               <Box {...containerStyles}>
                 <Schedule {...{ control, id, weekday, from, to }} />

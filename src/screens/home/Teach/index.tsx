@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useFocusEffect } from "@react-navigation/native";
-import { BackHandler, StyleSheet } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
-import { mix } from "react-native-redash";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 import MainHeader from "../components/MainHeader";
-import theme, { Box } from "../../../theme";
+import theme, { Box, Text } from "../../../theme";
 import TeacherForm from "../components/TeacherForm";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
@@ -19,13 +14,10 @@ import {
   AuthenticationActionTypes,
   TeacherSchedule,
 } from "../../../context/reducers/authenticationReducer";
-import Loading from "../../../components/static/Loading";
 
-import Avatar from "./components/Avatar";
 import { useStyles } from "./styles";
-import { useParticles } from "./hooks/useParticles";
 
-export type ProfileFormValues = {
+export type TeachFormValues = {
   bio: string;
   email: string;
   firstName: string;
@@ -36,11 +28,16 @@ export type ProfileFormValues = {
   [key: string]: Date | Weekday | string;
 };
 
-const Profile: React.FC = () => {
-  const { state, dispatch } = useAppContext();
+const Teach: React.FC = () => {
+  const { dispatch } = useAppContext();
+  const navigation = useNavigation();
   const { control, errors, handleSubmit } = useForm();
-  const { teacherFormContainerStyles } = useStyles();
-  const particles = useParticles();
+  const {
+    teacherRegistrationContainerStyles,
+    pageDescriptionContainerStyles,
+    pageTitleStyles,
+    pageDescriptionStyles,
+  } = useStyles();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -60,32 +57,8 @@ const Profile: React.FC = () => {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, [dispatch])
   );
-  useEffect(() => {
-    dispatch({
-      type: ActiveIllustrationActionTypes.Update,
-      payload: {
-        name: "profileIllustration",
-      },
-    });
-  }, [dispatch]);
 
-  const isFullScreen = useSharedValue(0);
-  const animatedFormContainerStyle = useAnimatedStyle(() => {
-    return {
-      opacity: mix(isFullScreen.value, 1, 0),
-      transform: [
-        { scale: mix(isFullScreen.value, 1, 0) },
-        { translateY: mix(isFullScreen.value, 0, 500) },
-      ],
-    };
-  });
-  const animatedParticlesContainerStyle = useAnimatedStyle(() => {
-    return {
-      opacity: mix(isFullScreen.value, 1, 0),
-    };
-  });
-
-  const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
+  const onSubmit: SubmitHandler<TeachFormValues> = (data) => {
     const scheduleIds = Array.from(
       new Set(
         Object.entries(data)
@@ -130,25 +103,28 @@ const Profile: React.FC = () => {
         schedule,
       },
     });
+    dispatch({
+      type: ActiveIllustrationActionTypes.Update,
+      payload: {
+        name: "teacherSignUpIllustration",
+      },
+    });
+
+    navigation.navigate("TeacherRegistrationSuccessful");
   };
 
   return (
     <Box flex={1}>
-      <MainHeader label="My profile" />
-      <Avatar {...{ isFullScreen }} />
-      {state.activeIllustration.name === "profileIllustration" ? (
-        <Animated.View
-          pointerEvents="none"
-          style={[StyleSheet.absoluteFill, animatedParticlesContainerStyle]}
-        >
-          {particles.map((Particle) => Particle)}
-        </Animated.View>
-      ) : (
-        <Loading />
-      )}
-      <Animated.View
-        style={[teacherFormContainerStyles, animatedFormContainerStyle]}
-      >
+      <MainHeader label="Teach" />
+      <Box {...pageDescriptionContainerStyles}>
+        <Text {...pageTitleStyles}>
+          It's awesome that you wanna{"\n"}be a Proffy.
+        </Text>
+        <Text {...pageDescriptionStyles}>
+          First step is to fill out this form.
+        </Text>
+      </Box>
+      <Box {...teacherRegistrationContainerStyles}>
         <TeacherForm {...{ control, errors }} />
         <AnimatedBackgroundButton
           extraStyles={{
@@ -160,12 +136,12 @@ const Profile: React.FC = () => {
           disabledBackgroundColor={theme.colors.background5}
           enabledLabelColor={theme.colors.title}
           disabledLabelColor={theme.colors.complementTextDark}
-          label="Save changes"
+          label="Save registration"
           onPress={handleSubmit(onSubmit)}
         />
-      </Animated.View>
+      </Box>
     </Box>
   );
 };
 
-export default Profile;
+export default Teach;

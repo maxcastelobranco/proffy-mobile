@@ -1,15 +1,13 @@
-import { BoxProps, useTheme, TextProps } from "@shopify/restyle";
+import { BoxProps, TextProps } from "@shopify/restyle";
 import { Dimensions } from "react-native";
 
 import { Theme } from "../../../theme";
 import responsivePixelSize from "../../../utils/responsivePixelSize";
 
 const { width } = Dimensions.get("window");
+const OPTION_WIDTH = width / 3;
 
 export const useStyles = () => {
-  const theme = useTheme<Theme>();
-  const OPTION_WIDTH = (width - theme.spacing.l * 2) / 2 - theme.spacing.xs;
-
   const containerStyles: BoxProps<Theme> = {
     flex: 1,
     backgroundColor: "primary",
@@ -33,7 +31,7 @@ export const useStyles = () => {
     height: responsivePixelSize(200),
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: "m",
+    paddingVertical: "s",
   };
 
   const studyOptionStyles: BoxProps<Theme> = {
