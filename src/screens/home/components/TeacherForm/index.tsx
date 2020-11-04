@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Control, FieldErrors } from "react-hook-form";
 import { FlatList } from "react-native";
 
@@ -28,19 +28,24 @@ const data = [
 ];
 
 const TeacherForm: React.FC<TeacherFormProps> = ({ control, errors }) => {
+  const flatListRef = useRef<FlatList>(null);
   const { flatListStyles } = useStyles();
 
   const renderItem = React.useCallback(
-    ({ item: { Component } }) => <Component {...{ control, errors }} />,
+    ({ item: { Component } }) => (
+      <Component {...{ control, errors, flatListRef }} />
+    ),
     [control, errors]
   );
 
   return (
     <FlatList
-      {...{ data }}
+      {...{ data, renderItem }}
+      ref={flatListRef}
+      initialNumToRender={3}
+      windowSize={3}
       style={flatListStyles}
       keyExtractor={({ id }) => id}
-      {...{ renderItem }}
     />
   );
 };

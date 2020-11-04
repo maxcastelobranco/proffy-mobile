@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { FlatList } from "react-native";
 
 type SlideInViewGeneric = { id: string; mountState: MountState };
 export type MountState = "unmounted" | "unmounting" | "mounting" | "mounted";
@@ -15,6 +16,7 @@ interface SlideInViewProps<T extends SlideInViewGeneric> {
   state: T[];
   setState: React.Dispatch<React.SetStateAction<T[]>>;
   viewHeight: number;
+  flatListRef?: React.RefObject<FlatList>;
 }
 
 function SlideInView<T extends SlideInViewGeneric>({
@@ -22,6 +24,7 @@ function SlideInView<T extends SlideInViewGeneric>({
   state,
   setState,
   viewHeight,
+  flatListRef,
   children,
 }: PropsWithChildren<SlideInViewProps<T>>) {
   const animationDriver = useSharedValue(-1);
@@ -73,6 +76,8 @@ function SlideInView<T extends SlideInViewGeneric>({
       });
     } else if (currentState.mountState === "mounting") {
       animationDriver.value = withTiming(0, timingConfig, () => {
+        flatListRef && flatListRef.current?.scrollToEnd();
+
         setState((prevState) =>
           prevState.map((item) =>
             item.id === id
