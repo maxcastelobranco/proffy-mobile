@@ -17,11 +17,11 @@ export interface User {
   avatarUrl: string;
   whatsapp: string;
   bio: string;
+  schedule: TeacherSchedule[];
+  favoriteTeachersIds: string[];
   isTeacher: boolean;
   subject?: string;
   perHourCost?: number;
-  schedule?: TeacherSchedule[];
-  favoriteTeachersIds?: string[];
 }
 
 export type AuthenticationState = {
@@ -94,6 +94,8 @@ export const authenticationReducer: Reducer<AuthenticationState, AppActions> = (
           whatsapp: "",
           bio: "",
           isTeacher: false,
+          schedule: [],
+          favoriteTeachersIds: [],
         },
       };
     default:

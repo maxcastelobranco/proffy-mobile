@@ -27,6 +27,8 @@ const initialState: InitialAppState = {
       whatsapp: "",
       bio: "",
       isTeacher: false,
+      schedule: [],
+      favoriteTeachersIds: [],
     },
   },
 };

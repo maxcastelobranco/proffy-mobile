@@ -10,7 +10,6 @@ import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
 import SlideInView, {
   MountState,
 } from "../../../../../../components/animated/SlideInView";
-import { useAppContext } from "../../../../../../context";
 
 import Schedule from "./components/Schedule";
 import { useStyles } from "./styles";

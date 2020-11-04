@@ -108,7 +108,7 @@ const theme = createTheme({
       fontFamily: "Archivo-Bold",
       fontSize: responsivePixelSize(16),
       lineHeight: responsivePixelSize(21),
-      color: "title",
+      color: "titleDark",
     },
     buttons: {
       fontFamily: "Archivo-SemiBold",

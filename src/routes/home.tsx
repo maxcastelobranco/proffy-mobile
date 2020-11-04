@@ -11,7 +11,7 @@ import Profile from "../screens/home/Profile";
 import Teach from "../screens/home/Teach";
 import TeacherRegistrationSuccessful from "../screens/home/TeacherRegistrationSuccessful";
 
-import { Tabs } from "./tabs";
+import StudyTabsNavigator, { Tabs } from "./tabs";
 
 export type HomeRoutes = {
   Landing: undefined;
@@ -36,7 +36,7 @@ const HomeNavigator: React.FC = () => {
     <HomeStack.Navigator headerMode="none">
       <HomeStack.Screen name="Landing" component={Landing} />
       <HomeStack.Screen name="Profile" component={Profile} />
-      {/*<HomeStack.Screen name="Study" component={StudyTabsNavigator} />*/}
+      <HomeStack.Screen name="Study" component={StudyTabsNavigator} />
       <HomeStack.Screen name="Teach" component={Teach} />
       <HomeStack.Screen
         name="TeacherRegistrationSuccessful"
