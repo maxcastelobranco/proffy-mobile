@@ -12,7 +12,6 @@ export const useGetFavorites = () => {
     },
   } = useAppContext();
   const [startIndex, setStartIndex] = useState(0);
-  const [loadingFavorites, setLoadingFavorites] = useState(true);
   const [favoriteTeachersEmoji, setFavoriteTeachersEmoji] = useState("😭");
   const [favoriteTeachers, setFavoriteTeachers] = useState<User[]>([]);
 
@@ -53,13 +52,11 @@ export const useGetFavorites = () => {
         setFavoriteTeachersEmoji("😍");
       }
     });
-    setLoadingFavorites(false);
   }, [getFavorites, startIndex, user.favoriteTeachersIds]);
 
   return {
     favoriteTeachers,
     favoriteTeachersEmoji,
-    loadingFavorites,
     setStartIndex,
   };
 };

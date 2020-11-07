@@ -15,7 +15,6 @@ import {
 
 import { Box, Text, Theme } from "../../../../../theme";
 import { TabNavigationProps } from "../../../../../routes/tabs";
-import Loading from "../../../../../components/static/Loading";
 import MainHeader from "../../../components/MainHeader";
 import TeacherCard from "../TeacherCard";
 import { User } from "../../../../../context/reducers/authenticationReducer";
@@ -35,7 +34,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     },
   } = useAppContext();
   const {
-    loadingFavorites,
     favoriteTeachers,
     favoriteTeachersEmoji,
     setStartIndex,
@@ -126,57 +124,51 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
           </Text>
         </Box>
       </Box>
-      {loadingFavorites ? (
-        <Box marginTop="l">
-          <Loading color="primaryDark" />
-        </Box>
-      ) : (
+      <FlingGestureHandler
+        key="left"
+        direction={Directions.LEFT}
+        onHandlerStateChange={({ nativeEvent: { state } }) => {
+          if (state === State.END) {
+            if (currentIndex === favoriteTeachers.length - 1) {
+              return;
+            }
+            setActiveIndex(currentIndex + 1);
+          }
+        }}
+      >
         <FlingGestureHandler
-          key="left"
-          direction={Directions.LEFT}
+          key="right"
+          direction={Directions.RIGHT}
           onHandlerStateChange={({ nativeEvent: { state } }) => {
             if (state === State.END) {
-              if (currentIndex === favoriteTeachers.length - 1) {
+              if (currentIndex === 0) {
                 return;
               }
-              setActiveIndex(currentIndex + 1);
+              setActiveIndex(currentIndex - 1);
             }
           }}
         >
-          <FlingGestureHandler
-            key="right"
-            direction={Directions.RIGHT}
-            onHandlerStateChange={({ nativeEvent: { state } }) => {
-              if (state === State.END) {
-                if (currentIndex === 0) {
-                  return;
-                }
-                setActiveIndex(currentIndex - 1);
-              }
-            }}
-          >
-            <FlatList
-              data={favoriteTeachers}
-              keyExtractor={({ id }) => id}
-              style={flatListStyles}
-              contentContainerStyle={flatListContentContainerStyles}
-              horizontal
-              scrollEnabled={false}
-              removeClippedSubviews={false}
-              CellRendererComponent={({ style, index, children, ...props }) => {
-                const newStyle = [style, { zIndex: 5 - index }];
+          <FlatList
+            data={favoriteTeachers}
+            keyExtractor={({ id }) => id}
+            style={flatListStyles}
+            contentContainerStyle={flatListContentContainerStyles}
+            horizontal
+            scrollEnabled={false}
+            removeClippedSubviews={false}
+            CellRendererComponent={({ style, index, children, ...props }) => {
+              const newStyle = [style, { zIndex: 5 - index }];
 
-                return (
-                  <View style={newStyle} {...props}>
-                    {children}
-                  </View>
-                );
-              }}
-              {...{ renderItem }}
-            />
-          </FlingGestureHandler>
+              return (
+                <View style={newStyle} {...props}>
+                  {children}
+                </View>
+              );
+            }}
+            {...{ renderItem }}
+          />
         </FlingGestureHandler>
-      )}
+      </FlingGestureHandler>
     </>
   );
 };
