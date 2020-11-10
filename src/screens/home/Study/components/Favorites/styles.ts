@@ -23,19 +23,16 @@ export const useStyles = () => {
     marginTop: "m",
     marginBottom: "xs",
   };
-  const flatListStyles: ViewStyle = {
-    marginTop: -theme.spacing.l,
-  };
-  const flatListContentContainerStyles: ViewStyle = {
+  const cardContainerStyles: ViewStyle = {
     flex: 1,
-    justifyContent: "center",
+    marginTop: -theme.spacing.xl,
+    alignSelf: "center",
   };
 
   return {
     titleContainerStyles,
     pageTitleStyles,
     favoriteProffysStyles,
-    flatListStyles,
-    flatListContentContainerStyles,
+    cardContainerStyles,
   };
 };

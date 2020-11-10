@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "db": "json-server --watch --host 192.168.100.181 .\\database.js"
+    "db": "json-server --watch --host 192.168.100.106 .\\database.js"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",

@@ -12,6 +12,7 @@ export const useGetFavorites = () => {
     },
   } = useAppContext();
   const [startIndex, setStartIndex] = useState(0);
+  const [loadingTeachers, setLoadingTeachers] = useState(true);
   const [favoriteTeachersEmoji, setFavoriteTeachersEmoji] = useState("😭");
   const [favoriteTeachers, setFavoriteTeachers] = useState<User[]>([]);
 
@@ -45,6 +46,7 @@ export const useGetFavorites = () => {
       const teachers = response?.map((value) => value.data[0]);
 
       setFavoriteTeachers(teachers);
+      setLoadingTeachers(false);
 
       if (teachers.length === 1) {
         setFavoriteTeachersEmoji("😐");
@@ -58,5 +60,6 @@ export const useGetFavorites = () => {
     favoriteTeachers,
     favoriteTeachersEmoji,
     setStartIndex,
+    loadingTeachers,
   };
 };

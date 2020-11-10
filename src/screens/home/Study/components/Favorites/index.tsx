@@ -1,33 +1,49 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  Animated,
-  Dimensions,
-  FlatList,
-  ListRenderItem,
-  View,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 import { useTheme } from "@shopify/restyle";
+import Animated, {
+  interpolate,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  Extrapolate,
+  withTiming,
+  Easing,
+  SpringUtils,
+} from "react-native-reanimated";
 import {
-  Directions,
-  FlingGestureHandler,
-  State,
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
+import { snapPoint } from "react-native-redash";
 
 import { Box, Text, Theme } from "../../../../../theme";
 import { TabNavigationProps } from "../../../../../routes/tabs";
 import MainHeader from "../../../components/MainHeader";
 import TeacherCard from "../TeacherCard";
-import { User } from "../../../../../context/reducers/authenticationReducer";
 import { useAppContext } from "../../../../../context";
+import { CARD_HEIGHT } from "../TeacherCard/styles";
+import Loading from "../../../../../components/static/Loading";
 
 import { useGetFavorites } from "./hooks/useGetFavorites";
 import { useStyles } from "./styles";
 
 const { width } = Dimensions.get("window");
-const VISIBLE_ITEMS = 5;
+
+const timingConfig: Animated.WithTimingConfig = {
+  duration: 500,
+  easing: Easing.bezier(0.65, 0, 0.35, 1),
+};
 
 const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const theme = useTheme<Theme>();
+  const {
+    titleContainerStyles,
+    pageTitleStyles,
+    favoriteProffysStyles,
+    cardContainerStyles,
+  } = useStyles();
   const {
     state: {
       authentication: { user },
@@ -37,81 +53,87 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     favoriteTeachers,
     favoriteTeachersEmoji,
     setStartIndex,
+    loadingTeachers,
   } = useGetFavorites();
-  const {
-    titleContainerStyles,
-    pageTitleStyles,
-    favoriteProffysStyles,
-    flatListStyles,
-    flatListContentContainerStyles,
-  } = useStyles();
+
+  const [index, setIndex] = useState(0);
+  const profile = favoriteTeachers[index];
 
   const CARD_WIDTH = width - theme.spacing.l * 2;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollXIndex = React.useRef(new Animated.Value(0)).current;
-  const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
-
-  const setActiveIndex = useCallback(
-    (index: number) => {
-      setCurrentIndex(index);
-      scrollXIndex.setValue(index);
-    },
-    [scrollXIndex]
+  const deltaX = CARD_WIDTH / 2;
+  const alpha = Math.PI / 12;
+  const A = Math.round(
+    CARD_WIDTH * Math.cos(alpha) + CARD_HEIGHT * Math.sin(alpha)
   );
+  const snapPoints = [-A, 0, A];
 
-  useEffect(() => {
-    if (currentIndex === 4) {
-      setStartIndex((prevState) => prevState + 4);
-      setActiveIndex(0);
-    }
-  }, [currentIndex, setActiveIndex, setStartIndex]);
+  const opacity = useSharedValue(0);
+  const scale = useSharedValue(0);
+  const translationX = useSharedValue(0);
+  const translationY = useSharedValue(0);
 
-  useEffect(() => {
-    Animated.timing(scrollXAnimated, {
-      toValue: scrollXIndex,
-      useNativeDriver: true,
-    }).start();
-  }, [scrollXAnimated, scrollXIndex]);
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent
+  >({
+    onActive: (event) => {
+      translationX.value = withSpring(event.translationX, {
+        velocity: event.velocityX,
+      });
+      translationY.value = withSpring(event.translationY, {
+        velocity: event.velocityY,
+      });
+    },
+    onEnd: (event) => {
+      const snapDestiny = snapPoint(
+        translationX.value,
+        event.velocityX,
+        snapPoints
+      );
 
-  const renderItem: ListRenderItem<User> = ({ item, index }) => {
-    const inputRange = [index - 1, index, index + 1];
+      if (snapDestiny === 0) {
+        translationX.value = withSpring(snapDestiny);
+      } else {
+        setIndex((index + 1) % favoriteTeachers.length);
 
-    const animatedStyle = {
-      opacity: scrollXAnimated.interpolate({
-        inputRange,
-        outputRange: [1 - 1 / VISIBLE_ITEMS, 1, 0],
-      }),
+        translationX.value = withTiming(snapDestiny, timingConfig, () => {
+          opacity.value = 0;
+          scale.value = 0;
+          translationX.value = 0;
+
+          opacity.value = withTiming(1, timingConfig);
+          scale.value = withSpring(1);
+        });
+      }
+
+      translationY.value = withSpring(0, {});
+    },
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    const rotateZ = `${interpolate(
+      translationX.value,
+      [-1 * deltaX, deltaX],
+      [alpha, -1 * alpha],
+      Extrapolate.CLAMP
+    )}rad`;
+
+    return {
+      opacity: opacity.value,
       transform: [
-        {
-          translateX: scrollXAnimated.interpolate({
-            inputRange,
-            outputRange: [30, 0, -100],
-          }),
-        },
-        {
-          scale: scrollXAnimated.interpolate({
-            inputRange,
-            outputRange: [0.9, 1, 1.1],
-          }),
-        },
+        { translateX: translationX.value },
+        { translateY: translationY.value },
+        { rotateZ },
+        { scale: scale.value },
       ],
     };
+  });
 
-    return (
-      <Animated.View
-        style={[
-          {
-            position: "absolute",
-            left: -CARD_WIDTH / 2,
-          },
-          animatedStyle,
-        ]}
-      >
-        <TeacherCard profile={item} />
-      </Animated.View>
-    );
-  };
+  useEffect(() => {
+    if (!loadingTeachers) {
+      opacity.value = withTiming(1, timingConfig);
+      scale.value = withSpring(1);
+    }
+  }, [loadingTeachers, opacity, scale]);
 
   return (
     <>
@@ -124,51 +146,15 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
           </Text>
         </Box>
       </Box>
-      <FlingGestureHandler
-        key="left"
-        direction={Directions.LEFT}
-        onHandlerStateChange={({ nativeEvent: { state } }) => {
-          if (state === State.END) {
-            if (currentIndex === favoriteTeachers.length - 1) {
-              return;
-            }
-            setActiveIndex(currentIndex + 1);
-          }
-        }}
-      >
-        <FlingGestureHandler
-          key="right"
-          direction={Directions.RIGHT}
-          onHandlerStateChange={({ nativeEvent: { state } }) => {
-            if (state === State.END) {
-              if (currentIndex === 0) {
-                return;
-              }
-              setActiveIndex(currentIndex - 1);
-            }
-          }}
-        >
-          <FlatList
-            data={favoriteTeachers}
-            keyExtractor={({ id }) => id}
-            style={flatListStyles}
-            contentContainerStyle={flatListContentContainerStyles}
-            horizontal
-            scrollEnabled={false}
-            removeClippedSubviews={false}
-            CellRendererComponent={({ style, index, children, ...props }) => {
-              const newStyle = [style, { zIndex: 5 - index }];
-
-              return (
-                <View style={newStyle} {...props}>
-                  {children}
-                </View>
-              );
-            }}
-            {...{ renderItem }}
-          />
-        </FlingGestureHandler>
-      </FlingGestureHandler>
+      {loadingTeachers ? (
+        <Loading color="primaryDark" />
+      ) : (
+        <PanGestureHandler {...{ onGestureEvent }}>
+          <Animated.View style={[cardContainerStyles, animatedStyle]}>
+            <TeacherCard {...{ profile }} />
+          </Animated.View>
+        </PanGestureHandler>
+      )}
     </>
   );
 };

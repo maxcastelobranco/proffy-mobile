@@ -8,7 +8,7 @@ const AVATAR_WIDTH = responsivePixelSize(80);
 const ICON_CONTAINER_SIZE = responsivePixelSize(40);
 
 const { width } = Dimensions.get("window");
-const CARD_HEIGHT = responsivePixelSize(536);
+export const CARD_HEIGHT = responsivePixelSize(600);
 
 export const useStyles = () => {
   const theme = useTheme<Theme>();
@@ -24,14 +24,14 @@ export const useStyles = () => {
     marginBottom: "m",
   };
   const boxShadowStyle: ViewStyle = {
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1,
-    // },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 1.41,
-    // elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   };
   const headerStyles: BoxProps<Theme> = {
     flexDirection: "row",
