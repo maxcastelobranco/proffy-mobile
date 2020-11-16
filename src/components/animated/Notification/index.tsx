@@ -26,7 +26,7 @@ const Notification: React.FC<NotificationProps> = ({
 }) => {
   const theme = useTheme<Theme>();
   const { styleSheet, messageStyles, NOTIFICATION_WIDTH } = useStyles();
-  const colorHex = theme.colors[color];
+  const colorHexCode = theme.colors[color];
 
   const animatedStyle = useAnimatedStyle(() => {
     const translateX = NOTIFICATION_WIDTH + theme.spacing.s * 2;
@@ -41,7 +41,7 @@ const Notification: React.FC<NotificationProps> = ({
 
   return (
     <Animated.View style={[styleSheet.container, animatedStyle]}>
-      <Feather name={iconName} size={ICON_SIZE} color={colorHex} />
+      <Feather name={iconName} size={ICON_SIZE} color={colorHexCode} />
       <Text {...messageStyles}>{message}</Text>
     </Animated.View>
   );

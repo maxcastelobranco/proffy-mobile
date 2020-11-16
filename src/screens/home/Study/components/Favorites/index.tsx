@@ -10,7 +10,6 @@ import Animated, {
   Extrapolate,
   withTiming,
   Easing,
-  SpringUtils,
 } from "react-native-reanimated";
 import {
   PanGestureHandler,
@@ -52,7 +51,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const {
     favoriteTeachers,
     favoriteTeachersEmoji,
-    setStartIndex,
     loadingTeachers,
   } = useGetFavorites();
 
@@ -110,19 +108,19 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   });
 
   const animatedStyle = useAnimatedStyle(() => {
-    const rotateZ = `${interpolate(
+    const rotateZ = interpolate(
       translationX.value,
       [-1 * deltaX, deltaX],
       [alpha, -1 * alpha],
       Extrapolate.CLAMP
-    )}rad`;
+    );
 
     return {
       opacity: opacity.value,
       transform: [
         { translateX: translationX.value },
         { translateY: translationY.value },
-        { rotateZ },
+        { rotateZ: `${rotateZ}rad` },
         { scale: scale.value },
       ],
     };

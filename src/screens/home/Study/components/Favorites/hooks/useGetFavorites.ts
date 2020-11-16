@@ -11,55 +11,48 @@ export const useGetFavorites = () => {
       authentication: { user },
     },
   } = useAppContext();
-  const [startIndex, setStartIndex] = useState(0);
   const [loadingTeachers, setLoadingTeachers] = useState(true);
   const [favoriteTeachersEmoji, setFavoriteTeachersEmoji] = useState("😭");
   const [favoriteTeachers, setFavoriteTeachers] = useState<User[]>([]);
 
-  const getFavorites = React.useCallback(
-    async (start: number) => {
-      const end = start + 5;
-      const requests: Promise<AxiosResponse<User[]>>[] = [];
+  const getFavorites = React.useCallback(async () => {
+    const requests: Promise<AxiosResponse<User[]>>[] = [];
 
-      if (start + 5 <= user.favoriteTeachersIds.length) {
-        for (let i = start; i < end; i++) {
-          const userId = user.favoriteTeachersIds[i];
+    for (let i = 0; i < user.favoriteTeachersIds.length; ++i) {
+      const userId = user.favoriteTeachersIds[i];
 
-          if (userId) {
-            const request = api.get("users", {
-              params: {
-                id: userId,
-              },
-            });
-            requests.push(request);
-          }
-        }
+      if (userId) {
+        const request = api.get("users", {
+          params: {
+            id: userId,
+          },
+        });
+        requests.push(request);
       }
+    }
 
-      return Promise.all(requests);
-    },
-    [user.favoriteTeachersIds]
-  );
+    return Promise.all(requests);
+  }, [user.favoriteTeachersIds]);
 
   useEffect(() => {
-    getFavorites(startIndex).then((response) => {
-      const teachers = response?.map((value) => value.data[0]);
+    getFavorites().then((response) => {
+      const teachers = response.map((value) => value.data[0]);
 
       setFavoriteTeachers(teachers);
-      setLoadingTeachers(false);
 
-      if (teachers.length === 1) {
+      if (teachers.length <= 1) {
         setFavoriteTeachersEmoji("😐");
       } else if (teachers.length > 1) {
         setFavoriteTeachersEmoji("😍");
       }
+
+      setLoadingTeachers(false);
     });
-  }, [getFavorites, startIndex, user.favoriteTeachersIds]);
+  }, [getFavorites, user.favoriteTeachersIds]);
 
   return {
     favoriteTeachers,
     favoriteTeachersEmoji,
-    setStartIndex,
     loadingTeachers,
   };
 };
