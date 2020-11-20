@@ -1,9 +1,10 @@
 import { StyleSheet, ViewStyle } from "react-native";
-import { BoxProps, TextProps } from "@shopify/restyle";
+import { BoxProps, TextProps, useTheme } from "@shopify/restyle";
 
-import theme, { Theme } from "../../../../theme";
+import { Theme } from "../../../../theme";
 
 export const useStyles = () => {
+  const theme = useTheme<Theme>();
   const headerStyles: BoxProps<Theme> = {
     flexDirection: "row",
     alignItems: "center",

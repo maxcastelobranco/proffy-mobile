@@ -2,9 +2,10 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { BackHandler } from "react-native";
+import { useTheme } from "@shopify/restyle";
 
 import MainHeader from "../components/MainHeader";
-import theme, { Box, Text } from "../../../theme";
+import { Box, Text, Theme } from "../../../theme";
 import TeacherForm from "../components/TeacherForm";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
@@ -29,6 +30,7 @@ export type TeachFormValues = {
 };
 
 const Teach: React.FC = () => {
+  const theme = useTheme<Theme>();
   const { dispatch } = useAppContext();
   const navigation = useNavigation();
   const { control, errors, handleSubmit } = useForm();

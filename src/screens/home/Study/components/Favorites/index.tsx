@@ -10,6 +10,7 @@ import Animated, {
   Extrapolate,
   withTiming,
   Easing,
+  useDerivedValue,
 } from "react-native-reanimated";
 import {
   PanGestureHandler,
@@ -29,7 +30,7 @@ import { useGetFavorites } from "./hooks/useGetFavorites";
 import { useStyles } from "./styles";
 
 const { width } = Dimensions.get("window");
-
+const ALPHA = Math.PI / 12;
 const timingConfig: Animated.WithTimingConfig = {
   duration: 500,
   easing: Easing.bezier(0.65, 0, 0.35, 1),
@@ -59,9 +60,8 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
 
   const CARD_WIDTH = width - theme.spacing.l * 2;
   const deltaX = CARD_WIDTH / 2;
-  const alpha = Math.PI / 12;
   const A = Math.round(
-    CARD_WIDTH * Math.cos(alpha) + CARD_HEIGHT * Math.sin(alpha)
+    CARD_WIDTH * Math.cos(ALPHA) + CARD_HEIGHT * Math.sin(ALPHA)
   );
   const snapPoints = [-A, 0, A];
 
@@ -69,6 +69,13 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const scale = useSharedValue(0);
   const translationX = useSharedValue(0);
   const translationY = useSharedValue(0);
+
+  const likeOpacity = useDerivedValue(() => {
+    return interpolate(translationX.value, [0, deltaX / 4], [0, 1]);
+  });
+  const dislikeOpacity = useDerivedValue(() => {
+    return interpolate(translationX.value, [-1 * (deltaX / 4), 0], [1, 0]);
+  });
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent
@@ -111,7 +118,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     const rotateZ = interpolate(
       translationX.value,
       [-1 * deltaX, deltaX],
-      [alpha, -1 * alpha],
+      [ALPHA, -1 * ALPHA],
       Extrapolate.CLAMP
     );
 
@@ -149,7 +156,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
       ) : (
         <PanGestureHandler {...{ onGestureEvent }}>
           <Animated.View style={[cardContainerStyles, animatedStyle]}>
-            <TeacherCard {...{ profile }} />
+            <TeacherCard {...{ profile, likeOpacity, dislikeOpacity }} />
           </Animated.View>
         </PanGestureHandler>
       )}

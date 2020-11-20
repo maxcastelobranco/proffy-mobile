@@ -1,10 +1,11 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { AppLoading } from "expo";
+import React, { useCallback, useEffect, useState } from "react";
 import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import { InitialState, NavigationContainer } from "@react-navigation/native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-community/async-storage";
+
+import Loading from "./Loading";
 
 const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY-${Constants.manifest.sdkVersion}`;
 
@@ -29,10 +30,9 @@ const useLoadAssets = (assets: number[], fonts: FontSource): boolean => {
 interface LoadAssetsProps {
   fonts?: FontSource;
   assets?: number[];
-  children: ReactElement | ReactElement[];
 }
 
-const LoadAssets = ({ assets, fonts, children }: LoadAssetsProps) => {
+const LoadAssets: React.FC<LoadAssetsProps> = ({ assets, fonts, children }) => {
   const [isNavigationReady, setIsNavigationReady] = useState(!__DEV__);
   const [initialState, setInitialState] = useState<InitialState | undefined>();
   const ready = useLoadAssets(assets || [], fonts || {});
@@ -61,7 +61,7 @@ const LoadAssets = ({ assets, fonts, children }: LoadAssetsProps) => {
     []
   );
   if (!ready || !isNavigationReady) {
-    return <AppLoading />;
+    return <Loading color="primaryDark" />;
   }
   return (
     <NavigationContainer {...{ onStateChange, initialState }}>

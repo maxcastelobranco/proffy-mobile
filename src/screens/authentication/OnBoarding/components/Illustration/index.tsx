@@ -15,7 +15,7 @@ const Illustration: React.FC<IllustrationProps> = ({
   backgroundColor,
 }) => {
   const animatedStyle = useAnimatedStyle(() => ({
-    backgroundColor: backgroundColor.value as string,
+    backgroundColor: backgroundColor.value,
   }));
 
   return (

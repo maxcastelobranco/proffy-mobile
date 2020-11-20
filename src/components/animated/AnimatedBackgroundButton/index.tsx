@@ -53,7 +53,7 @@ const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
         enabledTimingTransition.value,
         disabledBackgroundColor,
         enabledBackgroundColor
-      ) as string,
+      ),
     };
   });
   const animatedTextStyle = useAnimatedStyle(() => {
@@ -67,7 +67,7 @@ const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
       //   enabledTimingTransition.value,
       //   disabledLabelColor,
       //   enabledLabelColor
-      // ) as string,
+      // ) ,
       transform: [
         {
           scale: interpolate(

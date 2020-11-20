@@ -10,10 +10,11 @@ import Animated, {
 import { StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { mix } from "react-native-redash";
+import { useTheme } from "@shopify/restyle";
 
 import responsivePixelSize from "../../../utils/responsivePixelSize";
-import theme from "../../../theme";
 import { transformOrigin } from "../../../utils/transformOrigin";
+import { Theme } from "../../../theme";
 
 import { AnimatedSvgProps } from "./types";
 
@@ -23,6 +24,7 @@ const LONG_POINTER_WIDTH = CANVAS_SIZE * 0.18;
 const SHORT_POINTER_WIDTH = CANVAS_SIZE * 0.14;
 
 const Clock: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
+  const theme = useTheme<Theme>();
   const styles = StyleSheet.create({
     longPointer: {
       position: "absolute",

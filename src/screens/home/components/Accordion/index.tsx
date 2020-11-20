@@ -8,8 +8,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { mix } from "react-native-redash";
 import { Feather } from "@expo/vector-icons";
+import { useTheme } from "@shopify/restyle";
 
-import theme, { Box, Text } from "../../../../theme";
+import { Box, Text, Theme } from "../../../../theme";
 import RippleButton from "../../../../components/static/RippleButton";
 import responsivePixelSize from "../../../../utils/responsivePixelSize";
 
@@ -30,6 +31,7 @@ const Accordion: React.FC<AccordionProps> = ({
   childrenHeight,
   children,
 }) => {
+  const theme = useTheme<Theme>();
   const [open, setOpen] = useState(false);
   const openTimingTransition = useSharedValue(0);
   const openSpringTransition = useSharedValue(0);

@@ -1,4 +1,5 @@
 const faker = require("faker");
+faker.seed(69);
 
 module.exports = () => {
   const data = { users: [] };
@@ -322,7 +323,7 @@ module.exports = () => {
       lastName,
       email: faker.internet.email(firstName, lastName),
       password: "123456",
-      avatarUrl: faker.random.image(),
+      avatarUrl: faker.image.people(),
       whatsapp: faker.phone.phoneNumber(),
       bio: faker.lorem.words(10),
       isTeacher: true,

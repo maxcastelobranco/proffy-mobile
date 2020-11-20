@@ -7,9 +7,10 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { mix } from "react-native-redash";
+import { useTheme } from "@shopify/restyle";
 
 import MainHeader from "../components/MainHeader";
-import theme, { Box } from "../../../theme";
+import { Box, Theme } from "../../../theme";
 import TeacherForm from "../components/TeacherForm";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
@@ -37,6 +38,7 @@ export type ProfileFormValues = {
 };
 
 const Profile: React.FC = () => {
+  const theme = useTheme<Theme>();
   const { state, dispatch } = useAppContext();
   const { control, errors, handleSubmit } = useForm();
   const { teacherFormContainerStyles } = useStyles();

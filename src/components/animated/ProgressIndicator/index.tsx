@@ -37,7 +37,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       currentIndex.value,
       inputRange,
       outputRange
-    ) as string,
+    ),
     transform: [
       {
         scale: interpolate(

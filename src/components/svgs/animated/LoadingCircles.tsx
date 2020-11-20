@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BoxProps } from "@shopify/restyle";
+import { BoxProps, useTheme } from "@shopify/restyle";
 import Animated, {
   Easing,
   repeat,
@@ -11,16 +11,17 @@ import Animated, {
 import { mix } from "react-native-redash";
 import { StyleSheet } from "react-native";
 
-import theme, { Box, Theme } from "../../../theme";
-
-const CIRCLE_SIZE = 4;
-const CONTAINER_WIDTH = CIRCLE_SIZE * 3 + theme.spacing.xs;
+import { Box, Theme } from "../../../theme";
 
 interface LoadingCirclesProps {
   extraStyles?: BoxProps<Theme>;
 }
 
 const LoadingCircles: React.FC<LoadingCirclesProps> = ({ extraStyles }) => {
+  const theme = useTheme<Theme>();
+  const CIRCLE_SIZE = 4;
+  const CONTAINER_WIDTH = CIRCLE_SIZE * 3 + theme.spacing.xs;
+
   const stylesheet = StyleSheet.create({
     circleStyles: {
       width: CIRCLE_SIZE,

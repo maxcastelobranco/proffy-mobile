@@ -26,7 +26,7 @@ const CheckBox: React.FC<CheckboxProps> = ({ value, onChange }) => {
       animationDriver.value,
       theme.colors.background4,
       theme.colors.secondary
-    ) as string,
+    ),
     transform: [
       { rotate: `${mix(animationDriver.value, (-Math.PI / 2) * 2, 0)}rad` },
     ],

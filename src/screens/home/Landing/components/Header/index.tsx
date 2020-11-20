@@ -1,10 +1,11 @@
 import React from "react";
-import { useNavigation, CommonActions } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { Image, Pressable } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
+import { useTheme } from "@shopify/restyle";
 
-import theme, { Box, Text } from "../../../../../theme";
+import { Box, Text, Theme } from "../../../../../theme";
 import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 import RippleButton from "../../../../../components/static/RippleButton";
 import { useAppContext } from "../../../../../context";
@@ -14,6 +15,7 @@ import { AuthenticationActionTypes } from "../../../../../context/reducers/authe
 import { useStyles } from "./styles";
 
 const Header: React.FC = () => {
+  const theme = useTheme<Theme>();
   const {
     state: {
       authentication: { user },

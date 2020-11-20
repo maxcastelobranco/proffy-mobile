@@ -1,6 +1,7 @@
 import React from "react";
+import { useTheme } from "@shopify/restyle";
 
-import theme, { Box } from "../../../../../theme";
+import { Box, Theme } from "../../../../../theme";
 import HomeIllustration from "../../../../../components/svgs/static/HomeIllustration";
 import Gear from "../../../../../components/svgs/animated/Gear";
 import responsivePixelSize from "../../../../../utils/responsivePixelSize";
@@ -19,6 +20,7 @@ const CIRCLE_SIZE = responsivePixelSize(2);
 const SVG_PARTICLE_SIZE = responsivePixelSize(8);
 
 const Illustration: React.FC = () => {
+  const theme = useTheme<Theme>();
   const { containerStyles } = useStyles();
 
   return (
