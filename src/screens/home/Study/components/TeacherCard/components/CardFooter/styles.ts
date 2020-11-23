@@ -41,23 +41,21 @@ export const useStyles = () => {
     color: "title",
     marginLeft: "xs",
   };
-  const heartContainerStyles: ViewStyle = {
+  const baseHeartContainerStyles: ViewStyle = {
     alignItems: "center",
     justifyContent: "center",
     height: ICON_CONTAINER_SIZE,
     width: ICON_CONTAINER_SIZE,
     marginTop: theme.spacing.xs,
-    backgroundColor: theme.colors.primary,
     borderRadius: theme.borderRadii.default,
   };
+  const heartContainerStyles: ViewStyle = {
+    ...baseHeartContainerStyles,
+    backgroundColor: theme.colors.primary,
+  };
   const heartBrokenContainerStyles: ViewStyle = {
-    alignItems: "center",
-    justifyContent: "center",
-    height: ICON_CONTAINER_SIZE,
-    width: ICON_CONTAINER_SIZE,
-    marginTop: theme.spacing.xs,
+    ...baseHeartContainerStyles,
     backgroundColor: theme.colors.danger,
-    borderRadius: theme.borderRadii.default,
   };
 
   return {

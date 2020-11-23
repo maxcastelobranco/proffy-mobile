@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions } from "react-native";
+import { BackHandler, Dimensions } from "react-native";
 import { useTheme } from "@shopify/restyle";
 import Animated, {
   interpolate,
@@ -17,6 +17,7 @@ import {
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import { snapPoint } from "react-native-redash";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { Box, Text, Theme } from "../../../../../theme";
 import { TabNavigationProps } from "../../../../../routes/tabs";
@@ -28,6 +29,7 @@ import Loading from "../../../../../components/static/Loading";
 import { api } from "../../../../../services/api";
 import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
 import Notification from "../../../../../components/animated/Notification";
+import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
 
 import { useGetFavorites } from "./hooks/useGetFavorites";
 import { useStyles } from "./styles";
@@ -41,6 +43,7 @@ const timingConfig: Animated.WithTimingConfig = {
 
 const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const theme = useTheme<Theme>();
+  const navigation = useNavigation();
   const {
     titleContainerStyles,
     pageTitleStyles,
@@ -75,9 +78,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const translationX = useSharedValue(0);
   const translationY = useSharedValue(0);
 
-  const likeOpacity = useDerivedValue(() => {
-    return interpolate(translationX.value, [0, DELTA_X / 4], [0, 1]);
-  });
   const dislikeOpacity = useDerivedValue(() => {
     return interpolate(translationX.value, [-1 * (DELTA_X / 4), 0], [1, 0]);
   });
@@ -121,14 +121,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
       successNotification.value = withSpring(0);
     }, 2000);
   };
-  const errorNotification = useSharedValue(0);
-  const showErrorNotification = () => {
-    "worklet";
-    errorNotification.value = withSpring(1);
-    setTimeout(() => {
-      errorNotification.value = withSpring(0);
-    }, 2000);
-  };
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent
   >({
@@ -157,7 +149,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
         } else if (destiny === MAX_TRANSLATE) {
           setIndex((index + 1) % favoriteTeachers.length);
           animateNextCard(destiny);
-          showErrorNotification();
         }
       }
 
@@ -191,6 +182,20 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     }
   }, [loadingTeachers, opacity, scale]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate("Landing");
+        return true;
+      };
+
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [navigation])
+  );
+
   return (
     <>
       <Box flex={0.46}>
@@ -207,21 +212,14 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
       ) : (
         <PanGestureHandler {...{ onGestureEvent }}>
           <Animated.View style={[cardContainerStyles, animatedStyle]}>
-            <TeacherCard {...{ profile, likeOpacity, dislikeOpacity }} />
+            <TeacherCard
+              {...{ profile }}
+              isFavorite
+              favoriteButtonOpacity={dislikeOpacity}
+            />
           </Animated.View>
         </PanGestureHandler>
       )}
-      <Notification
-        shouldRenderNotification={errorNotification}
-        message="This teacher is already a favorite"
-        iconName="alert-triangle"
-        iconColor="title"
-        backgroundColor="danger"
-        position={{
-          top: theme.spacing.s,
-          left: theme.spacing.m,
-        }}
-      />
       <Notification
         shouldRenderNotification={successNotification}
         message="Teacher removed from favorites"

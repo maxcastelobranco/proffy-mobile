@@ -10,16 +10,16 @@ import { Box, Text, Theme } from "../../../../../../../theme";
 import { useStyles } from "./styles";
 
 interface CardFooterProps {
-  likeOpacity: Animated.SharedValue<number>;
-  dislikeOpacity: Animated.SharedValue<number>;
+  favoriteButtonOpacity: Animated.SharedValue<number>;
+  isFavorite: boolean;
   perHourCost?: number;
 }
 
 const ICON_SIZE = responsivePixelSize(24);
 
 const CardFooter: React.FC<CardFooterProps> = ({
-  likeOpacity,
-  dislikeOpacity,
+  favoriteButtonOpacity,
+  isFavorite,
   perHourCost = 0,
 }) => {
   const theme = useTheme<Theme>();
@@ -33,14 +33,9 @@ const CardFooter: React.FC<CardFooterProps> = ({
     heartBrokenContainerStyles,
   } = useStyles();
 
-  const animatedLikeStyle = useAnimatedStyle(() => {
+  const animatedFavoriteButtonStyle = useAnimatedStyle(() => {
     return {
-      opacity: likeOpacity.value,
-    };
-  });
-  const animatedDislikeStyle = useAnimatedStyle(() => {
-    return {
-      opacity: dislikeOpacity.value,
+      opacity: favoriteButtonOpacity.value,
     };
   });
 
@@ -51,13 +46,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
         <Text {...moneyStyles}>${perHourCost}</Text>
       </Box>
       <Box {...rowStyles}>
-        <Animated.View style={[heartContainerStyles, animatedLikeStyle]}>
-          <FontAwesome5
-            name="heart"
-            size={ICON_SIZE}
-            color={theme.colors.title}
-          />
-        </Animated.View>
         <RectButton onPress={() => true} style={buttonStyles}>
           <FontAwesome5
             name="whatsapp"
@@ -66,15 +54,27 @@ const CardFooter: React.FC<CardFooterProps> = ({
           />
           <Text {...getInTouchStyles}>Get in touch</Text>
         </RectButton>
-        <Animated.View
-          style={[heartBrokenContainerStyles, animatedDislikeStyle]}
-        >
-          <FontAwesome5
-            name="heart-broken"
-            size={ICON_SIZE}
-            color={theme.colors.title}
-          />
-        </Animated.View>
+        {isFavorite ? (
+          <Animated.View
+            style={[heartBrokenContainerStyles, animatedFavoriteButtonStyle]}
+          >
+            <FontAwesome5
+              name="heart-broken"
+              size={ICON_SIZE}
+              color={theme.colors.title}
+            />
+          </Animated.View>
+        ) : (
+          <Animated.View
+            style={[heartContainerStyles, animatedFavoriteButtonStyle]}
+          >
+            <FontAwesome5
+              name="heart"
+              size={ICON_SIZE}
+              color={theme.colors.title}
+            />
+          </Animated.View>
+        )}
       </Box>
     </>
   );

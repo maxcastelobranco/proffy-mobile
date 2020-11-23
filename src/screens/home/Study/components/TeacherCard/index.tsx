@@ -12,8 +12,8 @@ import CardHeader from "./components/CardHeader";
 
 interface TeacherCardProps {
   profile: User;
-  likeOpacity: Animated.SharedValue<number>;
-  dislikeOpacity: Animated.SharedValue<number>;
+  isFavorite: boolean;
+  favoriteButtonOpacity: Animated.SharedValue<number>;
 }
 
 const WEEKDAYS: Weekday[] = [
@@ -26,8 +26,8 @@ const WEEKDAYS: Weekday[] = [
 
 const TeacherCard: React.FC<TeacherCardProps> = ({
   profile,
-  likeOpacity,
-  dislikeOpacity,
+  isFavorite,
+  favoriteButtonOpacity,
 }) => {
   const { containerStyles, boxShadowStyle, bioStyles } = useStyles();
 
@@ -58,7 +58,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({
       })}
       <CardFooter
         perHourCost={profile.perHourCost}
-        {...{ likeOpacity, dislikeOpacity }}
+        {...{ isFavorite, favoriteButtonOpacity }}
       />
     </Box>
   );
