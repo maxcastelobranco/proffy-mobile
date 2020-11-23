@@ -9,11 +9,20 @@ import responsivePixelSize from "../../../utils/responsivePixelSize";
 
 import { useStyles } from "./styles";
 
+interface AbsolutePosition {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
 interface NotificationProps {
   shouldRenderNotification: Animated.SharedValue<number>;
   message: string;
-  color: Colors;
   iconName: string;
+  iconColor: Colors;
+  backgroundColor: Colors;
+  position: Partial<AbsolutePosition>;
 }
 
 const ICON_SIZE = responsivePixelSize(24);
@@ -21,12 +30,15 @@ const ICON_SIZE = responsivePixelSize(24);
 const Notification: React.FC<NotificationProps> = ({
   shouldRenderNotification,
   message,
-  color,
   iconName,
+  iconColor,
+  backgroundColor,
+  position,
 }) => {
   const theme = useTheme<Theme>();
   const { styleSheet, messageStyles, NOTIFICATION_WIDTH } = useStyles();
-  const colorHexCode = theme.colors[color];
+  const backgroundColorHexCode = theme.colors[backgroundColor];
+  const iconColorHexCode = theme.colors[iconColor];
 
   const animatedStyle = useAnimatedStyle(() => {
     const translateX = NOTIFICATION_WIDTH + theme.spacing.s * 2;
@@ -40,8 +52,14 @@ const Notification: React.FC<NotificationProps> = ({
   });
 
   return (
-    <Animated.View style={[styleSheet.container, animatedStyle]}>
-      <Feather name={iconName} size={ICON_SIZE} color={colorHexCode} />
+    <Animated.View
+      style={[
+        styleSheet.container,
+        { ...position, backgroundColor: backgroundColorHexCode },
+        animatedStyle,
+      ]}
+    >
+      <Feather name={iconName} size={ICON_SIZE} color={iconColorHexCode} />
       <Text {...messageStyles}>{message}</Text>
     </Animated.View>
   );

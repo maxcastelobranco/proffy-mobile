@@ -20,6 +20,7 @@ import {
   User,
 } from "../../../../../context/reducers/authenticationReducer";
 import Notification from "../../../../../components/animated/Notification";
+import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 
 import { useStyles } from "./styles";
 
@@ -146,9 +147,11 @@ const Form: React.FC = () => {
       />
       <Notification
         {...{ shouldRenderNotification }}
+        position={{ top: -responsivePixelSize(379) + theme.spacing.s }}
         message={state.authentication.error}
-        color="title"
         iconName="alert-triangle"
+        iconColor="title"
+        backgroundColor="danger"
       />
     </Box>
   );

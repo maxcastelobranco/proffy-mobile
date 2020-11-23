@@ -12,14 +12,11 @@ export const useStyles = () => {
 
   const styleSheet = StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.danger,
       width: NOTIFICATION_WIDTH,
       height: NOTIFICATION_HEIGHT,
       borderRadius: theme.borderRadii.default,
       padding: theme.spacing.s,
       position: "absolute",
-      top: -responsivePixelSize(379) + theme.spacing.s,
-      left: theme.spacing.s,
       flexDirection: "row",
       alignItems: "center",
     },

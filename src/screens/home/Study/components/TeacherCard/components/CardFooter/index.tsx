@@ -51,14 +51,12 @@ const CardFooter: React.FC<CardFooterProps> = ({
         <Text {...moneyStyles}>${perHourCost}</Text>
       </Box>
       <Box {...rowStyles}>
-        <Animated.View style={animatedLikeStyle}>
-          <RectButton style={heartContainerStyles}>
-            <FontAwesome5
-              name="heart"
-              size={ICON_SIZE}
-              color={theme.colors.title}
-            />
-          </RectButton>
+        <Animated.View style={[heartContainerStyles, animatedLikeStyle]}>
+          <FontAwesome5
+            name="heart"
+            size={ICON_SIZE}
+            color={theme.colors.title}
+          />
         </Animated.View>
         <RectButton onPress={() => true} style={buttonStyles}>
           <FontAwesome5
@@ -68,14 +66,14 @@ const CardFooter: React.FC<CardFooterProps> = ({
           />
           <Text {...getInTouchStyles}>Get in touch</Text>
         </RectButton>
-        <Animated.View style={animatedDislikeStyle}>
-          <RectButton style={heartBrokenContainerStyles} onPress={() => true}>
-            <FontAwesome5
-              name="heart-broken"
-              size={ICON_SIZE}
-              color={theme.colors.title}
-            />
-          </RectButton>
+        <Animated.View
+          style={[heartBrokenContainerStyles, animatedDislikeStyle]}
+        >
+          <FontAwesome5
+            name="heart-broken"
+            size={ICON_SIZE}
+            color={theme.colors.title}
+          />
         </Animated.View>
       </Box>
     </>

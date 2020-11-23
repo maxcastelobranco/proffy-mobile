@@ -52,6 +52,7 @@ export const useGetFavorites = () => {
 
   return {
     favoriteTeachers,
+    setFavoriteTeachers,
     favoriteTeachersEmoji,
     loadingTeachers,
   };
