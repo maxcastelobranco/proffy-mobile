@@ -37,6 +37,12 @@ const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
   const [connections, setConnections] = useState(0);
 
   const navigateToStudyPage = () => {
+    dispatch({
+      type: ActiveIllustrationActionTypes.Update,
+      payload: {
+        name: "empty",
+      },
+    });
     navigation.navigate("Study");
   };
   const navigateToTeachPage = () => {

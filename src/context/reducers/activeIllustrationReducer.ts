@@ -3,6 +3,7 @@ import { Reducer } from "react";
 import { ActionMap, AppActions } from "../types";
 
 type IllustrationNames =
+  | "empty"
   | "onBoardingIllustration"
   | "loginIllustration"
   | "signUpSuccessIllustration"

@@ -29,6 +29,7 @@ import Loading from "../../../../../components/static/Loading";
 import { api } from "../../../../../services/api";
 import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
 import Notification from "../../../../../components/animated/Notification";
+import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
 
 import { useGetFavorites } from "./hooks/useGetFavorites";
 import { useStyles } from "./styles";
@@ -182,6 +183,12 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
+        dispatch({
+          type: ActiveIllustrationActionTypes.Update,
+          payload: {
+            name: "homeIllustration",
+          },
+        });
         navigation.navigate("Landing");
         return true;
       };
@@ -190,7 +197,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, [navigation])
+    }, [dispatch, navigation])
   );
 
   return (
