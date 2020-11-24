@@ -10,7 +10,7 @@ import { Box, Text, Theme } from "../../../../../../../theme";
 import { useStyles } from "./styles";
 
 interface CardFooterProps {
-  favoriteButtonOpacity: Animated.SharedValue<number>;
+  favoriteButtonAnimationDriver: Animated.SharedValue<number>;
   isFavorite: boolean;
   perHourCost?: number;
 }
@@ -18,7 +18,7 @@ interface CardFooterProps {
 const ICON_SIZE = responsivePixelSize(24);
 
 const CardFooter: React.FC<CardFooterProps> = ({
-  favoriteButtonOpacity,
+  favoriteButtonAnimationDriver,
   isFavorite,
   perHourCost = 0,
 }) => {
@@ -35,7 +35,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
   const animatedFavoriteButtonStyle = useAnimatedStyle(() => {
     return {
-      opacity: favoriteButtonOpacity.value,
+      opacity: favoriteButtonAnimationDriver.value,
     };
   });
 

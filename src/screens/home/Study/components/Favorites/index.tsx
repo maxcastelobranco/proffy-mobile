@@ -29,7 +29,6 @@ import Loading from "../../../../../components/static/Loading";
 import { api } from "../../../../../services/api";
 import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
 import Notification from "../../../../../components/animated/Notification";
-import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
 
 import { useGetFavorites } from "./hooks/useGetFavorites";
 import { useStyles } from "./styles";
@@ -78,7 +77,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const translationX = useSharedValue(0);
   const translationY = useSharedValue(0);
 
-  const dislikeOpacity = useDerivedValue(() => {
+  const dislikeAnimationDriver = useDerivedValue(() => {
     return interpolate(translationX.value, [-1 * (DELTA_X / 4), 0], [1, 0]);
   });
 
@@ -215,7 +214,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
             <TeacherCard
               {...{ profile }}
               isFavorite
-              favoriteButtonOpacity={dislikeOpacity}
+              favoriteButtonAnimationDriver={dislikeAnimationDriver}
             />
           </Animated.View>
         </PanGestureHandler>
