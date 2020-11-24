@@ -4,8 +4,6 @@ import * as faker from "faker";
 
 import Gear from "../../../../../../components/svgs/animated/Gear";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
-import Graph from "../../../../../../components/svgs/animated/Graph";
-import LoadingCircles from "../../../../../../components/svgs/animated/LoadingCircles";
 import SpeechBalloon from "../../../../../../components/svgs/animated/SpeechBalloon";
 import Clock from "../../../../../../components/svgs/animated/Clock";
 import CircleGrid from "../../../../../../components/animated/CircleGrid";
@@ -25,36 +23,17 @@ export const useParticles = () => {
       viewProps={{
         style: {
           position: "absolute",
-          top: responsivePixelSize(12),
-          right: responsivePixelSize(160),
+          top: responsivePixelSize(-12),
+          right: responsivePixelSize(150),
         },
-      }}
-    />,
-
-    <Graph
-      key={faker.random.uuid()}
-      viewProps={{
-        style: {
-          position: "absolute",
-          bottom: responsivePixelSize(60),
-          right: responsivePixelSize(182),
-        },
-      }}
-    />,
-    <LoadingCircles
-      key={faker.random.uuid()}
-      extraStyles={{
-        position: "absolute",
-        top: responsivePixelSize(50),
-        left: responsivePixelSize(271),
       }}
     />,
     <SpeechBalloon
       key={faker.random.uuid()}
       extraStyles={{
         position: "absolute",
-        top: responsivePixelSize(65),
-        left: responsivePixelSize(46),
+        top: responsivePixelSize(6),
+        left: responsivePixelSize(33),
       }}
     />,
     <Clock
@@ -63,7 +42,7 @@ export const useParticles = () => {
         style: {
           position: "absolute",
           top: responsivePixelSize(52),
-          right: responsivePixelSize(45),
+          right: responsivePixelSize(25),
         },
       }}
     />,
@@ -76,7 +55,7 @@ export const useParticles = () => {
       {...{
         position: "absolute",
         bottom: responsivePixelSize(16),
-        left: responsivePixelSize(170),
+        left: responsivePixelSize(140),
       }}
     />,
     <CircleGrid
@@ -87,7 +66,7 @@ export const useParticles = () => {
       circleSize={CIRCLE_SIZE}
       {...{
         position: "absolute",
-        top: responsivePixelSize(22),
+        top: responsivePixelSize(12),
         right: responsivePixelSize(54),
       }}
     />,
@@ -97,7 +76,7 @@ export const useParticles = () => {
         style: {
           position: "absolute",
           top: responsivePixelSize(112),
-          left: responsivePixelSize(24),
+          left: responsivePixelSize(34),
         },
       }}
       svgProps={{
@@ -111,7 +90,7 @@ export const useParticles = () => {
       viewProps={{
         style: {
           position: "absolute",
-          top: responsivePixelSize(124),
+          top: responsivePixelSize(0),
           right: responsivePixelSize(28),
         },
       }}
@@ -127,7 +106,7 @@ export const useParticles = () => {
         style: {
           position: "absolute",
           bottom: responsivePixelSize(12),
-          right: responsivePixelSize(180),
+          right: responsivePixelSize(150),
         },
       }}
       svgProps={{
@@ -141,8 +120,8 @@ export const useParticles = () => {
       viewProps={{
         style: {
           position: "absolute",
-          top: responsivePixelSize(12),
-          left: responsivePixelSize(114),
+          top: responsivePixelSize(-4),
+          right: responsivePixelSize(114),
         },
       }}
       svgProps={{

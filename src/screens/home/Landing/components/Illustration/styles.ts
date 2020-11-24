@@ -5,7 +5,8 @@ import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 
 export const useStyles = () => {
   const containerStyles: BoxProps<Theme> = {
-    height: responsivePixelSize(300),
+    marginTop: "m",
+    height: responsivePixelSize(220),
     position: "relative",
   };
 
