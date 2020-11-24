@@ -140,15 +140,13 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
 
       if (destiny === 0) {
         translationX.value = withSpring(destiny);
-      } else {
-        if (destiny === -MAX_TRANSLATE) {
-          removeFromFavorites();
-          animateNextCard(destiny);
-          showSuccessNotification();
-        } else if (destiny === MAX_TRANSLATE) {
-          setIndex((index + 1) % favoriteTeachers.length);
-          animateNextCard(destiny);
-        }
+      } else if (destiny === -MAX_TRANSLATE) {
+        removeFromFavorites();
+        animateNextCard(destiny);
+        showSuccessNotification();
+      } else if (destiny === MAX_TRANSLATE) {
+        setIndex((index + 1) % favoriteTeachers.length);
+        animateNextCard(destiny);
       }
 
       translationY.value = withSpring(0, {});

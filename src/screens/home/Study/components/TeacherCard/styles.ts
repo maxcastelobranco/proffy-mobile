@@ -2,10 +2,9 @@ import { BoxProps, TextProps, useTheme } from "@shopify/restyle";
 import { Dimensions, ViewStyle } from "react-native";
 
 import { Theme } from "../../../../../theme";
-import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 
-const { width } = Dimensions.get("window");
-export const CARD_HEIGHT = responsivePixelSize(600);
+const { width, height } = Dimensions.get("window");
+export const CARD_HEIGHT = height * 0.7;
 
 export const useStyles = () => {
   const theme = useTheme<Theme>();
