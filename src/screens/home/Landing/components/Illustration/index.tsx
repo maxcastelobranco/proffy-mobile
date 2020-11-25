@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Box } from "../../../../../theme";
-import HomeIllustration from "../../../../../components/svgs/static/HomeIllustration";
+import HomeIllustration from "../../../../../components/svgs/animated/HomeIllustration";
 
 import { useStyles } from "./styles";
 import { useParticles } from "./hooks/useParticles";

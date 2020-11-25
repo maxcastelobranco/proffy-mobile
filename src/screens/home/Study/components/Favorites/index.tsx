@@ -121,6 +121,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
       successNotification.value = withSpring(0);
     }, 2000);
   };
+
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent
   >({

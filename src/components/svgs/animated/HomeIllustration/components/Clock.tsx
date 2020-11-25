@@ -12,11 +12,10 @@ import Svg, { Path } from "react-native-svg";
 import { mix } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 
-import responsivePixelSize from "../../../utils/responsivePixelSize";
-import { transformOrigin } from "../../../utils/transformOrigin";
-import { Theme } from "../../../theme";
-
-import { AnimatedSvgProps } from "./types";
+import responsivePixelSize from "../../../../../utils/responsivePixelSize";
+import { transformOrigin } from "../../../../../utils/transformOrigin";
+import { Theme } from "../../../../../theme";
+import { AnimatedSvgProps } from "../../types";
 
 const POINTER_HEIGHT = responsivePixelSize(2);
 const CANVAS_SIZE = responsivePixelSize(40);

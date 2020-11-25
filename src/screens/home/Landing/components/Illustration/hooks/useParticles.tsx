@@ -2,10 +2,10 @@ import React from "react";
 import { useTheme } from "@shopify/restyle";
 import * as faker from "faker";
 
-import Gear from "../../../../../../components/svgs/animated/Gear";
+import Gear from "../../../../../../components/svgs/animated/HomeIllustration/components/Gear";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
 import SpeechBalloon from "../../../../../../components/svgs/animated/SpeechBalloon";
-import Clock from "../../../../../../components/svgs/animated/Clock";
+import Clock from "../../../../../../components/svgs/animated/HomeIllustration/components/Clock";
 import CircleGrid from "../../../../../../components/animated/CircleGrid";
 import OutlinedCircle from "../../../../../../components/svgs/animated/OutlinedCircle";
 import X from "../../../../../../components/svgs/animated/X";

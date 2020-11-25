@@ -1,149 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Svg, { Ellipse, Path, SvgProps } from "react-native-svg";
-import {
-  Easing,
-  repeat,
-  runOnUI,
-  useAnimatedProps,
-  useAnimatedRef,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { mix } from "react-native-redash";
 
-import { AnimatedG, AnimatedPath } from "../animated/reanimatedSvgComponents";
+import GraphPath from "./components/GraphPath";
+import LoadingCircles from "./components/LoadingCircles";
+import PlayButton1 from "./components/PlayButtons/PlayButton1";
+import PlayButton2 from "./components/PlayButtons/PlayButton2";
+import PlayButton3 from "./components/PlayButtons/PlayButton3";
 
 const HomeIllustration: React.FC<SvgProps> = (props) => {
-  const graphPathRef = useAnimatedRef<typeof AnimatedPath>();
-  const [graphPathLength, setGraphPathLength] = useState(0);
-  const graphPathAnimationDriver = useSharedValue(0);
-  const graphPathAnimatedProps = useAnimatedProps(() => {
-    return {
-      strokeDashoffset: mix(
-        graphPathAnimationDriver.value,
-        0.1,
-        graphPathLength - 0.1
-      ),
-    };
-  });
-  useEffect(() => {
-    runOnUI(() => {
-      "worklet";
-      graphPathAnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2400,
-          easing: Easing.bezier(0.65, 0, 0.35, 1),
-        }),
-        -1,
-        true
-      );
-    })();
-  }, [graphPathAnimationDriver]);
-
-  const circle1AnimationDriver = useSharedValue(0);
-  const circle2AnimationDriver = useSharedValue(0);
-  const circle3AnimationDriver = useSharedValue(0);
-  const circle1animatedProps = useAnimatedProps(() => {
-    const circle1StrokeWidth = mix(circle1AnimationDriver.value, 0, 2.4);
-    return {
-      strokeWidth: circle1StrokeWidth,
-      opacity: circle1AnimationDriver.value,
-    };
-  });
-  const circle2animatedProps = useAnimatedProps(() => {
-    const circle2StrokeWidth = mix(circle2AnimationDriver.value, 0, 2.4);
-    return {
-      strokeWidth: circle2StrokeWidth,
-      opacity: circle2AnimationDriver.value,
-    };
-  });
-  const circle3animatedProps = useAnimatedProps(() => {
-    const circle3StrokeWidth = mix(circle3AnimationDriver.value, 0, 2.4);
-    return {
-      strokeWidth: circle3StrokeWidth,
-      opacity: circle3AnimationDriver.value,
-    };
-  });
-  useEffect(() => {
-    runOnUI(() => {
-      "worklet";
-      circle1AnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2000,
-          easing: Easing.bezier(0.76, 0, 0.24, 1),
-        }),
-        -1,
-        true
-      );
-      circle2AnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2100,
-          easing: Easing.bezier(0.76, 0, 0.24, 1),
-        }),
-        -1,
-        true
-      );
-      circle3AnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2200,
-          easing: Easing.bezier(0.76, 0, 0.24, 1),
-        }),
-        -1,
-        true
-      );
-    })();
-  }, [circle1AnimationDriver, circle2AnimationDriver, circle3AnimationDriver]);
-
-  const play1AnimationDriver = useSharedValue(0);
-  const play2AnimationDriver = useSharedValue(0);
-  const play3AnimationDriver = useSharedValue(0);
-
-  const play1AnimatedProps = useAnimatedProps(() => {
-    return {
-      opacity: play1AnimationDriver.value,
-    };
-  });
-  const play2AnimatedProps = useAnimatedProps(() => {
-    return {
-      opacity: play2AnimationDriver.value,
-    };
-  });
-  const play3AnimatedProps = useAnimatedProps(() => {
-    return {
-      opacity: play3AnimationDriver.value,
-    };
-  });
-
-  useEffect(() => {
-    runOnUI(() => {
-      "worklet";
-      play1AnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2000,
-          easing: Easing.bezier(0.7, 0, 0.84, 0),
-        }),
-        -1,
-        true
-      );
-      play2AnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2200,
-          easing: Easing.bezier(0.7, 0, 0.84, 0),
-        }),
-        -1,
-        true
-      );
-      play3AnimationDriver.value = repeat(
-        withTiming(1, {
-          duration: 2400,
-          easing: Easing.bezier(0.7, 0, 0.84, 0),
-        }),
-        -1,
-        true
-      );
-    })();
-  }, [play1AnimationDriver, play2AnimationDriver, play3AnimationDriver]);
-
   return (
     <Svg viewBox="0 0 290.9745 173.2419" {...props}>
       <Path
@@ -429,19 +293,7 @@ const HomeIllustration: React.FC<SvgProps> = (props) => {
         ry="9.6927"
         fill="#e5e5ef"
       />
-      <AnimatedPath
-        id="AnimatedGraphPath"
-        animatedProps={graphPathAnimatedProps}
-        ref={graphPathRef}
-        onLayout={() => setGraphPathLength(graphPathRef.current.getTotalLength)}
-        d="M165.7441,133.5882a3.1345,3.1345,0,0,0,2.2588-1.0588,8.269,8.269,0,0,1,4.2511-2.7351c2.4722-.4548,2.6842-5.3031,5.6754-4.6414s3.3617,3.4677,7.2529,1.6942,2.8489-4.81,5.2147-4.4471,4.6324,3.9945,4.6589,5.6237,2.8288,1.7351,2.8288,1.7351"
-        transform="translate(0 -2.1379)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeDasharray={graphPathLength}
-      />
+      <GraphPath />
       <Path
         d="M34.2882,169.6l-.3332.82a67.5082,67.5082,0,0,0-16.4274-11.4162,63.1034,63.1034,0,0,0-8.7056-3.3756c-.408-.1257-1.2222-.064-.9855-.7824.18-.5477.7979-.1811,1.21-.06A61.5948,61.5948,0,0,1,32.647,168.0689C33.2078,168.5635,33.7418,169.0886,34.2882,169.6Z"
         transform="translate(0 -2.1379)"
@@ -487,30 +339,7 @@ const HomeIllustration: React.FC<SvgProps> = (props) => {
         transform="translate(0 -2.1379)"
         fill="#f1f1f9"
       />
-      <AnimatedPath
-        id="LoadingCircle1"
-        d="M148.9382,17.1289a1.8691,1.8691,0,1,1-1.9748-1.8032A1.8682,1.8682,0,0,1,148.9382,17.1289Z"
-        transform="translate(0 -2.1379)"
-        fill="#fff"
-        stroke="#e3e5ee"
-        animatedProps={circle1animatedProps}
-      />
-      <AnimatedPath
-        id="LoadingCircle2"
-        d="M155.2008,19.0246a1.8426,1.8426,0,1,1-.1124-3.6828,1.7627,1.7627,0,0,1,1.8861,1.7206A1.7911,1.7911,0,0,1,155.2008,19.0246Z"
-        transform="translate(0 -2.1379)"
-        fill="#fff"
-        stroke="#e3e5ee"
-        animatedProps={circle2animatedProps}
-      />
-      <AnimatedPath
-        id="LoadingCircle3"
-        d="M165.0857,17.1424a1.8743,1.8743,0,0,1-1.7787,1.8616,1.8317,1.8317,0,1,1-.0595-3.6606A1.8467,1.8467,0,0,1,165.0857,17.1424Z"
-        transform="translate(0 -2.1379)"
-        fill="#fff"
-        stroke="#e3e5ee"
-        animatedProps={circle3animatedProps}
-      />
+      <LoadingCircles />
       <Path
         d="M233.6673,82.6965l-3.9281-.0022a2.5263,2.5263,0,0,1-1.5544.36c-5.2066.0076-10.4131.0149-15.62-.0083-.8076-.0036-1.9374.1168-1.9436-1.023-.0065-1.2086,1.1632-.9521,1.9367-.9563,5.248-.0282,10.4963-.0114,15.7445-.0179a4.4229,4.4229,0,0,0,1.4792-.097c.4595-.3286.2327-.7545.1374-1.1393q-1.6234-6.5488-3.256-13.0953c-.1366-.5522-.6411-.9959-.4686-1.6314,1.2463-.3365,1.9247-.0445,2.3535,1.0582a5.1127,5.1127,0,0,1,.3817,2.5332q1.4181,5.9124,2.8343,11.8254a.8336.8336,0,0,0,.9492.7427c2.5289-.0453,5.0585-.051,7.5892-.0708a3.7375,3.7375,0,0,1,2.31.61Z"
         transform="translate(0 -2.1379)"
@@ -856,50 +685,13 @@ const HomeIllustration: React.FC<SvgProps> = (props) => {
         transform="translate(0 -2.1379)"
         fill="#06d362"
       />
-      <AnimatedG id="PlayButton3" animatedProps={play3AnimatedProps}>
-        <Path
-          d="M198.93,103.3434a8.79,8.79,0,0,1,8.8384-8.872,8.6253,8.6253,0,0,1,8.822,8.7815,8.7539,8.7539,0,0,1-8.9333,8.9041C202.7583,112.1277,198.6972,107.8874,198.93,103.3434Z"
-          transform="translate(0 -2.1379)"
-          fill="#c7bee4"
-        />
-        <Path
-          d="M214.4372,103.3033c.3416,3.8241-3.2365,6.9121-6.6675,6.8572a6.8479,6.8479,0,1,1-.011-13.6957C211.3993,96.425,214.7772,99.5084,214.4372,103.3033Z"
-          transform="translate(0 -2.1379)"
-          fill="#e5e5ef"
-        />
-        <Path
-          d="M204.4276,103.2608c0-.874-.0315-1.7494.0076-2.6217.0645-1.4415,1.1271-2.1517,2.3961-1.5163,1.6319.8171,3.2324,1.7089,4.7851,2.6678a1.6772,1.6772,0,0,1-.0948,2.84,40.2682,40.2682,0,0,1-4.5436,2.5812c-1.4616.7044-2.5333-.0756-2.5495-1.7041C204.421,104.7591,204.4272,104.01,204.4276,103.2608Z"
-          transform="translate(0 -2.1379)"
-          fill="#c7bee4"
-        />
-        <Path
-          d="M206.4654,101.1659c1.1086.6139,2.0483,1.1138,2.9662,1.6509.4755.2783.3888.5362-.088.7622-.9219.437-1.92,1.6866-2.6257,1.32-.7717-.4011-.175-1.88-.2861-2.8822A7.0744,7.0744,0,0,1,206.4654,101.1659Z"
-          transform="translate(0 -2.1379)"
-          fill="#e5e5ef"
-        />
-      </AnimatedG>
+      <PlayButton3 />
       <Path
         d="M210.0342,33.1453c-1.1487.66-2.0666,1.1969-2.9936,1.7172-.5269.2957-.65.0132-.6134-.4626.0781-1.02-.4476-2.4224.2254-2.9449.517-.4013,1.6546.7064,2.4925,1.19C209.3574,32.7677,209.5723,32.8857,210.0342,33.1453Z"
         transform="translate(0 -2.1379)"
         fill="#e5e5ef"
       />
-      <AnimatedG id="PlayButton2" animatedProps={play2AnimatedProps}>
-        <Path
-          d="M198.8615,68.5692A8.79,8.79,0,0,1,207.7,59.6971a8.6255,8.6255,0,0,1,8.822,8.7815,8.754,8.754,0,0,1-8.9333,8.9042C202.69,77.3534,198.6284,73.1131,198.8615,68.5692Z"
-          transform="translate(0 -2.1379)"
-          fill="#c7bee4"
-        />
-        <Path
-          d="M214.3684,68.5291c.3416,3.8241-3.2365,6.9121-6.6675,6.8571a6.8479,6.8479,0,1,1-.011-13.6957C211.3305,61.6507,214.7085,64.7342,214.3684,68.5291Z"
-          transform="translate(0 -2.1379)"
-          fill="#e5e5ef"
-        />
-        <Path
-          d="M204.3588,68.4865c0-.874-.0315-1.7494.0076-2.6216.0646-1.4416,1.1272-2.1518,2.3961-1.5164,1.6319.8171,3.2324,1.7089,4.7851,2.6679a1.6773,1.6773,0,0,1-.0947,2.84,40.2688,40.2688,0,0,1-4.5437,2.5811c-1.4615.7045-2.5333-.0756-2.5495-1.704C204.3522,69.9848,204.3584,69.2356,204.3588,68.4865Z"
-          transform="translate(0 -2.1379)"
-          fill="#c7bee4"
-        />
-      </AnimatedG>
+      <PlayButton2 />
       <Path
         d="M230.4262,81.1609c-5.9419-.0082-11.8844-.061-17.8253.0133-1.1759.0146-1.5069-.4829-1.6558-1.4257a16.4424,16.4424,0,0,0-.7516-3.0987c-.521-.32-.5426-.8674-.6311-1.3843-.2111-.8146-.3964-1.6361-.6367-2.4442-.4313-1.7954-.894-3.5824-1.338-5.374a2.6055,2.6055,0,0,1-.0421-1.8069,1.31,1.31,0,0,1,.6831-.5442c1.7871-.59,3.6282-.2067,5.4431-.3046a3.6636,3.6636,0,0,1,2.2467.361l6.0917-.0384q2.1228.0639,4.2463.1282a2.0392,2.0392,0,0,1,.6714,1.0152q1.7538,7.1792,3.5289,14.3532C230.5,80.7865,230.6713,80.9921,230.4262,81.1609Z"
         transform="translate(0 -2.1379)"
@@ -910,28 +702,7 @@ const HomeIllustration: React.FC<SvgProps> = (props) => {
         transform="translate(0 -2.1379)"
         fill="#fbdcc5"
       />
-      <AnimatedG id="PlayButton1" animatedProps={play1AnimatedProps}>
-        <Path
-          d="M199.55,33.527a8.79,8.79,0,0,1,8.8383-8.872,8.6254,8.6254,0,0,1,8.8221,8.7814,8.7541,8.7541,0,0,1-8.9333,8.9042C203.3781,42.3112,199.317,38.071,199.55,33.527Z"
-          transform="translate(0 -2.1379)"
-          fill="#c7bee4"
-        />
-        <Path
-          d="M215.0569,33.4869c.3416,3.8241-3.2365,6.9121-6.6674,6.8571a6.8478,6.8478,0,1,1-.0111-13.6956C212.0191,26.6085,215.397,29.692,215.0569,33.4869Z"
-          transform="translate(0 -2.1379)"
-          fill="#e5e5ef"
-        />
-        <Path
-          d="M205.0474,33.4443c0-.874-.0315-1.7494.0075-2.6216.0646-1.4416,1.1272-2.1517,2.3961-1.5164,1.632.8171,3.2325,1.709,4.7852,2.6679a1.6772,1.6772,0,0,1-.0948,2.84,40.2762,40.2762,0,0,1-4.5437,2.5812c-1.4615.7044-2.5333-.0757-2.5495-1.7041C205.0408,34.9426,205.047,34.1934,205.0474,33.4443Z"
-          transform="translate(0 -2.1379)"
-          fill="#c7bee4"
-        />
-        <Path
-          d="M207.0851,31.35c1.1086.6138,2.0483,1.1138,2.9663,1.6509.4754.2782.3887.5361-.088.7621-.922.4371-1.92,1.6867-2.6257,1.32-.7717-.4012-.175-1.8805-.2861-2.8822A7.09,7.09,0,0,1,207.0851,31.35Z"
-          transform="translate(0 -2.1379)"
-          fill="#e5e5ef"
-        />
-      </AnimatedG>
+      <PlayButton1 />
     </Svg>
   );
 };
