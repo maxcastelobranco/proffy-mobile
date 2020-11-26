@@ -21,15 +21,6 @@ export const useStyles = () => {
   };
   const chooseTextStyles: TextProps<Theme> = {
     variant: "regularTextMedium",
-    color: "inputText",
-  };
-  const optionTextStyles: TextProps<Theme> = {
-    variant: "regularTextMedium",
-    color: "baseTextDark",
-  };
-  const selectedOptionTextStyles: TextProps<Theme> = {
-    variant: "regularTextMedium",
-    fontFamily: "Poppins-SemiBold",
     color: "baseTextDark",
   };
 
@@ -37,7 +28,5 @@ export const useStyles = () => {
     containerStyles,
     labelStyles,
     chooseTextStyles,
-    optionTextStyles,
-    selectedOptionTextStyles,
   };
 };

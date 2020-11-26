@@ -12,6 +12,7 @@ import { Weekday } from "../../../screens/home/components/TeacherForm/components
 
 import FocusIndicator from "./components/FocusIndicator";
 import { useStyles } from "./styles";
+import OptionText from "./components/OptionText";
 
 interface SelectProps {
   options: string[];
@@ -34,13 +35,7 @@ const Select: React.FC<SelectProps> = ({
     defaultValue ? defaultValue : ""
   );
 
-  const {
-    containerStyles,
-    labelStyles,
-    chooseTextStyles,
-    optionTextStyles,
-    selectedOptionTextStyles,
-  } = useStyles();
+  const { containerStyles, labelStyles, chooseTextStyles } = useStyles();
 
   const openTimingTransition = useTiming(open);
   const openSpringTransition = useSpring(open);
@@ -95,7 +90,7 @@ const Select: React.FC<SelectProps> = ({
           }}
         >
           {options.map((option) => {
-            const isSelected = option === selectedOption;
+            const focused = option === selectedOption;
 
             return (
               <TouchableOpacity
@@ -107,13 +102,9 @@ const Select: React.FC<SelectProps> = ({
                   height={INPUT_HEIGHT * 0.6}
                   backgroundColor="title"
                 >
-                  {isSelected ? (
-                    <Text {...selectedOptionTextStyles}>{option}</Text>
-                  ) : (
-                    <Text {...optionTextStyles}>{option}</Text>
-                  )}
+                  <OptionText {...{ focused, option }} />
                 </Box>
-                {isSelected && <FocusIndicator />}
+                <FocusIndicator {...{ focused }} />
               </TouchableOpacity>
             );
           })}

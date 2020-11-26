@@ -106,8 +106,8 @@ const TeacherCardSkeleton: React.FC = () => {
         />
       </Box>
       <Skeleton
-        width={CARD_WIDTH - theme.spacing.m * 2}
-        height={responsivePixelSize(56)}
+        width={CARD_WIDTH - theme.spacing.l * 2}
+        height={responsivePixelSize(40)}
         boxProps={{
           backgroundColor: "secondary",
           borderRadius: "default",

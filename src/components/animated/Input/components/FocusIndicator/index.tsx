@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import { mixColor, useSpring } from "react-native-redash";
+import { mixColor, useSpring, useTiming } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 
 import { Theme } from "../../../../../theme";
@@ -25,7 +25,8 @@ const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused, error }) => {
     },
   });
 
-  const focusedTransition = useSpring(focused);
+  const focusedSpringTransition = useSpring(focused);
+  const focusedTimingTransition = useTiming(focused);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -33,8 +34,8 @@ const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused, error }) => {
         error === undefined
           ? theme.colors.primary
           : mixColor(error, theme.colors.primary, theme.colors.danger),
-      opacity: focusedTransition.value,
-      transform: [{ scale: focusedTransition.value }],
+      opacity: focusedTimingTransition.value,
+      transform: [{ scale: focusedSpringTransition.value }],
     };
   });
 
