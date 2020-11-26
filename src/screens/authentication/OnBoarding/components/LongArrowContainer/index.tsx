@@ -1,6 +1,9 @@
 import React from "react";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import { StyleSheet } from "react-native";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+import { Dimensions, StyleSheet } from "react-native";
 import { useTheme } from "@shopify/restyle";
 
 import LongArrow from "../../../../../components/svgs/static/LongArrow";
@@ -9,15 +12,27 @@ import { Theme } from "../../../../../theme";
 
 interface LongArrowContainerProps {
   onPress(): void;
-  opacity: Animated.SharedValue<number>;
+  index: number;
+  translationX: Animated.SharedValue<number>;
 }
+
+const { width } = Dimensions.get("window");
 
 const LongArrowContainer: React.FC<LongArrowContainerProps> = ({
   onPress,
-  opacity,
+  index,
+  translationX,
 }) => {
   const theme = useTheme<Theme>();
-  const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        translationX.value,
+        [(index - 1) * width, index * width, (index + 1) * width],
+        [0, 1, 0]
+      ),
+    };
+  });
 
   const { containerStyle } = StyleSheet.create({
     containerStyle: {

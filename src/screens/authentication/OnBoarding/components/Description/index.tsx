@@ -1,17 +1,31 @@
 import React from "react";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+import { Dimensions } from "react-native";
 
 import { Text } from "../../../../../theme";
 import { DescriptionProps } from "../types";
 
 import { useStyles } from "./styles";
 
+const { width } = Dimensions.get("window");
+
 const Description: React.FC<DescriptionProps> = ({
   descriptionText,
   index,
-  opacity,
+  translationX,
 }) => {
-  const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        translationX.value,
+        [(index - 1) * width, index * width, (index + 1) * width],
+        [0, 1, 0]
+      ),
+    };
+  });
   const { stylesheet, titleStyles, numerationStyles } = useStyles();
 
   return (

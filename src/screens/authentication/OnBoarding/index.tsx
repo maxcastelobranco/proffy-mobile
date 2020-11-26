@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Animated, {
-  interpolate,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -108,54 +107,32 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
         showsHorizontalScrollIndicator={false}
       >
         {slideData.map(
-          ({ SvgComponent, svgParticleColor, descriptionText }, index) => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            const opacity = useDerivedValue(() =>
-              interpolate(
-                translationX.value,
-                [(index - 1) * width, index * width, (index + 1) * width],
-                [0, 1, 0]
-              )
-            );
-
-            return (
-              <Slide
-                key={index}
-                {...{
-                  SvgComponent,
-                  svgParticleColor,
-                  backgroundColor,
-                  opacity,
-                  descriptionText,
-                  index,
-                  shouldDisplayIllustration,
-                }}
-              />
-            );
-          }
+          ({ SvgComponent, svgParticleColor, descriptionText }, index) => (
+            <Slide
+              key={index}
+              {...{
+                SvgComponent,
+                svgParticleColor,
+                backgroundColor,
+                translationX,
+                descriptionText,
+                index,
+                shouldDisplayIllustration,
+              }}
+            />
+          )
         )}
       </Animated.ScrollView>
       <Animated.View
         style={[styles.longArrowContainer, buttonsContainerAnimatedStyle]}
       >
-        {slideData.map((_, index) => {
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-          const opacity = useDerivedValue(() =>
-            interpolate(
-              translationX.value,
-              [(index - 1) * width, index * width, (index + 1) * width],
-              [0, 1, 0]
-            )
-          );
-
-          return (
-            <LongArrowContainer
-              key={index}
-              onPress={() => onPress(index)}
-              {...{ opacity }}
-            />
-          );
-        })}
+        {slideData.map((_, index) => (
+          <LongArrowContainer
+            key={index}
+            onPress={() => onPress(index)}
+            {...{ index, translationX }}
+          />
+        ))}
       </Animated.View>
       <Box {...progressIndicatorContainerStyles}>{progressIndicators}</Box>
     </>

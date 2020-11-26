@@ -10,7 +10,7 @@ const Slide: React.FC<SlideProps> = ({
   SvgComponent,
   svgParticleColor,
   backgroundColor,
-  opacity,
+  translationX,
   descriptionText,
   index,
   shouldDisplayIllustration,
@@ -26,7 +26,7 @@ const Slide: React.FC<SlideProps> = ({
           <Loading color="primary" />
         </Box>
       )}
-      <Description {...{ descriptionText, index, opacity }} />
+      <Description {...{ descriptionText, index, translationX }} />
     </Box>
   );
 };

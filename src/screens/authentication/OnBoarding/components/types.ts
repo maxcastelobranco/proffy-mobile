@@ -7,14 +7,14 @@ export interface SlideProps {
   SvgComponent: React.FC<AnimatedSvgProps>;
   svgParticleColor: string;
   backgroundColor: Animated.SharedValue<string>;
-  opacity: Animated.SharedValue<number>;
+  translationX: Animated.SharedValue<number>;
   descriptionText: string;
   index: number;
   shouldDisplayIllustration: boolean;
 }
 
 type UnusedIllustrationProps =
-  | "opacity"
+  | "translationX"
   | "descriptionText"
   | "index"
   | "shouldDisplayIllustration";
