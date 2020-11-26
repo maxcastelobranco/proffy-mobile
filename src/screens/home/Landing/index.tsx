@@ -46,17 +46,14 @@ const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
     navigation.navigate("Study");
   };
   const navigateToTeachPage = () => {
-    navigation.navigate("Teach");
-  };
-
-  useEffect(() => {
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {
-        name: "homeIllustration",
+        name: "empty",
       },
     });
-  }, [dispatch]);
+    navigation.navigate("Teach");
+  };
 
   useEffect(() => {
     api.get<User[]>("users").then(({ data }) => {

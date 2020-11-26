@@ -36,5 +36,6 @@ export const useStyles = () => {
     titleContainerStyles,
     nameStyles,
     subjectStyles,
+    AVATAR_WIDTH,
   };
 };

@@ -3,7 +3,10 @@ import Animated from "react-native-reanimated";
 
 import { Box, Text } from "../../../../../theme";
 import { User } from "../../../../../context/reducers/authenticationReducer";
-import { Weekday } from "../../../components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
+import {
+  Weekday,
+  WEEKDAYS,
+} from "../../../components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
 
 import { useStyles } from "./styles";
 import ScheduleDisplay from "./components/ScheduleDisplay";
@@ -15,14 +18,6 @@ interface TeacherCardProps {
   isFavorite: boolean;
   favoriteButtonAnimationDriver: Animated.SharedValue<number>;
 }
-
-const WEEKDAYS: Weekday[] = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-];
 
 const TeacherCard: React.FC<TeacherCardProps> = ({
   profile,

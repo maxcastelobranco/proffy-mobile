@@ -2,6 +2,7 @@ import { BoxProps, TextProps, useTheme } from "@shopify/restyle";
 import { ViewStyle } from "react-native";
 
 import { Theme } from "../../../../../theme";
+import responsivePixelSize from "../../../../../utils/responsivePixelSize";
 
 export const useStyles = () => {
   const theme = useTheme<Theme>();
@@ -28,11 +29,17 @@ export const useStyles = () => {
     marginTop: -theme.spacing.xl,
     alignSelf: "center",
   };
+  const skeletonContainerStyle: ViewStyle = {
+    position: "absolute",
+    left: theme.spacing.l,
+    top: responsivePixelSize(184),
+  };
 
   return {
     titleContainerStyles,
     pageTitleStyles,
     favoriteProffysStyles,
     cardContainerStyles,
+    skeletonContainerStyle,
   };
 };

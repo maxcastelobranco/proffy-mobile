@@ -5,7 +5,7 @@ export type Weekday =
   | "thursday"
   | "friday";
 
-export const weekdays: Weekday[] = [
+export const WEEKDAYS: Weekday[] = [
   "monday",
   "tuesday",
   "wednesday",

@@ -8,10 +8,11 @@ export const CARD_HEIGHT = height * 0.7;
 
 export const useStyles = () => {
   const theme = useTheme<Theme>();
+  const CARD_WIDTH = width - theme.spacing.l * 2;
 
   const containerStyles: BoxProps<Theme> = {
     justifyContent: "space-between",
-    maxWidth: width - theme.spacing.l * 2,
+    width: CARD_WIDTH,
     height: CARD_HEIGHT,
     paddingVertical: "s",
     paddingHorizontal: "ms",
@@ -40,5 +41,7 @@ export const useStyles = () => {
     containerStyles,
     boxShadowStyle,
     bioStyles,
+    CARD_WIDTH,
+    CARD_HEIGHT,
   };
 };
