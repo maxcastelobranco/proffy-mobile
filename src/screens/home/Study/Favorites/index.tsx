@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { BackHandler, Dimensions } from "react-native";
+import React, { useState } from "react";
 import { useTheme } from "@shopify/restyle";
 import Animated, {
   interpolate,
@@ -8,7 +7,6 @@ import Animated, {
   useSharedValue,
   withSpring,
   Extrapolate,
-  withTiming,
   Easing,
   useDerivedValue,
 } from "react-native-reanimated";
@@ -17,26 +15,31 @@ import {
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import { snapPoint } from "react-native-redash";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import { Box, Text, Theme } from "../../../../../theme";
-import { TabNavigationProps } from "../../../../../routes/tabs";
-import MainHeader from "../../../components/MainHeader";
-import TeacherCard from "../TeacherCard";
-import { useAppContext } from "../../../../../context";
-import { CARD_HEIGHT } from "../TeacherCard/styles";
-import { api } from "../../../../../services/api";
-import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
-import Notification from "../../../../../components/animated/Notification";
-import { ActiveIllustrationActionTypes } from "../../../../../context/reducers/activeIllustrationReducer";
-import TeacherCardSkeleton from "../TeacherCardSkeleton";
+import { Box, Text, Theme } from "../../../../theme";
+import { TabNavigationProps } from "../../../../routes/tabs";
+import MainHeader from "../../components/MainHeader";
+import TeacherCard from "../components/TeacherCard";
+import { useAppContext } from "../../../../context";
+import { api } from "../../../../services/api";
+import { AuthenticationActionTypes } from "../../../../context/reducers/authenticationReducer";
+import Notification from "../../../../components/animated/Notification";
+import TeacherCardSkeleton from "../components/TeacherCardSkeleton";
+import { useStyles } from "../styles";
+import {
+  ALPHA,
+  animateNextCard,
+  animateNextCardLoading,
+  DELTA_X,
+  HEADER_CONTAINER_HEIGHT,
+  MAX_TRANSLATE,
+  showSuccessNotification,
+  SNAP_POINTS,
+} from "../shared";
+import { useOnTabRenderEffect } from "../hooks/useOnTabRenderEffect";
 
 import { useGetFavorites } from "./hooks/useGetFavorites";
-import { useStyles } from "./styles";
 
-const { width, height } = Dimensions.get("window");
-const HEADER_CONTAINER_HEIGHT = height * 0.35;
-const ALPHA = Math.PI / 12;
 const timingConfig: Animated.WithTimingConfig = {
   duration: 500,
   easing: Easing.bezier(0.65, 0, 0.35, 1),
@@ -44,7 +47,6 @@ const timingConfig: Animated.WithTimingConfig = {
 
 const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const theme = useTheme<Theme>();
-  const navigation = useNavigation();
   const {
     titleContainerStyles,
     pageTitleStyles,
@@ -68,13 +70,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
   const [index, setIndex] = useState(0);
   const profile = favoriteTeachers[index];
 
-  const CARD_WIDTH = width - theme.spacing.l * 2;
-  const DELTA_X = CARD_WIDTH / 2;
-  const MAX_TRANSLATE = Math.round(
-    CARD_WIDTH * Math.cos(ALPHA) + CARD_HEIGHT * Math.sin(ALPHA)
-  );
-  const snapPoints = [-MAX_TRANSLATE, 0, MAX_TRANSLATE];
-
   const opacity = useSharedValue(0);
   const skeletonOpacity = useSharedValue(1);
   const scale = useSharedValue(0);
@@ -89,31 +84,21 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     setFavoriteTeachers((prevState) =>
       prevState.filter(({ id }) => id !== profile.id)
     );
-
     const updatedFavoriteTeacherIds = user.favoriteTeachersIds.filter(
       (id) => id !== profile.id
     );
-
     dispatch({
       type: AuthenticationActionTypes.UpdateUser,
       payload: {
         favoriteTeachersIds: updatedFavoriteTeacherIds,
       },
     });
-
     api.patch(`users/${user.id}`, {
       favoriteTeachersIds: updatedFavoriteTeacherIds,
     });
   };
 
   const successNotification = useSharedValue(0);
-  const showSuccessNotification = () => {
-    "worklet";
-    successNotification.value = withSpring(1);
-    setTimeout(() => {
-      successNotification.value = withSpring(0);
-    }, 2000);
-  };
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent
@@ -130,38 +115,36 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
       const destiny = snapPoint(
         translationX.value,
         event.velocityX,
-        snapPoints
+        SNAP_POINTS
       );
 
       if (destiny === 0) {
-        translationX.value = withSpring(destiny);
+        translationX.value = withSpring(destiny, { velocity: event.velocityX });
       } else if (destiny === -MAX_TRANSLATE) {
         removeFromFavorites();
-        showSuccessNotification();
-        translationX.value = withTiming(destiny, timingConfig, () => {
-          opacity.value = 0;
-          scale.value = 0;
-          translationX.value = 0;
+        showSuccessNotification(successNotification);
+        animateNextCardLoading({
+          destiny,
+          scale,
+          opacity,
+          skeletonOpacity,
+          translationX,
+          timingConfig,
         });
-        skeletonOpacity.value = withTiming(1, timingConfig);
-        setTimeout(() => {
-          skeletonOpacity.value = withTiming(0, timingConfig, () => {
-            opacity.value = withTiming(1, timingConfig);
-            scale.value = withSpring(1);
-          });
-        }, 500);
       } else if (destiny === MAX_TRANSLATE) {
-        setIndex((index + 1) % favoriteTeachers.length);
-        translationX.value = withTiming(destiny, timingConfig, () => {
-          opacity.value = 0;
-          scale.value = 0;
-          translationX.value = 0;
-          opacity.value = withTiming(1, timingConfig);
-          scale.value = withSpring(1);
+        animateNextCard({
+          index,
+          setIndex,
+          length: favoriteTeachers.length,
+          translationX,
+          scale,
+          opacity,
+          destiny,
+          timingConfig,
         });
       }
 
-      translationY.value = withSpring(0, {});
+      translationY.value = withSpring(0);
     },
   });
 
@@ -189,41 +172,13 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     };
   });
 
-  useEffect(() => {
-    dispatch({
-      type: ActiveIllustrationActionTypes.Update,
-      payload: {
-        name: "empty",
-      },
-    });
-  }, [dispatch]);
-  useEffect(() => {
-    if (!loadingTeachers) {
-      skeletonOpacity.value = withTiming(0, timingConfig, () => {
-        scale.value = withSpring(1);
-        opacity.value = withTiming(1, timingConfig);
-      });
-    }
-  }, [loadingTeachers, opacity, scale, skeletonOpacity]);
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        dispatch({
-          type: ActiveIllustrationActionTypes.Update,
-          payload: {
-            name: "homeIllustration",
-          },
-        });
-        navigation.navigate("Landing");
-        return true;
-      };
-
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
-
-      return () =>
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, [dispatch, navigation])
-  );
+  useOnTabRenderEffect({
+    loadingTeachers,
+    opacity,
+    scale,
+    skeletonOpacity,
+    timingConfig,
+  });
 
   return (
     <>

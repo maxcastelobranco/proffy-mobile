@@ -1,8 +1,8 @@
 import { BoxProps, TextProps, useTheme } from "@shopify/restyle";
 import { ViewStyle } from "react-native";
 
-import { Theme } from "../../../../../theme";
-import responsivePixelSize from "../../../../../utils/responsivePixelSize";
+import { Theme } from "../../../theme";
+import responsivePixelSize from "../../../utils/responsivePixelSize";
 
 export const useStyles = () => {
   const theme = useTheme<Theme>();

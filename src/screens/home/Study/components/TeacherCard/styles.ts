@@ -1,15 +1,13 @@
-import { BoxProps, TextProps, useTheme } from "@shopify/restyle";
+import { BoxProps, TextProps } from "@shopify/restyle";
 import { Dimensions, ViewStyle } from "react-native";
 
-import { Theme } from "../../../../../theme";
+import theme, { Theme } from "../../../../../theme";
 
 const { width, height } = Dimensions.get("window");
 export const CARD_HEIGHT = height * 0.7;
+export const CARD_WIDTH = width - theme.spacing.l * 2;
 
 export const useStyles = () => {
-  const theme = useTheme<Theme>();
-  const CARD_WIDTH = width - theme.spacing.l * 2;
-
   const containerStyles: BoxProps<Theme> = {
     justifyContent: "space-between",
     width: CARD_WIDTH,

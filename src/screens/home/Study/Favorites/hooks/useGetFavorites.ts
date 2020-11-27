@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 
-import { User } from "../../../../../../context/reducers/authenticationReducer";
-import { api } from "../../../../../../services/api";
-import { useAppContext } from "../../../../../../context";
+import { User } from "../../../../../context/reducers/authenticationReducer";
+import { api } from "../../../../../services/api";
+import { useAppContext } from "../../../../../context";
 
 export const useGetFavorites = () => {
   const {
