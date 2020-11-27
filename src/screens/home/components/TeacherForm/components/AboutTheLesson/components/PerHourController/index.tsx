@@ -4,13 +4,9 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
+import { BaseControllerProps } from "../../../../../../../../utils/types";
 
-interface PerHourControllerProps {
-  control: Control;
-  errors: FieldErrors;
-}
-
-const PerHourController: React.FC<PerHourControllerProps> = ({
+const PerHourController: React.FC<BaseControllerProps> = ({
   control,
   errors,
 }) => {

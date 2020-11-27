@@ -1,16 +1,12 @@
 import React from "react";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
+import { BaseControllerProps } from "../../../../../../../../utils/types";
 
-interface SubjectControllerProps {
-  control: Control;
-  errors: FieldErrors;
-}
-
-const SubjectController: React.FC<SubjectControllerProps> = ({
+const SubjectController: React.FC<BaseControllerProps> = ({
   control,
   errors,
 }) => {

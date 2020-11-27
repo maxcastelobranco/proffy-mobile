@@ -1,22 +1,15 @@
 import React from "react";
-import { Control, FieldErrors } from "react-hook-form";
-import { useTheme } from "@shopify/restyle";
 import { useSharedValue } from "react-native-reanimated";
 
 import Accordion from "../../../Accordion";
 import { INPUT_HEIGHT } from "../../../../../../components/animated/Input";
-import { Theme } from "../../../../../../theme";
+import { BaseControllerProps } from "../../../../../../utils/types";
 
 import FirstNameController from "./components/FirstNameController";
 import LastNameController from "./components/LastNameController";
 import EmailController from "./components/EmailController";
 import WhatsappController from "./components/WhatsappController";
 import BioController from "./components/BioController";
-
-interface UserDataProps {
-  control: Control;
-  errors: FieldErrors;
-}
 
 const controllers = [
   FirstNameController,
@@ -26,7 +19,7 @@ const controllers = [
   BioController,
 ];
 
-const UserData: React.FC<UserDataProps> = ({ control, errors }) => {
+const UserData: React.FC<BaseControllerProps> = ({ control, errors }) => {
   const height = useSharedValue(0);
   const childrenHeight = INPUT_HEIGHT * (controllers.length + 0.8);
 

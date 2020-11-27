@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Control, FieldErrors } from "react-hook-form";
 import * as faker from "faker";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import { FlatList } from "react-native";
@@ -10,6 +9,7 @@ import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
 import SlideInView, {
   MountState,
 } from "../../../../../../components/animated/SlideInView";
+import { BaseControllerProps } from "../../../../../../utils/types";
 
 import Schedule from "./components/Schedule";
 import { useStyles } from "./styles";
@@ -17,9 +17,7 @@ import { Weekday } from "./components/WeekdayController/weekdays";
 import AddButton from "./components/AddButton";
 import DeleteButton from "./components/DeleteButton";
 
-interface AvailableHoursProps {
-  control: Control;
-  errors: FieldErrors;
+interface AvailableHoursProps extends BaseControllerProps {
   flatListRef: React.RefObject<FlatList>;
 }
 

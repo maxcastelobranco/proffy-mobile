@@ -1,16 +1,12 @@
 import React from "react";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
+import { BaseControllerProps } from "../../../../../../../../utils/types";
 
-interface EmailControllerProps {
-  control: Control;
-  errors: FieldErrors;
-}
-
-const EmailController: React.FC<EmailControllerProps> = ({
+const EmailController: React.FC<BaseControllerProps> = ({
   control,
   errors,
 }) => {

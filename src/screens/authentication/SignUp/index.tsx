@@ -8,7 +8,7 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
-import { Control, SubmitHandler, useForm, FieldErrors } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
@@ -21,11 +21,6 @@ import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeI
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
-
-export interface SlideFormProps {
-  control: Control;
-  errors: FieldErrors;
-}
 
 interface FormValues {
   name: string;

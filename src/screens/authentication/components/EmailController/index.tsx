@@ -1,11 +1,10 @@
 import React from "react";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import Input from "../../../../components/animated/Input";
+import { BaseControllerProps } from "../../../../utils/types";
 
-interface EmailControllerProps {
-  control: Control;
-  errors: FieldErrors;
+interface EmailControllerProps extends BaseControllerProps {
   onSubmitEditing?: () => void;
   sharpBottom?: boolean;
 }

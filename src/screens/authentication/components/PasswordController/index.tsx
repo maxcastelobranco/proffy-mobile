@@ -1,12 +1,11 @@
 import React from "react";
 import { TextInput } from "react-native";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import Input from "../../../../components/animated/Input";
+import { BaseControllerProps } from "../../../../utils/types";
 
-interface PasswordControllerProps {
-  control: Control;
-  errors: FieldErrors;
+interface PasswordControllerProps extends BaseControllerProps {
   passwordInputRef: React.RefObject<TextInput>;
 }
 

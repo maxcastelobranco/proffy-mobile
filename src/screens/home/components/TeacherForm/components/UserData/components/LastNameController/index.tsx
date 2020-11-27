@@ -1,16 +1,12 @@
 import React from "react";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
+import { BaseControllerProps } from "../../../../../../../../utils/types";
 
-interface LastNameControllerProps {
-  control: Control;
-  errors: FieldErrors;
-}
-
-const LastNameController: React.FC<LastNameControllerProps> = ({
+const LastNameController: React.FC<BaseControllerProps> = ({
   control,
   errors,
 }) => {
