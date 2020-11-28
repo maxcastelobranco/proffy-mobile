@@ -11,7 +11,7 @@ const WeekdayController: React.FC<BaseControllerProps> = ({ control }) => {
       name="weekday"
       defaultValue=""
       render={({ onChange }) => (
-        <Select label="weekday" options={WEEKDAYS} {...{ onChange }} />
+        <Select label="Weekday" options={WEEKDAYS} {...{ onChange }} />
       )}
       {...{ control }}
     />

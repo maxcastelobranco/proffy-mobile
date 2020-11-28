@@ -1,5 +1,5 @@
 import { Dimensions, ViewStyle } from "react-native";
-import { useTheme } from "@shopify/restyle";
+import { TextProps, useTheme } from "@shopify/restyle";
 
 import { Theme } from "../../../../../../theme";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
@@ -20,7 +20,7 @@ export const useStyles = () => {
     borderTopRightRadius: responsivePixelSize(24),
     borderTopLeftRadius: responsivePixelSize(24),
     paddingHorizontal: theme.spacing.l,
-    paddingVertical: theme.spacing.m,
+    paddingTop: theme.spacing.s,
 
     shadowColor: "#000",
     shadowOffset: {
@@ -37,10 +37,23 @@ export const useStyles = () => {
     flex: 0,
     marginBottom: theme.spacing.s,
   };
+  const buttonStyles: ViewStyle = {
+    flexDirection: "row",
+    backgroundColor: theme.colors.secondary,
+    marginHorizontal: theme.spacing.l,
+    marginTop: theme.spacing.m,
+    paddingVertical: theme.spacing.m,
+  };
+  const buttonTextStyles: TextProps<Theme> = {
+    variant: "buttons",
+    marginLeft: "xs",
+  };
 
   return {
     SHEET_HEIGHT,
     containerStyles,
     extraButtonStyles,
+    buttonStyles,
+    buttonTextStyles,
   };
 };

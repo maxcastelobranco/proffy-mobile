@@ -26,7 +26,7 @@ interface AnimateNextCardParams {
 export interface FormValues {
   subject: string;
   weekday: string;
-  hour: number;
+  hour: string;
 }
 
 const { height } = Dimensions.get("window");

@@ -13,7 +13,7 @@ const HourController: React.FC<BaseControllerProps> = ({ control }) => {
   return (
     <Controller
       name="hour"
-      defaultValue={8}
+      defaultValue=""
       render={({ onChange }) => (
         <Select label="Hour" {...{ onChange, options }} />
       )}

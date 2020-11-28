@@ -10,7 +10,7 @@ import { Feather } from "@expo/vector-icons";
 import { mix } from "react-native-redash";
 
 import { BaseControllerProps } from "../../../../../../utils/types";
-import { Theme } from "../../../../../../theme";
+import { Theme, Text } from "../../../../../../theme";
 import RippleButton from "../../../../../../components/static/RippleButton";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
 
@@ -24,7 +24,8 @@ interface FilterSheetProps extends BaseControllerProps {
   onPress(): void;
 }
 
-const ICON_SIZE = responsivePixelSize(32);
+const CLOSE_ICON_SIZE = responsivePixelSize(32);
+const SEARCH_ICON_SIZE = responsivePixelSize(28);
 
 const FilterSheet: React.FC<FilterSheetProps> = ({
   showFilter,
@@ -33,7 +34,13 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
   errors,
 }) => {
   const theme = useTheme<Theme>();
-  const { SHEET_HEIGHT, containerStyles, extraButtonStyles } = useStyles();
+  const {
+    SHEET_HEIGHT,
+    containerStyles,
+    extraButtonStyles,
+    buttonStyles,
+    buttonTextStyles,
+  } = useStyles();
   const closeThisShitDown = () => {
     showFilter.value = withTiming(0);
   };
@@ -45,7 +52,7 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
       translateY: mix(
         showFilterSpringTransition.value,
         SHEET_HEIGHT,
-        SHEET_HEIGHT * 0.28
+        SHEET_HEIGHT * 0.32
       ),
     };
   });
@@ -55,13 +62,20 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
         <Feather
           name="x-circle"
           color={theme.colors.primaryDark}
-          size={ICON_SIZE}
+          size={CLOSE_ICON_SIZE}
         />
       </RippleButton>
       <SubjectController {...{ control, errors }} />
       <WeekdayController {...{ control, errors }} />
       <HourController {...{ control, errors }} />
-      {/*TODO: Submit Button  */}
+      <RippleButton {...{ onPress }} extraButtonStyles={buttonStyles}>
+        <Feather
+          name="search"
+          size={SEARCH_ICON_SIZE}
+          color={theme.colors.title}
+        />
+        <Text {...buttonTextStyles}>Search</Text>
+      </RippleButton>
     </Animated.View>
   );
 };

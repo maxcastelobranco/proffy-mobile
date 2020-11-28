@@ -8,6 +8,7 @@ import Animated, {
   withSpring,
   Extrapolate,
   useAnimatedGestureHandler,
+  withTiming,
 } from "react-native-reanimated";
 import { useTheme } from "@shopify/restyle";
 import {
@@ -36,7 +37,10 @@ import { useOnTabRenderEffect } from "../../hooks/useOnTabRenderEffect";
 import TeacherCardSkeleton from "../../components/TeacherCardSkeleton";
 import Notification from "../../../../../components/animated/Notification";
 import { useAppContext } from "../../../../../context";
-import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
+import {
+  AuthenticationActionTypes,
+  User,
+} from "../../../../../context/reducers/authenticationReducer";
 import { api } from "../../../../../services/api";
 import ShowFilter from "../../components/Filter/ShowFilter";
 import FilterSheet from "../../components/Filter/FilterSheet";
@@ -65,7 +69,12 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
     },
     dispatch,
   } = useAppContext();
-  const { loadingTeachers, teachersEmoji, teachers } = useGetTeachers();
+  const {
+    loadingTeachers,
+    teachersEmoji,
+    teachers,
+    setTeachers,
+  } = useGetTeachers();
 
   const [index, setIndex] = useState(0);
   const profile = teachers[index];
@@ -182,8 +191,47 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
     mode: "onSubmit",
     criteriaMode: "all",
   });
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    showFilter.value = withTiming(0, timingConfig);
+
+    opacity.value = withTiming(0, timingConfig, () => {
+      skeletonOpacity.value = withTiming(1, timingConfig, () => {
+        setTimeout(() => {
+          skeletonOpacity.value = withTiming(0, timingConfig, () => {
+            opacity.value = withTiming(1, timingConfig);
+          });
+        }, 1000);
+      });
+    });
+
+    setIndex(0);
+    const allTeachers = await api.get<User[]>("users");
+    const filteredTeachers = allTeachers.data
+      .filter((teacher) => {
+        if (data.subject === "") {
+          return true;
+        }
+        return teacher.subject
+          ?.toLowerCase()
+          .includes(data.subject.toLowerCase());
+      })
+      .filter((teacher) => {
+        if (data.weekday === "") {
+          return true;
+        }
+        return teacher.schedule.find(
+          (schedule) => schedule.weekday === data.weekday
+        );
+      })
+      .filter((teacher) => {
+        if (data.hour === "") {
+          return true;
+        }
+        return teacher.schedule.find(
+          (schedule) => schedule.from === Number(data.hour)
+        );
+      });
+    setTeachers(filteredTeachers);
   };
 
   return (
@@ -201,7 +249,7 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
       <Animated.View style={[skeletonContainerStyle, animatedSkeletonStyle]}>
         <TeacherCardSkeleton />
       </Animated.View>
-      {!loadingTeachers && (
+      {!loadingTeachers && teachers.length > 0 && (
         <PanGestureHandler {...{ onGestureEvent }}>
           <Animated.View style={[animatedStyle, cardContainerStyles]}>
             <TeacherCard

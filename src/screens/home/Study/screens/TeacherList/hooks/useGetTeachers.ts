@@ -15,18 +15,19 @@ export const useGetTeachers = () => {
   useEffect(() => {
     getTeachers().then(({ data }) => {
       setTeachers(data);
-      if (teachers.length <= 1) {
+      if (data.length <= 1) {
         setTeachersEmoji("😐");
-      } else if (teachers.length > 1) {
+      } else if (data.length > 1) {
         setTeachersEmoji("😍");
       }
       setLoadingTeachers(false);
     });
-  }, [teachers.length]);
+  }, []);
 
   return {
     loadingTeachers,
     teachersEmoji,
     teachers,
+    setTeachers,
   };
 };
