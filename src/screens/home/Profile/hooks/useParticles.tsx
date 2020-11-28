@@ -1,6 +1,5 @@
 import React from "react";
 import { useTheme } from "@shopify/restyle";
-import * as faker from "faker";
 
 import OutlinedCircle from "../../../../components/svgs/animated/OutlinedCircle";
 import responsivePixelSize from "../../../../utils/responsivePixelSize";
@@ -13,7 +12,7 @@ export const useParticles = () => {
 
   return [
     <OutlinedCircle
-      key={faker.random.uuid()}
+      key="0"
       viewProps={{
         style: {
           position: "absolute",
@@ -24,7 +23,7 @@ export const useParticles = () => {
       svgProps={{ stroke: theme.colors.secondary }}
     />,
     <X
-      key={faker.random.uuid()}
+      key="1"
       viewProps={{
         style: {
           position: "absolute",
@@ -35,7 +34,7 @@ export const useParticles = () => {
       svgProps={{ stroke: theme.colors.secondary }}
     />,
     <X
-      key={faker.random.uuid()}
+      key="2"
       viewProps={{
         style: {
           position: "absolute",
@@ -46,7 +45,7 @@ export const useParticles = () => {
       svgProps={{ stroke: theme.colors.secondary }}
     />,
     <CircleGrid
-      key={faker.random.uuid()}
+      key="3"
       rows={3}
       columns={2}
       circleColor={theme.colors.primaryLight}
@@ -58,7 +57,7 @@ export const useParticles = () => {
       }}
     />,
     <CircleGrid
-      key={faker.random.uuid()}
+      key="4"
       rows={3}
       columns={2}
       circleColor={theme.colors.primaryLight}

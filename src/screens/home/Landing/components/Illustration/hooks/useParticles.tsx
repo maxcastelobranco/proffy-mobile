@@ -1,6 +1,5 @@
 import React from "react";
 import { useTheme } from "@shopify/restyle";
-import * as faker from "faker";
 
 import Gear from "../../../../../../components/svgs/animated/HomeIllustration/components/Gear";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
@@ -19,7 +18,7 @@ export const useParticles = () => {
 
   return [
     <Gear
-      key={faker.random.uuid()}
+      key="0"
       viewProps={{
         style: {
           position: "absolute",
@@ -29,7 +28,7 @@ export const useParticles = () => {
       }}
     />,
     <SpeechBalloon
-      key={faker.random.uuid()}
+      key="1"
       extraStyles={{
         position: "absolute",
         top: responsivePixelSize(6),
@@ -37,7 +36,7 @@ export const useParticles = () => {
       }}
     />,
     <Clock
-      key={faker.random.uuid()}
+      key="2"
       viewProps={{
         style: {
           position: "absolute",
@@ -47,7 +46,7 @@ export const useParticles = () => {
       }}
     />,
     <CircleGrid
-      key={faker.random.uuid()}
+      key="3"
       rows={2}
       columns={4}
       circleColor={theme.colors.primaryLight}
@@ -58,20 +57,8 @@ export const useParticles = () => {
         left: responsivePixelSize(140),
       }}
     />,
-    <CircleGrid
-      key={faker.random.uuid()}
-      rows={2}
-      columns={3}
-      circleColor={theme.colors.primaryLight}
-      circleSize={CIRCLE_SIZE}
-      {...{
-        position: "absolute",
-        top: responsivePixelSize(12),
-        right: responsivePixelSize(54),
-      }}
-    />,
     <OutlinedCircle
-      key={faker.random.uuid()}
+      key="4"
       viewProps={{
         style: {
           position: "absolute",
@@ -85,43 +72,13 @@ export const useParticles = () => {
         height: SVG_PARTICLE_SIZE,
       }}
     />,
-    <OutlinedCircle
-      key={faker.random.uuid()}
-      viewProps={{
-        style: {
-          position: "absolute",
-          top: responsivePixelSize(0),
-          right: responsivePixelSize(28),
-        },
-      }}
-      svgProps={{
-        stroke: theme.colors.secondary,
-        width: SVG_PARTICLE_SIZE,
-        height: SVG_PARTICLE_SIZE,
-      }}
-    />,
     <X
-      key={faker.random.uuid()}
+      key="5"
       viewProps={{
         style: {
           position: "absolute",
           bottom: responsivePixelSize(12),
           right: responsivePixelSize(150),
-        },
-      }}
-      svgProps={{
-        stroke: theme.colors.secondary,
-        width: SVG_PARTICLE_SIZE,
-        height: SVG_PARTICLE_SIZE,
-      }}
-    />,
-    <X
-      key={faker.random.uuid()}
-      viewProps={{
-        style: {
-          position: "absolute",
-          top: responsivePixelSize(-4),
-          right: responsivePixelSize(114),
         },
       }}
       svgProps={{

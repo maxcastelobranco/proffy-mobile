@@ -75,7 +75,9 @@ const Select: React.FC<SelectProps> = ({
             <Feather
               name="chevrons-up"
               size={ICON_SIZE}
-              color={theme.colors.titleDark}
+              color={
+                open ? theme.colors.primary : theme.colors.complementTextDark
+              }
             />
           </Animated.View>
         </Box>
@@ -100,7 +102,7 @@ const Select: React.FC<SelectProps> = ({
                 <Box
                   {...containerStyles}
                   height={INPUT_HEIGHT * 0.6}
-                  backgroundColor="title"
+                  backgroundColor="background4"
                 >
                   <OptionText {...{ focused, option }} />
                 </Box>

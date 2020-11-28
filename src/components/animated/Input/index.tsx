@@ -24,7 +24,7 @@ interface InputProps {
     value: string;
     onChange(text: string): void;
     onBlur(): void;
-    error: FieldError | undefined;
+    error?: FieldError;
     iconName: string;
     placeholderText: string;
     extraContainerStyles?: BoxProps<Theme>;

@@ -8,8 +8,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 
 import TabBar from "../screens/home/Study/components/TabBar";
-import TeacherList from "../screens/home/Study/TeacherList";
-import Favorites from "../screens/home/Study/Favorites";
+import TeacherList from "../screens/home/Study/screens/TeacherList";
+import Favorites from "../screens/home/Study/screens/Favorites";
 
 import { HomeRoutes } from "./home";
 

@@ -56,7 +56,7 @@ const theme = createTheme({
     ml: responsivePixelSize(32),
     l: responsivePixelSize(40),
     xl: responsivePixelSize(80),
-    xxl: responsivePixelSize(96),
+    xxl: responsivePixelSize(92),
   },
   borderRadii: {
     zero: 0,
@@ -140,6 +140,11 @@ const theme = createTheme({
       fontSize: responsivePixelSize(24),
       lineHeight: responsivePixelSize(25),
       color: "title",
+    },
+    filterDescription: {
+      fontFamily: "Archivo-Regular",
+      fontSize: responsivePixelSize(20),
+      color: "baseText",
     },
   },
   breakpoints: {},

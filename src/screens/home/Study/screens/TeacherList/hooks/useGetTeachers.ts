@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { User } from "../../../../../context/reducers/authenticationReducer";
-import { api } from "../../../../../services/api";
+import { User } from "../../../../../../context/reducers/authenticationReducer";
+import { api } from "../../../../../../services/api";
 
 export const useGetTeachers = () => {
   const [loadingTeachers, setLoadingTeachers] = useState(true);

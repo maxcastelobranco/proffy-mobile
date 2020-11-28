@@ -22,9 +22,16 @@ interface AnimateNextCardParams {
   scale: Animated.SharedValue<number>;
   timingConfig: Animated.WithTimingConfig;
 }
+
+export interface FormValues {
+  subject: string;
+  weekday: string;
+  hour: number;
+}
+
 const { height } = Dimensions.get("window");
 
-export const HEADER_CONTAINER_HEIGHT = height * 0.35;
+export const HEADER_CONTAINER_HEIGHT = height * 0.4;
 export const ALPHA = Math.PI / 12;
 export const DELTA_X = CARD_WIDTH / 2;
 export const MAX_TRANSLATE = Math.round(

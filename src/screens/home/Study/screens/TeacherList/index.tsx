@@ -15,28 +15,32 @@ import {
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import { snapPoint } from "react-native-redash";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-import { Box, Text, Theme } from "../../../../theme";
-import { TabNavigationProps } from "../../../../routes/tabs";
-import MainHeader from "../../components/MainHeader";
-import { useStyles } from "../styles";
+import { Box, Text, Theme } from "../../../../../theme";
+import { TabNavigationProps } from "../../../../../routes/tabs";
+import MainHeader from "../../../components/MainHeader";
+import { useStyles } from "../../styles";
 import {
   ALPHA,
   animateNextCard,
   animateNextCardLoading,
   DELTA_X,
-  HEADER_CONTAINER_HEIGHT,
+  FormValues,
   MAX_TRANSLATE,
   showSuccessNotification,
   SNAP_POINTS,
-} from "../shared";
-import TeacherCard from "../components/TeacherCard";
-import { useOnTabRenderEffect } from "../hooks/useOnTabRenderEffect";
-import TeacherCardSkeleton from "../components/TeacherCardSkeleton";
-import Notification from "../../../../components/animated/Notification";
-import { useAppContext } from "../../../../context";
-import { AuthenticationActionTypes } from "../../../../context/reducers/authenticationReducer";
-import { api } from "../../../../services/api";
+} from "../../shared";
+import TeacherCard from "../../components/TeacherCard";
+import { useOnTabRenderEffect } from "../../hooks/useOnTabRenderEffect";
+import TeacherCardSkeleton from "../../components/TeacherCardSkeleton";
+import Notification from "../../../../../components/animated/Notification";
+import { useAppContext } from "../../../../../context";
+import { AuthenticationActionTypes } from "../../../../../context/reducers/authenticationReducer";
+import { api } from "../../../../../services/api";
+import ShowFilter from "../../components/Filter/ShowFilter";
+import FilterSheet from "../../components/Filter/FilterSheet";
+import Overlay from "../../components/Overlay";
 
 import { useGetTeachers } from "./hooks/useGetTeachers";
 
@@ -48,6 +52,7 @@ const timingConfig: Animated.WithTimingConfig = {
 const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
   const theme = useTheme<Theme>();
   const {
+    headerContainerStyles,
     titleContainerStyles,
     pageTitleStyles,
     favoriteProffysStyles,
@@ -172,9 +177,18 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
     timingConfig,
   });
 
+  const showFilter = useSharedValue(0);
+  const { control, errors, handleSubmit } = useForm({
+    mode: "onSubmit",
+    criteriaMode: "all",
+  });
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
-      <Box height={HEADER_CONTAINER_HEIGHT} backgroundColor="primary">
+      <Box {...headerContainerStyles}>
         <MainHeader label="Study" />
         <Box {...titleContainerStyles}>
           <Text {...pageTitleStyles}>Available{"\n"}Proffys</Text>
@@ -182,6 +196,7 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
             {`${teachersEmoji} ${teachers.length} Proffys`}
           </Text>
         </Box>
+        <ShowFilter {...{ showFilter }} />
       </Box>
       <Animated.View style={[skeletonContainerStyle, animatedSkeletonStyle]}>
         <TeacherCardSkeleton />
@@ -208,6 +223,11 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
           right: theme.spacing.m,
         }}
       />
+      <FilterSheet
+        onPress={handleSubmit(onSubmit)}
+        {...{ showFilter, control, errors }}
+      />
+      <Overlay show={showFilter} />
     </>
   );
 };

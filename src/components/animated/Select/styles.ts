@@ -1,5 +1,4 @@
 import { BoxProps, TextProps } from "@shopify/restyle";
-import { StyleSheet } from "react-native";
 
 import { Theme } from "../../../theme";
 import { INPUT_HEIGHT } from "../Input";
@@ -10,7 +9,8 @@ export const useStyles = () => {
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "default",
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
+    borderColor: "background1",
     padding: "s",
     height: INPUT_HEIGHT * 0.6,
   };
@@ -21,7 +21,7 @@ export const useStyles = () => {
   };
   const chooseTextStyles: TextProps<Theme> = {
     variant: "regularTextMedium",
-    color: "baseTextDark",
+    color: "inputText",
   };
 
   return {
