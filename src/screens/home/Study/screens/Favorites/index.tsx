@@ -9,14 +9,12 @@ import Animated, {
   Extrapolate,
   Easing,
   useDerivedValue,
-  withTiming,
 } from "react-native-reanimated";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import { snapPoint } from "react-native-redash";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Box, Text, Theme } from "../../../../../theme";
 import { TabNavigationProps } from "../../../../../routes/tabs";
@@ -36,7 +34,6 @@ import {
   animateNextCard,
   animateNextCardLoading,
   DELTA_X,
-  FormValues,
   MAX_TRANSLATE,
   showSuccessNotification,
   SNAP_POINTS,
@@ -45,6 +42,7 @@ import { useOnTabRenderEffect } from "../../hooks/useOnTabRenderEffect";
 import ShowFilter from "../../components/Filter/ShowFilter";
 import FilterSheet from "../../components/Filter/FilterSheet";
 import Overlay from "../../components/Overlay";
+import { useFilterBoilerplate } from "../../hooks/useFilterBoilerplate";
 
 import { useGetFavorites } from "./hooks/useGetFavorites";
 
@@ -181,6 +179,25 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     };
   });
 
+  const { showFilter, control, errors, filterTeachers } = useFilterBoilerplate({
+    scale,
+    opacity,
+    skeletonOpacity,
+    setIndex,
+    timingConfig,
+    getFavoriteTeachers: () =>
+      Promise.all(
+        user.favoriteTeachersIds.map((id) =>
+          api.get<User[]>("users", {
+            params: {
+              id,
+            },
+          })
+        )
+      ),
+    updateTeachers: setFavoriteTeachers,
+  });
+
   useOnTabRenderEffect({
     loadingTeachers,
     opacity,
@@ -189,64 +206,6 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
     timingConfig,
   });
 
-  const showFilter = useSharedValue(0);
-  const { control, errors, handleSubmit } = useForm({
-    mode: "onSubmit",
-    criteriaMode: "all",
-  });
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    showFilter.value = withTiming(0, timingConfig);
-
-    opacity.value = withTiming(0, timingConfig, () => {
-      skeletonOpacity.value = withTiming(1, timingConfig, () => {
-        setTimeout(() => {
-          skeletonOpacity.value = withTiming(0, timingConfig, () => {
-            opacity.value = withTiming(1, timingConfig);
-          });
-        }, 1000);
-      });
-    });
-
-    setIndex(0);
-
-    const allFavorites = await Promise.all(
-      user.favoriteTeachersIds.map((id) =>
-        api.get<User[]>("users", {
-          params: {
-            id,
-          },
-        })
-      )
-    );
-
-    const filteredTeachers = allFavorites
-      .map((favorite) => favorite.data[0])
-      .filter((teacher) => {
-        if (data.subject === "") {
-          return true;
-        }
-        return teacher.subject
-          ?.toLowerCase()
-          .includes(data.subject.toLowerCase());
-      })
-      .filter((teacher) => {
-        if (data.weekday === "") {
-          return true;
-        }
-        return teacher.schedule.find(
-          (schedule) => schedule.weekday === data.weekday
-        );
-      })
-      .filter((teacher) => {
-        if (data.hour === "") {
-          return true;
-        }
-        return teacher.schedule.find(
-          (schedule) => schedule.from === Number(data.hour)
-        );
-      });
-    setFavoriteTeachers(filteredTeachers);
-  };
   return (
     <>
       <Box {...headerContainerStyles}>
@@ -285,7 +244,7 @@ const Favorites: React.FC<TabNavigationProps<"Favorites">> = () => {
         }}
       />
       <FilterSheet
-        onPress={handleSubmit(onSubmit)}
+        onPress={filterTeachers}
         {...{ showFilter, control, errors }}
       />
       <Overlay show={showFilter} />

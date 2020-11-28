@@ -39,7 +39,7 @@ export const useStyles = () => {
   const getInTouchStyles: TextProps<Theme> = {
     variant: "smallTitle",
     color: "title",
-    marginLeft: "xs",
+    marginHorizontal: "xs",
   };
   const baseHeartContainerStyles: ViewStyle = {
     alignItems: "center",

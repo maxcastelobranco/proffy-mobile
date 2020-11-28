@@ -8,7 +8,6 @@ import Animated, {
   withSpring,
   Extrapolate,
   useAnimatedGestureHandler,
-  withTiming,
 } from "react-native-reanimated";
 import { useTheme } from "@shopify/restyle";
 import {
@@ -16,7 +15,6 @@ import {
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import { snapPoint } from "react-native-redash";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Box, Text, Theme } from "../../../../../theme";
 import { TabNavigationProps } from "../../../../../routes/tabs";
@@ -27,7 +25,6 @@ import {
   animateNextCard,
   animateNextCardLoading,
   DELTA_X,
-  FormValues,
   MAX_TRANSLATE,
   showSuccessNotification,
   SNAP_POINTS,
@@ -45,6 +42,7 @@ import { api } from "../../../../../services/api";
 import ShowFilter from "../../components/Filter/ShowFilter";
 import FilterSheet from "../../components/Filter/FilterSheet";
 import Overlay from "../../components/Overlay";
+import { useFilterBoilerplate } from "../../hooks/useFilterBoilerplate";
 
 import { useGetTeachers } from "./hooks/useGetTeachers";
 
@@ -178,6 +176,16 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
     },
   });
 
+  const { showFilter, control, errors, filterTeachers } = useFilterBoilerplate({
+    scale,
+    opacity,
+    skeletonOpacity,
+    setIndex,
+    timingConfig,
+    getAllTeachers: () => api.get<User[]>("users"),
+    updateTeachers: setTeachers,
+  });
+
   useOnTabRenderEffect({
     loadingTeachers,
     opacity,
@@ -185,54 +193,6 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
     skeletonOpacity,
     timingConfig,
   });
-
-  const showFilter = useSharedValue(0);
-  const { control, errors, handleSubmit } = useForm({
-    mode: "onSubmit",
-    criteriaMode: "all",
-  });
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    showFilter.value = withTiming(0, timingConfig);
-
-    opacity.value = withTiming(0, timingConfig, () => {
-      skeletonOpacity.value = withTiming(1, timingConfig, () => {
-        setTimeout(() => {
-          skeletonOpacity.value = withTiming(0, timingConfig, () => {
-            opacity.value = withTiming(1, timingConfig);
-          });
-        }, 1000);
-      });
-    });
-
-    setIndex(0);
-    const allTeachers = await api.get<User[]>("users");
-    const filteredTeachers = allTeachers.data
-      .filter((teacher) => {
-        if (data.subject === "") {
-          return true;
-        }
-        return teacher.subject
-          ?.toLowerCase()
-          .includes(data.subject.toLowerCase());
-      })
-      .filter((teacher) => {
-        if (data.weekday === "") {
-          return true;
-        }
-        return teacher.schedule.find(
-          (schedule) => schedule.weekday === data.weekday
-        );
-      })
-      .filter((teacher) => {
-        if (data.hour === "") {
-          return true;
-        }
-        return teacher.schedule.find(
-          (schedule) => schedule.from === Number(data.hour)
-        );
-      });
-    setTeachers(filteredTeachers);
-  };
 
   return (
     <>
@@ -272,7 +232,7 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
         }}
       />
       <FilterSheet
-        onPress={handleSubmit(onSubmit)}
+        onPress={filterTeachers}
         {...{ showFilter, control, errors }}
       />
       <Overlay show={showFilter} />
