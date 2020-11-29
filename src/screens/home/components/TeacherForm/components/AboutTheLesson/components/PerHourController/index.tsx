@@ -4,11 +4,12 @@ import { Controller } from "react-hook-form";
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
-import { BaseControllerProps } from "../../../../../../../../utils/types";
+import { TeacherFormProps } from "../../../../index";
 
-const PerHourController: React.FC<BaseControllerProps> = ({
+const PerHourController: React.FC<TeacherFormProps> = ({
   control,
   errors,
+  empty,
 }) => {
   const {
     state: {
@@ -20,7 +21,7 @@ const PerHourController: React.FC<BaseControllerProps> = ({
     <Controller
       {...{ control }}
       name="perHour"
-      defaultValue={`$${user.perHourCost}`}
+      defaultValue={empty ? "" : `$${user.perHourCost}`}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{

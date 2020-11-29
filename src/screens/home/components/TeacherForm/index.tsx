@@ -23,15 +23,23 @@ const data = [
   },
 ];
 
-const TeacherForm: React.FC<BaseControllerProps> = ({ control, errors }) => {
+export interface TeacherFormProps extends BaseControllerProps {
+  empty?: boolean;
+}
+
+const TeacherForm: React.FC<TeacherFormProps> = ({
+  control,
+  errors,
+  empty,
+}) => {
   const flatListRef = useRef<FlatList>(null);
   const { flatListStyles } = useStyles();
 
   const renderItem = React.useCallback(
     ({ item: { Component } }) => (
-      <Component {...{ control, errors, flatListRef }} />
+      <Component {...{ control, errors, flatListRef, empty }} />
     ),
-    [control, errors]
+    [control, empty, errors]
   );
 
   return (

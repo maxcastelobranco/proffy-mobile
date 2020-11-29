@@ -9,7 +9,7 @@ import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
 import SlideInView, {
   MountState,
 } from "../../../../../../components/animated/SlideInView";
-import { BaseControllerProps } from "../../../../../../utils/types";
+import { TeacherFormProps } from "../../index";
 
 import Schedule from "./components/Schedule";
 import { useStyles } from "./styles";
@@ -17,7 +17,7 @@ import { Weekday } from "./components/WeekdayController/weekdays";
 import AddButton from "./components/AddButton";
 import DeleteButton from "./components/DeleteButton";
 
-interface AvailableHoursProps extends BaseControllerProps {
+interface AvailableHoursProps extends TeacherFormProps {
   flatListRef: React.RefObject<FlatList>;
 }
 
@@ -34,6 +34,7 @@ const ICON_SIZE = responsivePixelSize(24);
 const AvailableHours: React.FC<AvailableHoursProps> = ({
   control,
   flatListRef,
+  empty,
 }) => {
   // const {
   //   state: {

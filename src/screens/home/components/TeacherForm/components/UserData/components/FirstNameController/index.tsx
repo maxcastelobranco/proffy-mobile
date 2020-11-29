@@ -4,11 +4,12 @@ import { Controller } from "react-hook-form";
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
-import { BaseControllerProps } from "../../../../../../../../utils/types";
+import { TeacherFormProps } from "../../../../index";
 
-const FirstNameController: React.FC<BaseControllerProps> = ({
+const FirstNameController: React.FC<TeacherFormProps> = ({
   control,
   errors,
+  empty,
 }) => {
   const {
     state: {
@@ -20,7 +21,7 @@ const FirstNameController: React.FC<BaseControllerProps> = ({
     <Controller
       {...{ control }}
       name="firstName"
-      defaultValue={user.firstName}
+      defaultValue={empty ? "" : user.firstName}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{

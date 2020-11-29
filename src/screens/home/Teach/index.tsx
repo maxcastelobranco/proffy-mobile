@@ -127,7 +127,7 @@ const Teach: React.FC = () => {
         </Text>
       </Box>
       <Box {...teacherRegistrationContainerStyles}>
-        <TeacherForm {...{ control, errors }} />
+        <TeacherForm empty {...{ control, errors }} />
         <AnimatedBackgroundButton
           extraStyles={{
             marginHorizontal: theme.spacing.xl,

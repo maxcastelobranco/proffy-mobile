@@ -4,9 +4,13 @@ import { Controller } from "react-hook-form";
 import { extraContainerStyles } from "../index";
 import Input from "../../../../../../../../components/animated/Input";
 import { useAppContext } from "../../../../../../../../context";
-import { BaseControllerProps } from "../../../../../../../../utils/types";
+import { TeacherFormProps } from "../../../../index";
 
-const BioController: React.FC<BaseControllerProps> = ({ control, errors }) => {
+const BioController: React.FC<TeacherFormProps> = ({
+  control,
+  errors,
+  empty,
+}) => {
   const {
     state: {
       authentication: { user },
@@ -17,7 +21,7 @@ const BioController: React.FC<BaseControllerProps> = ({ control, errors }) => {
     <Controller
       {...{ control }}
       name="bio"
-      defaultValue={user.bio}
+      defaultValue={empty ? "" : user.bio}
       render={({ value, onBlur, onChange }) => (
         <Input
           privateProps={{
