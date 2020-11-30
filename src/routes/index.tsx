@@ -34,6 +34,8 @@ export const AppStackNavigator = () => {
 
       setLoadingUser(false);
     });
+
+    AsyncStorage.clear();
   }, [dispatch]);
 
   return (

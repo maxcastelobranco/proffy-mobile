@@ -1,21 +1,4 @@
-const fs = require("fs");
-
-const faker = require("faker");
-faker.seed(69);
-
-const data = { users: [] };
-
-const userIds = [];
-const weekdays = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-];
-const subjects = [
+module.exports = [
   "Music",
   "Accompanying",
   "Chamber music",
@@ -296,44 +279,3 @@ const subjects = [
   "Concurrency theory",
   "VLSI design",
 ];
-
-for (let i = 0; i < 100; i++) {
-  userIds.push(faker.random.uuid());
-}
-
-for (let i = 0; i < 100; i++) {
-  const schedule = [];
-  for (let w = 0; w < 7; w++) {
-    const worksToday = faker.random.boolean();
-    worksToday &&
-      schedule.push({
-        weekday: weekdays[w],
-        from: faker.random.number({ min: 6, max: 12 }),
-        to: faker.random.number({ min: 13, max: 18 }),
-      });
-  }
-
-  const favoriteTeachersIds = userIds.filter(faker.random.boolean);
-
-  const firstName = faker.name.firstName();
-  const lastName = faker.name.lastName();
-
-  data.users.push({
-    id: userIds[i],
-    firstName,
-    lastName,
-    email: faker.internet.email(firstName, lastName),
-    password: "123456",
-    avatarUrl: faker.image.people(),
-    whatsapp: faker.phone.phoneNumber(),
-    bio: faker.lorem.words(10),
-    isTeacher: true,
-    subject: subjects[Math.round(Math.random() * subjects.length)],
-    perHourCost: faker.random.number({ min: 10, max: 1000, precision: 2 }),
-    schedule,
-    favoriteTeachersIds,
-  });
-}
-fs.writeFile("db.json", JSON.stringify(data), (err) => {
-  console.log(err);
-});

@@ -4,7 +4,6 @@ import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "@shopify/restyle";
 
 import { fonts } from "./assets/fonts";
-import { assets } from "./assets/images";
 import LoadAssets from "./src/components/static/LoadAssets";
 import { AppStackNavigator } from "./src/routes";
 import { AppProvider, useAppContext } from "./src/context";
@@ -19,7 +18,7 @@ export default function App() {
   } = useAppContext();
 
   return (
-    <LoadAssets {...{ fonts, assets }}>
+    <LoadAssets {...{ fonts }}>
       <AppProvider>
         <ThemeProvider
           theme={current === ThemeOptions.Dark ? darkTheme : theme}
