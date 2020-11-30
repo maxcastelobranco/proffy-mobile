@@ -9,6 +9,7 @@ import React, {
 import { activeIllustrationReducer } from "./reducers/activeIllustrationReducer";
 import { authenticationReducer } from "./reducers/authenticationReducer";
 import { AppActions, InitialAppState } from "./types";
+import { ThemeOptions, themeReducer } from "./reducers/themeReducer";
 
 const initialState: InitialAppState = {
   activeIllustration: {
@@ -31,6 +32,9 @@ const initialState: InitialAppState = {
       favoriteTeachersIds: [],
     },
   },
+  theme: {
+    current: ThemeOptions.Dark,
+  },
 };
 
 const AppContext = createContext<{
@@ -42,11 +46,12 @@ const AppContext = createContext<{
 });
 
 const mainReducer: Reducer<InitialAppState, AppActions> = (
-  { activeIllustration, authentication }: InitialAppState,
+  { activeIllustration, authentication, theme }: InitialAppState,
   action: AppActions
 ) => ({
   activeIllustration: activeIllustrationReducer(activeIllustration, action),
   authentication: authenticationReducer(authentication, action),
+  theme: themeReducer(theme, action),
 });
 
 const AppProvider: React.FC = ({ children }) => {

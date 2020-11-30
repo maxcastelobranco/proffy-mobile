@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
   repeat,
@@ -47,20 +47,22 @@ const Circle: React.FC<CircleProps> = ({
     ],
   }));
 
-  runOnUI(() => {
-    "worklet";
-    circleAnimationDriver.value = delay(
-      (i + j) * 200,
-      repeat(
-        withTiming(1, {
-          duration: 2000,
-          easing: Easing.bezier(0.87, 0, 0.13, 1),
-        }),
-        -1,
-        true
-      )
-    );
-  })();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      circleAnimationDriver.value = delay(
+        (i + j) * 200,
+        repeat(
+          withTiming(1, {
+            duration: 2000,
+            easing: Easing.bezier(0.87, 0, 0.13, 1),
+          }),
+          -1,
+          true
+        )
+      );
+    })();
+  }, [circleAnimationDriver, i, j]);
 
   return <Animated.View style={[styles.circle, circleAnimatedStyles]} />;
 };

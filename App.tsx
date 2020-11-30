@@ -6,17 +6,24 @@ import { ThemeProvider } from "@shopify/restyle";
 import { fonts } from "./assets/fonts";
 import { assets } from "./assets/images";
 import LoadAssets from "./src/components/static/LoadAssets";
-import theme from "./src/theme";
 import { AppStackNavigator } from "./src/routes";
-import { AppProvider } from "./src/context";
+import { AppProvider, useAppContext } from "./src/context";
+import { ThemeOptions } from "./src/context/reducers/themeReducer";
+import theme, { darkTheme } from "./src/theme";
 
 export default function App() {
-  // const [darkMode, setDarkMode] = useState(false);
+  const {
+    state: {
+      theme: { current },
+    },
+  } = useAppContext();
 
   return (
     <LoadAssets {...{ fonts, assets }}>
       <AppProvider>
-        <ThemeProvider {...{ theme }}>
+        <ThemeProvider
+          theme={current === ThemeOptions.Dark ? darkTheme : theme}
+        >
           <StatusBar hidden />
           <AppStackNavigator />
         </ThemeProvider>
