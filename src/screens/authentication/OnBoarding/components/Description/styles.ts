@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { TextProps, useTheme } from "@shopify/restyle";
+import { BoxProps, useTheme } from "@shopify/restyle";
 
 import { Theme } from "../../../../../theme";
 
@@ -8,26 +8,27 @@ const { width } = Dimensions.get("window");
 export const useStyles = () => {
   const theme = useTheme<Theme>();
   const stylesheet = StyleSheet.create({
-    container: {
-      flex: 1,
-      maxWidth: width,
-      backgroundColor: theme.colors.background3,
-      paddingHorizontal: theme.spacing.l,
-      paddingTop: theme.spacing.xxl,
+    numerationStyles: {
+      ...theme.textVariants.onBoardingNumeration,
+      color: theme.colors.baseTextDark,
+      marginBottom: theme.spacing.m,
+    },
+    titleStyles: {
+      ...theme.textVariants.onBoardingTitle,
+      color: theme.colors.baseTextDark,
+      marginRight: theme.spacing.l,
     },
   });
-  const numerationStyles: TextProps<Theme> = {
-    variant: "onBoardingNumeration",
-    marginBottom: "m",
-  };
-  const titleStyles: TextProps<Theme> = {
-    variant: "onBoardingTitle",
-    marginRight: "l",
+  const containerStyles: BoxProps<Theme> = {
+    flex: 1,
+    maxWidth: width,
+    backgroundColor: "background3",
+    paddingHorizontal: "l",
+    paddingTop: "xxl",
   };
 
   return {
     stylesheet,
-    numerationStyles,
-    titleStyles,
+    containerStyles,
   };
 };

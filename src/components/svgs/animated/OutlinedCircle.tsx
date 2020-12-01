@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Animated, {
   Easing,
+  interpolate,
   repeat,
   runOnUI,
   useAnimatedProps,
@@ -35,8 +36,7 @@ const OutlinedCircle: React.FC<AnimatedSvgProps> = ({
           duration: 3000,
           easing: Easing.bezier(0.16, 1, 0.3, 1),
         }),
-        -1,
-        true
+        -1
       );
     })();
   }, [animationDriver]);

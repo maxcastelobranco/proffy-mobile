@@ -5,7 +5,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Dimensions } from "react-native";
 
-import { Text } from "../../../../../theme";
+import { Box } from "../../../../../theme";
 import { DescriptionProps } from "../types";
 
 import { useStyles } from "./styles";
@@ -17,7 +17,8 @@ const Description: React.FC<DescriptionProps> = ({
   index,
   translationX,
 }) => {
-  const animatedStyle = useAnimatedStyle(() => {
+  const { stylesheet, containerStyles } = useStyles();
+  const animatedNumerationStyle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(
         translationX.value,
@@ -26,13 +27,25 @@ const Description: React.FC<DescriptionProps> = ({
       ),
     };
   });
-  const { stylesheet, titleStyles, numerationStyles } = useStyles();
+  const animatedTitleStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        translationX.value,
+        [(index - 1) * width, index * width, (index + 1) * width],
+        [0, 1, 0]
+      ),
+    };
+  });
 
   return (
-    <Animated.View style={[stylesheet.container, animatedStyle]}>
-      <Text {...numerationStyles}>{`0${index + 1}.`}</Text>
-      <Text {...titleStyles}>{descriptionText}</Text>
-    </Animated.View>
+    <Box {...containerStyles}>
+      <Animated.Text
+        style={[stylesheet.numerationStyles, animatedNumerationStyle]}
+      >{`0${index + 1}.`}</Animated.Text>
+      <Animated.Text style={[stylesheet.titleStyles, animatedTitleStyle]}>
+        {descriptionText}
+      </Animated.Text>
+    </Box>
   );
 };
 

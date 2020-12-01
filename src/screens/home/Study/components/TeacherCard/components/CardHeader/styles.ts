@@ -16,7 +16,6 @@ export const useStyles = () => {
     width: AVATAR_WIDTH,
     height: (AVATAR_WIDTH * 9) / 16,
     borderRadius: AVATAR_WIDTH / 2,
-    resizeMode: "contain",
   };
   const titleContainerStyles: BoxProps<Theme> = {
     marginLeft: "s",

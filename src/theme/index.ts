@@ -24,16 +24,6 @@ const palette = {
   portage: "#A380F6",
 };
 
-const darkPalette = {
-  lightPurple: "#1c0c45",
-  purple: "#150934",
-  mediumPurple: "#0e0623",
-  darkPurple: "#070312",
-  green: "#012812",
-  lightGreen: "#03632d",
-  red: "#b31919",
-};
-
 const theme = createTheme({
   colors: {
     primary: palette.purple,
@@ -76,14 +66,12 @@ const theme = createTheme({
     onBoardingNumeration: {
       fontFamily: "Poppins-Medium",
       fontSize: responsivePixelSize(40),
-      color: "baseTextDark",
       opacity: 0.16,
     },
     onBoardingTitle: {
       fontFamily: "Poppins-Medium",
       fontSize: responsivePixelSize(24),
       lineHeight: responsivePixelSize(34),
-      color: "baseTextDark",
     },
     logo: {
       fontFamily: "Archivo-SemiBold",
@@ -163,20 +151,6 @@ const theme = createTheme({
 
 export type Colors = keyof typeof theme.colors;
 export type Theme = typeof theme;
-
-export const darkTheme: Theme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
-    primary: darkPalette.purple,
-    primaryMedium: darkPalette.mediumPurple,
-    primaryLight: darkPalette.lightPurple,
-    primaryDark: darkPalette.darkPurple,
-    secondary: darkPalette.green,
-    secondaryLight: darkPalette.lightGreen,
-    danger: darkPalette.red,
-  },
-};
 
 export const Box = createBox<Theme>();
 export const Text = createText<Theme>();

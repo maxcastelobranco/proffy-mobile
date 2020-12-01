@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { BackHandler, KeyboardAvoidingView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { useTheme } from "@shopify/restyle";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
+import { Theme } from "../../../theme";
+import Loading from "../../../components/static/Loading";
 
 import Illustration from "./components/Illustration";
 import Form from "./components/Form";
@@ -13,6 +16,7 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
   navigation,
 }) => {
   const { state, dispatch } = useAppContext();
+  const theme = useTheme<Theme>();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,9 +47,14 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
   }, [dispatch, navigation]);
 
   return (
-    <KeyboardAvoidingView behavior="position">
-      {state.activeIllustration.name === "loginIllustration" && (
+    <KeyboardAvoidingView
+      behavior="position"
+      style={{ flex: 1, backgroundColor: theme.colors.background3 }}
+    >
+      {state.activeIllustration.name === "loginIllustration" ? (
         <Illustration />
+      ) : (
+        <Loading color="primaryDark" />
       )}
       <Form />
     </KeyboardAvoidingView>

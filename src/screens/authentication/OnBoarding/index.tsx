@@ -8,11 +8,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { Dimensions } from "react-native";
 import { interpolateColor } from "react-native-redash";
-import { BoxProps, useTheme } from "@shopify/restyle";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
-import { Box, Theme } from "../../../theme";
+import { Box } from "../../../theme";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 
@@ -28,8 +27,11 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
 }) => {
   const { state, dispatch } = useAppContext();
   const slideData = useSlideData();
-  const styles = useStyles(slideData.length);
-  const theme = useTheme<Theme>();
+  const {
+    stylesheet,
+    containerStyles,
+    progressIndicatorContainerStyles,
+  } = useStyles(slideData.length);
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const translationX = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
@@ -46,14 +48,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
   const progressIndicators = slideData.map((_, index) => (
     <ProgressIndicator key={index} {...{ index, currentIndex }} />
   ));
-  const progressIndicatorContainerStyles: BoxProps<Theme> = {
-    position: "absolute",
-    bottom: theme.spacing.s / 2,
-    left: 0,
-    flexDirection: "row",
-    marginBottom: "l",
-    paddingLeft: "l",
-  };
+
   const buttonsContainerAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translationX.value * -1 }],
   }));
@@ -96,7 +91,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     state.activeIllustration.name === "onBoardingIllustration";
 
   return (
-    <>
+    <Box {...containerStyles}>
       <Animated.ScrollView
         ref={scrollViewRef}
         onScroll={scrollHandler}
@@ -124,7 +119,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
         )}
       </Animated.ScrollView>
       <Animated.View
-        style={[styles.longArrowContainer, buttonsContainerAnimatedStyle]}
+        style={[stylesheet.longArrowContainer, buttonsContainerAnimatedStyle]}
       >
         {slideData.map((_, index) => (
           <LongArrowContainer
@@ -135,7 +130,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
         ))}
       </Animated.View>
       <Box {...progressIndicatorContainerStyles}>{progressIndicators}</Box>
-    </>
+    </Box>
   );
 };
 

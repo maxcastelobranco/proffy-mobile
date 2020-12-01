@@ -1,14 +1,15 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { useTheme } from "@shopify/restyle";
+import { BoxProps, useTheme } from "@shopify/restyle";
+import React from "react";
 
-import { Theme } from "../../../theme";
+import { Box, Theme } from "../../../theme";
 
 const { width } = Dimensions.get("window");
 
 export const useStyles = (slideDataLength: number) => {
   const theme = useTheme<Theme>();
 
-  return StyleSheet.create({
+  const stylesheet = StyleSheet.create({
     scrollView: {
       flex: 1,
     },
@@ -19,6 +20,25 @@ export const useStyles = (slideDataLength: number) => {
       justifyContent: "center",
       width: width * slideDataLength,
       marginBottom: theme.spacing.ml,
+      backgroundColor: theme.colors.background3,
     },
   });
+  const containerStyles: BoxProps<Theme> = {
+    flex: 1,
+    backgroundColor: "background3",
+  };
+  const progressIndicatorContainerStyles: BoxProps<Theme> = {
+    position: "absolute",
+    bottom: theme.spacing.s / 2,
+    left: 0,
+    flexDirection: "row",
+    marginBottom: "l",
+    paddingLeft: "l",
+  };
+
+  return {
+    stylesheet,
+    containerStyles,
+    progressIndicatorContainerStyles,
+  };
 };
