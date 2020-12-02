@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Animated, {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedStyle,
   useSharedValue,
@@ -83,14 +83,14 @@ const Clock: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      shortPointerAnimationDriver.value = repeat(
+      shortPointerAnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 1000,
           easing: Easing.linear,
         }),
         -1
       );
-      longPointerAnimationDriver.value = repeat(
+      longPointerAnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 6000,
           easing: Easing.linear,

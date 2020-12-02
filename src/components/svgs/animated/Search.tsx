@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Animated, {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedProps,
   useAnimatedStyle,
@@ -25,7 +25,7 @@ const Search: React.FC<AnimatedSvgProps> = ({ viewProps, svgProps }) => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      animationDriver.value = repeat(
+      animationDriver.value = withRepeat(
         withTiming(1, {
           duration: 3000,
           easing: Easing.bezier(0.65, 0, 0.35, 1),

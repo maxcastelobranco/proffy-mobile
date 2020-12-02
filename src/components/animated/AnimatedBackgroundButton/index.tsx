@@ -26,6 +26,7 @@ interface AnimatedBackgroundButtonProps {
   loading?: boolean;
 }
 
+/*TODO: Fucking fix this somehow*/
 const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
   enabled,
   enabledBackgroundColor,

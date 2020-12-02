@@ -8,6 +8,8 @@ import Animated, {
   withSpring,
   Extrapolate,
   useAnimatedGestureHandler,
+  runOnJS,
+  withTiming,
 } from "react-native-reanimated";
 import { useTheme } from "@shopify/restyle";
 import {
@@ -20,15 +22,7 @@ import { Box, Text, Theme } from "../../../../../theme";
 import { TabNavigationProps } from "../../../../../routes/tabs";
 import MainHeader from "../../../components/MainHeader";
 import { useStyles } from "../../styles";
-import {
-  ALPHA,
-  animateNextCard,
-  animateNextCardLoading,
-  DELTA_X,
-  MAX_TRANSLATE,
-  showSuccessNotification,
-  SNAP_POINTS,
-} from "../../shared";
+import { ALPHA, DELTA_X, MAX_TRANSLATE, SNAP_POINTS } from "../../shared";
 import TeacherCard from "../../components/TeacherCard";
 import { useOnTabRenderEffect } from "../../hooks/useOnTabRenderEffect";
 import TeacherCardSkeleton from "../../components/TeacherCardSkeleton";
@@ -79,14 +73,13 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
 
   const translationX = useSharedValue(0);
   const translationY = useSharedValue(0);
+  const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const skeletonOpacity = useSharedValue(1);
-  const scale = useSharedValue(0);
+  const successNotification = useSharedValue(0);
   const likeAnimationDriver = useDerivedValue(() => {
     return interpolate(translationX.value, [0, DELTA_X / 4], [0, 1]);
   });
-
-  const successNotification = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     const rotateZ = interpolate(
@@ -124,17 +117,29 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
       favoriteTeachersIds: updatedFavoriteTeacherIds,
     });
   };
+  const updateIndex = () => {
+    setIndex((index + 1) % teachers.length);
+  };
+  const removeNotification = () => {
+    setTimeout(() => {
+      successNotification.value = withSpring(0);
+    }, 2000);
+  };
+  const animateNextCard = () => {
+    setTimeout(() => {
+      skeletonOpacity.value = withTiming(0, timingConfig, () => {
+        opacity.value = withTiming(1, timingConfig);
+        scale.value = withSpring(1);
+      });
+    }, 500);
+  };
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent
   >({
     onActive: (event) => {
-      translationX.value = withSpring(event.translationX, {
-        velocity: event.velocityX,
-      });
-      translationY.value = withSpring(event.translationY, {
-        velocity: event.velocityY,
-      });
+      translationX.value = event.translationX;
+      translationY.value = event.translationY;
     },
     onEnd: (event) => {
       const destiny = snapPoint(
@@ -148,27 +153,25 @@ const TeacherList: React.FC<TabNavigationProps<"TeacherList">> = () => {
           velocity: event.velocityX,
         });
       } else if (destiny === MAX_TRANSLATE) {
-        setIndex((index + 1) % teachers.length);
-        addToFavorites();
-        showSuccessNotification(successNotification);
-        animateNextCardLoading({
-          destiny,
-          scale,
-          opacity,
-          skeletonOpacity,
-          translationX,
-          timingConfig,
+        runOnJS(updateIndex)();
+        runOnJS(addToFavorites)();
+        successNotification.value = withSpring(1);
+        runOnJS(removeNotification)();
+        translationX.value = withTiming(destiny, timingConfig, () => {
+          opacity.value = 0;
+          scale.value = 0;
+          translationX.value = 0;
         });
+        skeletonOpacity.value = withTiming(1, timingConfig);
+        runOnJS(animateNextCard)();
       } else if (destiny === -MAX_TRANSLATE) {
-        animateNextCard({
-          index,
-          setIndex,
-          length: teachers.length,
-          translationX,
-          scale,
-          opacity,
-          destiny,
-          timingConfig,
+        runOnJS(updateIndex)();
+        translationX.value = withTiming(destiny, timingConfig, () => {
+          opacity.value = 0;
+          scale.value = 0;
+          translationX.value = 0;
+          opacity.value = withTiming(1, timingConfig);
+          scale.value = withSpring(1);
         });
       }
 

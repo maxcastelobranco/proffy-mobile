@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { HomeNavigationProps } from "../../../routes/home";
 import { Box, Text } from "../../../theme";
@@ -8,19 +8,18 @@ import Book from "../../../components/svgs/animated/Book";
 import Television from "../../../components/svgs/animated/Television";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
-import { api } from "../../../services/api";
-import { User } from "../../../context/reducers/authenticationReducer";
 import Loading from "../../../components/static/Loading";
 
 import Illustration from "./components/Illustration";
 import Header from "./components/Header";
 import { useStyles } from "./styles";
+import { useConnections } from "./hooks/useConnections";
 
 const ICON_SIZE = responsivePixelSize(56);
 
 const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
   const {
-    state: { authentication, activeIllustration },
+    state: { activeIllustration },
     dispatch,
   } = useAppContext();
   const {
@@ -34,7 +33,7 @@ const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
     optionTitle,
     connectionTextStyles,
   } = useStyles();
-  const [connections, setConnections] = useState(0);
+  const connections = useConnections();
 
   const navigateToStudyPage = () => {
     dispatch({
@@ -56,27 +55,13 @@ const Landing: React.FC<HomeNavigationProps<"Landing">> = ({ navigation }) => {
   };
 
   useEffect(() => {
-    api.get<User[]>("users").then(({ data }) => {
-      const { numberOfLikes } = data.reduce(
-        (acc, curr) => {
-          if (curr.favoriteTeachersIds?.includes(authentication.user.id)) {
-            acc.numberOfLikes += 1;
-          }
-
-          return acc;
-        },
-        {
-          numberOfLikes: 0,
-        }
-      );
-
-      const numberOfConnections = authentication.user.favoriteTeachersIds
-        ? numberOfLikes + authentication.user.favoriteTeachersIds.length
-        : numberOfLikes;
-
-      setConnections(numberOfConnections);
+    dispatch({
+      type: ActiveIllustrationActionTypes.Update,
+      payload: {
+        name: "homeIllustration",
+      },
     });
-  }, [authentication.user.favoriteTeachersIds, authentication.user.id]);
+  }, [dispatch]);
 
   return (
     <Box {...containerStyles}>

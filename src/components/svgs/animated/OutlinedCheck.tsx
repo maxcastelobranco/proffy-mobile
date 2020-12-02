@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedProps,
   useSharedValue,
@@ -40,7 +40,7 @@ const OutlinedCheck: React.FC = () => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      animationDriver.value = repeat(
+      animationDriver.value = withRepeat(
         withTiming(1, {
           duration: 1000,
           easing: Easing.bezier(0.65, 0, 0.35, 1),

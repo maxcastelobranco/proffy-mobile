@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedProps,
   useAnimatedRef,
@@ -28,7 +28,7 @@ const GraphPath: React.FC = () => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      graphPathAnimationDriver.value = repeat(
+      graphPathAnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 2400,
           easing: Easing.bezier(0.65, 0, 0.35, 1),

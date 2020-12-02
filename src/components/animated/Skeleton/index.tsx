@@ -5,7 +5,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   runOnUI,
-  repeat,
+  withRepeat,
   withTiming,
   Easing,
 } from "react-native-reanimated";
@@ -54,7 +54,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      translateX.value = repeat(withTiming(width, timingConfig), -1);
+      translateX.value = withRepeat(withTiming(width, timingConfig), -1);
     })();
   }, [translateX, width]);
 

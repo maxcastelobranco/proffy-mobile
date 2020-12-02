@@ -11,10 +11,8 @@ import { useTheme } from "@shopify/restyle";
 
 import MainHeader from "../components/MainHeader";
 import { Box, Theme } from "../../../theme";
-import TeacherForm from "../components/TeacherForm";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
-import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
 import { Weekday } from "../components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
 import {
   AuthenticationActionTypes,
@@ -151,20 +149,21 @@ const Profile: React.FC = () => {
       <Animated.View
         style={[teacherFormContainerStyles, animatedFormContainerStyle]}
       >
-        <TeacherForm {...{ control, errors }} />
-        <AnimatedBackgroundButton
-          extraStyles={{
-            marginHorizontal: theme.spacing.xl,
-            marginVertical: theme.spacing.m,
-          }}
-          enabled={true}
-          enabledBackgroundColor={theme.colors.secondary}
-          disabledBackgroundColor={theme.colors.background5}
-          enabledLabelColor={theme.colors.title}
-          disabledLabelColor={theme.colors.complementTextDark}
-          label="Save changes"
-          onPress={handleSubmit(onSubmit)}
-        />
+        {/*TODO: Fucking fix this somehow*/}
+        {/*<TeacherForm {...{ control, errors }} />*/}
+        {/*<AnimatedBackgroundButton*/}
+        {/*  extraStyles={{*/}
+        {/*    marginHorizontal: theme.spacing.xl,*/}
+        {/*    marginVertical: theme.spacing.m,*/}
+        {/*  }}*/}
+        {/*  enabled={true}*/}
+        {/*  enabledBackgroundColor={theme.colors.secondary}*/}
+        {/*  disabledBackgroundColor={theme.colors.background5}*/}
+        {/*  enabledLabelColor={theme.colors.title}*/}
+        {/*  disabledLabelColor={theme.colors.complementTextDark}*/}
+        {/*  label="Save changes"*/}
+        {/*  onPress={handleSubmit(onSubmit)}*/}
+        {/*/>*/}
       </Animated.View>
     </Box>
   );

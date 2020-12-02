@@ -27,6 +27,7 @@ export interface TeacherFormProps extends BaseControllerProps {
   empty?: boolean;
 }
 
+/*TODO: Fucking fix this somehow*/
 const TeacherForm: React.FC<TeacherFormProps> = ({
   control,
   errors,
@@ -46,8 +47,6 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
     <FlatList
       {...{ data, renderItem }}
       ref={flatListRef}
-      initialNumToRender={3}
-      windowSize={3}
       style={flatListStyles}
       keyExtractor={({ id }) => id}
     />

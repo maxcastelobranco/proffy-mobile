@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedProps,
   useSharedValue,
@@ -23,7 +23,7 @@ const PlayButton1: React.FC = () => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      play1AnimationDriver.value = repeat(
+      play1AnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 2000,
           easing: Easing.bezier(0.7, 0, 0.84, 0),

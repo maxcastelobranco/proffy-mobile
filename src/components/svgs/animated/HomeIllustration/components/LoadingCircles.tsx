@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedProps,
   useSharedValue,
@@ -39,7 +39,7 @@ const LoadingCircles: React.FC = () => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      circle1AnimationDriver.value = repeat(
+      circle1AnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 2000,
           easing: Easing.bezier(0.76, 0, 0.24, 1),
@@ -47,7 +47,7 @@ const LoadingCircles: React.FC = () => {
         -1,
         true
       );
-      circle2AnimationDriver.value = repeat(
+      circle2AnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 2100,
           easing: Easing.bezier(0.76, 0, 0.24, 1),
@@ -55,7 +55,7 @@ const LoadingCircles: React.FC = () => {
         -1,
         true
       );
-      circle3AnimationDriver.value = repeat(
+      circle3AnimationDriver.value = withRepeat(
         withTiming(1, {
           duration: 2200,
           easing: Easing.bezier(0.76, 0, 0.24, 1),

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import Animated, {
   Easing,
-  interpolate,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedProps,
   useAnimatedStyle,
@@ -31,7 +30,7 @@ const OutlinedCircle: React.FC<AnimatedSvgProps> = ({
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      animationDriver.value = repeat(
+      animationDriver.value = withRepeat(
         withTiming(1, {
           duration: 3000,
           easing: Easing.bezier(0.16, 1, 0.3, 1),

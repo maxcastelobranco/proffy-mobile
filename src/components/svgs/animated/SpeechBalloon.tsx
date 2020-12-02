@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import Animated, {
   Easing,
-  repeat,
+  withRepeat,
   runOnUI,
   useAnimatedStyle,
   useSharedValue,
@@ -98,7 +98,7 @@ const SpeechBalloon: React.FC<SpeechBalloonProps> = ({ extraStyles }) => {
   useEffect(() => {
     runOnUI(() => {
       "worklet";
-      animationDriver.value = repeat(
+      animationDriver.value = withRepeat(
         withTiming(1, {
           duration: 8000,
           easing: Easing.bezier(0.37, 0, 0.63, 1),

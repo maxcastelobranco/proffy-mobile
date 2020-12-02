@@ -13,7 +13,6 @@ const Loading: React.FC<LoadingProps> = ({ color }) => {
   const containerStyles: BoxProps<Theme> = {
     alignItems: "center",
     justifyContent: "center",
-    padding: "m",
   };
 
   const activityIndicatorColor = color
