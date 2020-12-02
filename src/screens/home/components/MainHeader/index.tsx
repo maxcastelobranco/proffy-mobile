@@ -41,7 +41,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ label }) => {
 
   return (
     <Box {...containerStyles}>
-      <RippleButton {...{ onPress }} extraButtonStyles={{ padding: 0 }}>
+      <RippleButton {...{ onPress }}>
         <Feather
           name="chevrons-left"
           color={theme.colors.baseText}

@@ -27,6 +27,8 @@ interface AvatarProps {
   isFullScreen: Animated.SharedValue<number>;
 }
 
+const timingConfig = { easing: Easing.bezier(0.22, 1, 0.36, 1) };
+
 const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
   const {
     state: {
@@ -67,14 +69,12 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
     };
   });
   const animatedImageStyle = useAnimatedStyle(() => {
-    const { x, y } = origin;
-
     return {
       width: imageWidth.value,
       height: imageHeight.value,
       borderRadius: borderRadius.value,
       transform: transformOrigin(
-        { x: x.value, y: y.value },
+        { x: origin.x.value, y: origin.y.value },
         {
           scale: imageScale.value,
         },
@@ -83,7 +83,6 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
     };
   });
 
-  const timingConfig = { easing: Easing.bezier(0.22, 1, 0.36, 1) };
   const onPress = () => {
     isFullScreen.value =
       isFullScreen.value === 1 ? withTiming(0) : withTiming(1);
