@@ -3,7 +3,6 @@ import { useTheme } from "@shopify/restyle";
 
 import Gear from "../../../../../../components/svgs/animated/HomeIllustration/components/Gear";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
-import SpeechBalloon from "../../../../../../components/svgs/animated/SpeechBalloon";
 import Clock from "../../../../../../components/svgs/animated/HomeIllustration/components/Clock";
 import CircleGrid from "../../../../../../components/animated/CircleGrid";
 import OutlinedCircle from "../../../../../../components/svgs/animated/OutlinedCircle";
@@ -27,16 +26,8 @@ export const useParticles = () => {
         },
       }}
     />,
-    <SpeechBalloon
-      key="1"
-      extraStyles={{
-        position: "absolute",
-        top: responsivePixelSize(6),
-        left: responsivePixelSize(33),
-      }}
-    />,
     <Clock
-      key="2"
+      key="1"
       viewProps={{
         style: {
           position: "absolute",
@@ -46,7 +37,7 @@ export const useParticles = () => {
       }}
     />,
     <CircleGrid
-      key="3"
+      key="2"
       rows={2}
       columns={4}
       circleColor={theme.colors.primaryLight}
@@ -58,7 +49,7 @@ export const useParticles = () => {
       }}
     />,
     <OutlinedCircle
-      key="4"
+      key="3"
       viewProps={{
         style: {
           position: "absolute",
@@ -73,7 +64,7 @@ export const useParticles = () => {
       }}
     />,
     <X
-      key="5"
+      key="4"
       viewProps={{
         style: {
           position: "absolute",
