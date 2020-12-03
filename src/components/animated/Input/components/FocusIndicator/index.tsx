@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import { mixColor, useSpring, useTiming } from "react-native-redash";
+import { useSpring, useTiming } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 
 import { Theme } from "../../../../../theme";
@@ -28,12 +28,15 @@ const FocusIndicator: React.FC<FocusIndicatorProps> = ({ focused, error }) => {
   const focusedSpringTransition = useSpring(focused);
   const focusedTimingTransition = useTiming(focused);
 
+  // TODO: Maybe find a way to interpolate the colors again
   const animatedStyle = useAnimatedStyle(() => {
     return {
+      // backgroundColor:
+      //   error === undefined
+      //     ? theme.colors.primary
+      //     : mixColor(error, theme.colors.primary, theme.colors.danger),
       backgroundColor:
-        error === undefined
-          ? theme.colors.primary
-          : mixColor(error, theme.colors.primary, theme.colors.danger),
+        error === undefined ? theme.colors.primary : theme.colors.danger,
       opacity: focusedTimingTransition.value,
       transform: [{ scale: focusedSpringTransition.value }],
     };
