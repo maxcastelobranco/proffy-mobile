@@ -1,7 +1,9 @@
 import React, { ReactNode, useState } from "react";
 import Animated, {
   Easing,
+  runOnJS,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withSpring,
   withTiming,
@@ -21,20 +23,33 @@ interface AccordionProps {
   labelButton?: ReactNode;
   height: Animated.SharedValue<number>;
   childrenHeight: number;
+  openByDefault?: boolean;
 }
 const ICON_SIZE = responsivePixelSize(24);
+
+const timingConfig: Animated.WithTimingConfig = {
+  duration: 250,
+  easing: Easing.bezier(0.85, 0, 0.15, 1),
+};
 
 const Accordion: React.FC<AccordionProps> = ({
   label,
   labelButton,
   height,
   childrenHeight,
+  openByDefault,
   children,
 }) => {
   const theme = useTheme<Theme>();
-  const [open, setOpen] = useState(false);
-  const openTimingTransition = useSharedValue(0);
-  const openSpringTransition = useSharedValue(0);
+  const open = useSharedValue<boolean>(!!openByDefault);
+  const openTimingTransition = useDerivedValue(() => {
+    return open.value
+      ? withTiming(1, timingConfig)
+      : withTiming(0, timingConfig);
+  });
+  const openSpringTransition = useDerivedValue(() => {
+    return open.value ? withSpring(1) : withSpring(0);
+  });
 
   const animatedChildrenContainerStyle = useAnimatedStyle(() => {
     return {
@@ -50,24 +65,10 @@ const Accordion: React.FC<AccordionProps> = ({
     };
   });
 
-  const timingConfig: Animated.WithTimingConfig = {
-    duration: 250,
-    easing: Easing.bezier(0.85, 0, 0.15, 1),
-  };
-
   const toggleOpen = () => {
-    if (open) {
-      height.value = withTiming(0);
-      openTimingTransition.value = withTiming(0, timingConfig, () => {
-        setOpen(false);
-      });
-      openSpringTransition.value = withSpring(0);
-    } else {
-      setOpen(true);
-      height.value = withTiming(childrenHeight);
-      openTimingTransition.value = withTiming(1, timingConfig);
-      openSpringTransition.value = withSpring(1);
-    }
+    "worklet";
+    open.value = !open.value;
+    height.value = open.value ? withTiming(0) : withTiming(childrenHeight);
   };
 
   const { headerStyles, labelStyles, childrenContainerStyles } = useStyles();

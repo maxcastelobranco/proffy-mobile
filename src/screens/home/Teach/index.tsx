@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { BackHandler } from "react-native";
@@ -13,6 +13,10 @@ import {
   AuthenticationActionTypes,
   TeacherSchedule,
 } from "../../../context/reducers/authenticationReducer";
+import TeacherForm from "../components/TeacherForm";
+import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
+import TeacherAlready from "../TeacherAlready";
+import { api } from "../../../services/api";
 
 import { useStyles } from "./styles";
 
@@ -29,15 +33,21 @@ export type TeachFormValues = {
 
 const Teach: React.FC = () => {
   const theme = useTheme<Theme>();
-  const { dispatch } = useAppContext();
+  const {
+    state: {
+      authentication: { user },
+    },
+    dispatch,
+  } = useAppContext();
   const navigation = useNavigation();
-  const { control, errors, handleSubmit } = useForm();
+  const { control, errors, handleSubmit, formState } = useForm();
   const {
     teacherRegistrationContainerStyles,
     pageDescriptionContainerStyles,
     pageTitleStyles,
     pageDescriptionStyles,
   } = useStyles();
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -58,7 +68,11 @@ const Teach: React.FC = () => {
     }, [dispatch])
   );
 
-  const onSubmit: SubmitHandler<TeachFormValues> = (data) => {
+  const enabled = Object.keys(formState.touched).length > 0;
+
+  const onSubmit: SubmitHandler<TeachFormValues> = async (data) => {
+    setLoadingSubmit(true);
+
     const scheduleIds = Array.from(
       new Set(
         Object.entries(data)
@@ -90,18 +104,22 @@ const Teach: React.FC = () => {
       });
     });
 
+    const payload = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      bio: data.bio,
+      subject: data.subject,
+      whatsapp: data.whatsapp,
+      perHourCost: Number(data.perHour.replace("$", "")),
+      schedule,
+    };
+
+    await api.patch(`users/${user.id}`, payload);
+
     dispatch({
       type: AuthenticationActionTypes.UpdateUser,
-      payload: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        bio: data.bio,
-        subject: data.subject,
-        whatsapp: data.whatsapp,
-        perHourCost: Number(data.perHour.replace("$", "")),
-        schedule,
-      },
+      payload,
     });
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
@@ -111,37 +129,44 @@ const Teach: React.FC = () => {
     });
 
     navigation.navigate("TeacherRegistrationSuccessful");
+    setLoadingSubmit(false);
   };
 
   return (
-    <Box flex={1}>
-      <MainHeader label="Teach" />
-      <Box {...pageDescriptionContainerStyles}>
-        <Text {...pageTitleStyles}>
-          It's awesome that you wanna{"\n"}be a Proffy.
-        </Text>
-        <Text {...pageDescriptionStyles}>
-          First step is to fill out this form.
-        </Text>
-      </Box>
-      <Box {...teacherRegistrationContainerStyles}>
-        {/*TODO: Fucking fix this somehow*/}
-        {/*<TeacherForm empty {...{ control, errors }} />*/}
-        {/*<AnimatedBackgroundButton*/}
-        {/*  extraStyles={{*/}
-        {/*    marginHorizontal: theme.spacing.xl,*/}
-        {/*    marginVertical: theme.spacing.m,*/}
-        {/*  }}*/}
-        {/*  enabled={true}*/}
-        {/*  enabledBackgroundColor={theme.colors.secondary}*/}
-        {/*  disabledBackgroundColor={theme.colors.background5}*/}
-        {/*  enabledLabelColor={theme.colors.title}*/}
-        {/*  disabledLabelColor={theme.colors.complementTextDark}*/}
-        {/*  label="Save registration"*/}
-        {/*  onPress={handleSubmit(onSubmit)}*/}
-        {/*/>*/}
-      </Box>
-    </Box>
+    <>
+      {user.isTeacher ? (
+        <TeacherAlready />
+      ) : (
+        <Box flex={1}>
+          <MainHeader label="Teach" />
+          <Box {...pageDescriptionContainerStyles}>
+            <Text {...pageTitleStyles}>
+              It's awesome that you wanna{"\n"}be a Proffy.
+            </Text>
+            <Text {...pageDescriptionStyles}>
+              First step is to fill out this form.
+            </Text>
+          </Box>
+          <Box {...teacherRegistrationContainerStyles}>
+            <TeacherForm empty {...{ control, errors }} />
+            <AnimatedBackgroundButton
+              extraStyles={{
+                marginHorizontal: theme.spacing.xl,
+                marginVertical: theme.spacing.m,
+              }}
+              {...{ enabled }}
+              label="Save registration"
+              loading={loadingSubmit}
+              enabledBackgroundColor={theme.colors.secondary}
+              disabledBackgroundColor={theme.colors.background5}
+              enabledLabelColor={theme.colors.title}
+              disabledLabelColor={theme.colors.complementTextDark}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </Box>
+        </Box>
+      )}
+    </>
   );
 };
 

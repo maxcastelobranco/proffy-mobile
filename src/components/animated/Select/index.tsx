@@ -4,11 +4,13 @@ import { mix, useSpring, useTiming } from "react-native-redash";
 import { ScrollView, TouchableOpacity } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
+import { RectButton } from "react-native-gesture-handler";
 
 import responsivePixelSize from "../../../utils/responsivePixelSize";
 import { Box, Text, Theme } from "../../../theme";
 import { INPUT_HEIGHT } from "../Input";
 import { Weekday } from "../../../screens/home/components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
+import RippleButton from "../../static/RippleButton";
 
 import FocusIndicator from "./components/FocusIndicator";
 import { useStyles } from "./styles";
@@ -35,7 +37,12 @@ const Select: React.FC<SelectProps> = ({
     defaultValue ? defaultValue : ""
   );
 
-  const { containerStyles, labelStyles, chooseTextStyles } = useStyles();
+  const {
+    rectButtonStyles,
+    containerStyles,
+    labelStyles,
+    chooseTextStyles,
+  } = useStyles();
 
   const openTimingTransition = useTiming(open);
   const openSpringTransition = useSpring(open);
@@ -66,22 +73,24 @@ const Select: React.FC<SelectProps> = ({
   return (
     <>
       <Text {...labelStyles}>{label}</Text>
-      <TouchableOpacity onPress={toggleOpen}>
-        <Box {...containerStyles}>
-          <Text {...chooseTextStyles}>
-            {selectedOption === "" ? "Choose" : selectedOption}
-          </Text>
-          <Animated.View style={animatedIconStyle}>
-            <Feather
-              name="chevrons-up"
-              size={ICON_SIZE}
-              color={
-                open ? theme.colors.primary : theme.colors.complementTextDark
-              }
-            />
-          </Animated.View>
-        </Box>
-      </TouchableOpacity>
+      <Box overflow="hidden" borderRadius="default">
+        <RectButton onPress={toggleOpen}>
+          <Box {...containerStyles}>
+            <Text {...chooseTextStyles}>
+              {selectedOption === "" ? "Choose" : selectedOption}
+            </Text>
+            <Animated.View style={animatedIconStyle}>
+              <Feather
+                name="chevrons-up"
+                size={ICON_SIZE}
+                color={
+                  open ? theme.colors.primary : theme.colors.complementTextDark
+                }
+              />
+            </Animated.View>
+          </Box>
+        </RectButton>
+      </Box>
       <Animated.View style={animatedOptionsStyle}>
         <ScrollView
           horizontal

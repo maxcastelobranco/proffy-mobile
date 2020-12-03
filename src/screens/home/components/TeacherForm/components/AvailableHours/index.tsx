@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import * as faker from "faker";
-import { useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 import { FlatList } from "react-native";
 
 import Accordion from "../../../Accordion";
 import { Box } from "../../../../../../theme";
 import responsivePixelSize from "../../../../../../utils/responsivePixelSize";
 import { TeacherFormProps } from "../../index";
+import { useAppContext } from "../../../../../../context";
 
 import Schedule from "./components/Schedule";
 import { useStyles } from "./styles";
@@ -30,22 +31,45 @@ const ICON_SIZE = responsivePixelSize(24);
 const AvailableHours: React.FC<AvailableHoursProps> = ({
   control,
   flatListRef,
+  empty,
 }) => {
-  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([
-    {
-      id: faker.random.uuid(),
-      weekday: "monday",
-      from: 8,
-      to: 18,
+  const {
+    state: {
+      authentication: { user },
     },
-  ]);
+  } = useAppContext();
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>(() => {
+    return empty
+      ? [
+          {
+            id: faker.random.uuid(),
+            weekday: "monday",
+            from: 8,
+            to: 18,
+          },
+        ]
+      : user.isTeacher
+      ? user.schedule.map(({ from, to, weekday }) => ({
+          id: faker.random.uuid(),
+          from,
+          to,
+          weekday,
+        }))
+      : [
+          {
+            id: faker.random.uuid(),
+            weekday: "monday",
+            from: 8,
+            to: 18,
+          },
+        ];
+  });
 
   const addScheduleItem = () => {
     setScheduleItems((prevState) => [
       ...prevState,
       {
         id: faker.random.uuid(),
-        mountState: "mounting",
         weekday: "monday",
         from: 8,
         to: 18,
@@ -54,14 +78,7 @@ const AvailableHours: React.FC<AvailableHoursProps> = ({
   };
   const deleteScheduleItem = (id: string) => {
     setScheduleItems((prevState) =>
-      prevState?.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              mountState: "unmounting",
-            }
-          : item
-      )
+      prevState.filter((scheduleItem) => scheduleItem.id !== id)
     );
   };
 
@@ -69,6 +86,10 @@ const AvailableHours: React.FC<AvailableHoursProps> = ({
 
   const childrenHeight = scheduleItems.length * CONTAINER_HEIGHT;
   const height = useSharedValue(0);
+
+  useEffect(() => {
+    height.value = withTiming(scheduleItems.length * CONTAINER_HEIGHT);
+  }, [CONTAINER_HEIGHT, height, scheduleItems.length]);
 
   return (
     <Accordion

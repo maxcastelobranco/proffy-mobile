@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useFocusEffect } from "@react-navigation/native";
 import { BackHandler, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
 } from "react-native-reanimated";
 import { mix } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
@@ -19,6 +20,10 @@ import {
   TeacherSchedule,
 } from "../../../context/reducers/authenticationReducer";
 import Loading from "../../../components/static/Loading";
+import TeacherForm from "../components/TeacherForm";
+import AnimatedBackgroundButton from "../../../components/animated/AnimatedBackgroundButton";
+import { api } from "../../../services/api";
+import Notification from "../../../components/animated/Notification";
 
 import Avatar from "./components/Avatar";
 import { useStyles } from "./styles";
@@ -38,8 +43,9 @@ export type ProfileFormValues = {
 const Profile: React.FC = () => {
   const theme = useTheme<Theme>();
   const { state, dispatch } = useAppContext();
-  const { control, errors, handleSubmit } = useForm();
+  const { control, errors, formState, handleSubmit } = useForm();
   const { teacherFormContainerStyles } = useStyles();
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const particles = useParticles();
 
   useFocusEffect(
@@ -85,7 +91,11 @@ const Profile: React.FC = () => {
     };
   });
 
-  const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
+  const enabled = Object.keys(formState.touched).length > 0;
+  const shouldRenderNotification = useSharedValue(0);
+
+  const onSubmit: SubmitHandler<ProfileFormValues> = async (data) => {
+    setLoadingSubmit(true);
     const scheduleIds = Array.from(
       new Set(
         Object.entries(data)
@@ -100,7 +110,6 @@ const Profile: React.FC = () => {
     );
 
     const schedule: TeacherSchedule[] = [];
-
     scheduleIds.forEach((id) => {
       const weekdayKey = `weekday:${id}`;
       const fromKey = `from:${id}`;
@@ -117,19 +126,29 @@ const Profile: React.FC = () => {
       });
     });
 
+    const payload = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      bio: data.bio,
+      subject: data.subject,
+      whatsapp: data.whatsapp,
+      perHourCost: Number(data.perHour.replace("$", "")),
+      schedule,
+    };
+
+    await api.patch(`users/${state.authentication.user.id}`, payload);
+
     dispatch({
       type: AuthenticationActionTypes.UpdateUser,
-      payload: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        bio: data.bio,
-        subject: data.subject,
-        whatsapp: data.whatsapp,
-        perHourCost: Number(data.perHour.replace("$", "")),
-        schedule,
-      },
+      payload,
     });
+    setLoadingSubmit(false);
+
+    shouldRenderNotification.value = withSpring(1);
+    setTimeout(() => {
+      shouldRenderNotification.value = withSpring(0);
+    }, 3000);
   };
 
   return (
@@ -149,22 +168,30 @@ const Profile: React.FC = () => {
       <Animated.View
         style={[teacherFormContainerStyles, animatedFormContainerStyle]}
       >
-        {/*TODO: Fucking fix this somehow*/}
-        {/*<TeacherForm {...{ control, errors }} />*/}
-        {/*<AnimatedBackgroundButton*/}
-        {/*  extraStyles={{*/}
-        {/*    marginHorizontal: theme.spacing.xl,*/}
-        {/*    marginVertical: theme.spacing.m,*/}
-        {/*  }}*/}
-        {/*  enabled={true}*/}
-        {/*  enabledBackgroundColor={theme.colors.secondary}*/}
-        {/*  disabledBackgroundColor={theme.colors.background5}*/}
-        {/*  enabledLabelColor={theme.colors.title}*/}
-        {/*  disabledLabelColor={theme.colors.complementTextDark}*/}
-        {/*  label="Save changes"*/}
-        {/*  onPress={handleSubmit(onSubmit)}*/}
-        {/*/>*/}
+        <TeacherForm {...{ control, errors }} />
+        <AnimatedBackgroundButton
+          extraStyles={{
+            marginHorizontal: theme.spacing.xl,
+            marginVertical: theme.spacing.m,
+          }}
+          {...{ enabled }}
+          label="Save changes"
+          loading={loadingSubmit}
+          enabledBackgroundColor={theme.colors.secondary}
+          disabledBackgroundColor={theme.colors.background5}
+          enabledLabelColor={theme.colors.title}
+          disabledLabelColor={theme.colors.complementTextDark}
+          onPress={handleSubmit(onSubmit)}
+        />
       </Animated.View>
+      <Notification
+        {...{ shouldRenderNotification }}
+        position={{ top: theme.spacing.s, left: theme.spacing.s }}
+        message="Changes saved successfully!"
+        iconName="check-circle"
+        iconColor="title"
+        backgroundColor="secondary"
+      />
     </Box>
   );
 };

@@ -5,7 +5,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { useTiming, mixColor, useSpring } from "react-native-redash";
+import { useTiming, useSpring } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 
 import { Theme } from "../../../theme";
@@ -26,7 +26,6 @@ interface AnimatedBackgroundButtonProps {
   loading?: boolean;
 }
 
-/*TODO: Fucking fix this somehow*/
 const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
   enabled,
   enabledBackgroundColor,
@@ -48,15 +47,6 @@ const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
   });
   const enabledSpringTransition = useSpring(enabled);
 
-  const animatedViewStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: mixColor(
-        enabledTimingTransition.value,
-        disabledBackgroundColor,
-        enabledBackgroundColor
-      ),
-    };
-  });
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(
@@ -64,11 +54,6 @@ const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
         [0, 0.1, 0.9, 1],
         [1, 0, 0, 1]
       ),
-      // color: mixColor(
-      //   enabledTimingTransition.value,
-      //   disabledLabelColor,
-      //   enabledLabelColor
-      // ) ,
       transform: [
         {
           scale: interpolate(
@@ -87,7 +72,17 @@ const AnimatedBackgroundButton: React.FC<AnimatedBackgroundButtonProps> = ({
         enabled && onPress();
       }}
     >
-      <Animated.View style={[styles.button, extraStyles, animatedViewStyle]}>
+      <Animated.View
+        style={[
+          styles.button,
+          {
+            backgroundColor: enabled
+              ? enabledBackgroundColor
+              : disabledBackgroundColor,
+          },
+          extraStyles,
+        ]}
+      >
         {loading ? (
           <Loading />
         ) : (

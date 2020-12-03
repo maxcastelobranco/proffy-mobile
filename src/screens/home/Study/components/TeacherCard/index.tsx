@@ -3,10 +3,7 @@ import Animated from "react-native-reanimated";
 
 import { Box, Text } from "../../../../../theme";
 import { User } from "../../../../../context/reducers/authenticationReducer";
-import {
-  Weekday,
-  WEEKDAYS,
-} from "../../../components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
+import { WEEKDAYS } from "../../../components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
 
 import { useStyles } from "./styles";
 import ScheduleDisplay from "./components/ScheduleDisplay";

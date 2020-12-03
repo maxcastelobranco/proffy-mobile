@@ -4,6 +4,10 @@ import { Theme } from "../../../theme";
 import { INPUT_HEIGHT } from "../Input";
 
 export const useStyles = () => {
+  const rectButtonContainerStyles: BoxProps<Theme> = {
+    overflow: "hidden",
+    borderRadius: "default",
+  };
   const containerStyles: BoxProps<Theme> = {
     flexDirection: "row",
     alignItems: "center",
@@ -25,6 +29,7 @@ export const useStyles = () => {
   };
 
   return {
+    rectButtonStyles: rectButtonContainerStyles,
     containerStyles,
     labelStyles,
     chooseTextStyles,

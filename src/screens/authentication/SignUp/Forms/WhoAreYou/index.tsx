@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import { Controller } from "react-hook-form";
 import { TextInput } from "react-native";
 
-import { SlideFormProps } from "../../index";
 import Input from "../../../../../components/animated/Input";
+import { BaseControllerProps } from "../../../../../utils/types";
 
-const WhoAreYou: React.FC<SlideFormProps> = ({ control, errors }) => {
+const WhoAreYou: React.FC<BaseControllerProps> = ({ control, errors }) => {
   const lastNameInputRef = useRef<TextInput>(null);
 
   return (

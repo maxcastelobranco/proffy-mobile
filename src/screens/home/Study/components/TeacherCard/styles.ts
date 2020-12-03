@@ -4,7 +4,7 @@ import { Dimensions, ViewStyle } from "react-native";
 import theme, { Theme } from "../../../../../theme";
 
 const { width, height } = Dimensions.get("window");
-export const CARD_HEIGHT = height * 0.66;
+export const CARD_HEIGHT = height * 0.62;
 export const CARD_WIDTH = width - theme.spacing.l * 2;
 
 export const useStyles = () => {

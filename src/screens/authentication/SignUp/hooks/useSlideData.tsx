@@ -4,11 +4,11 @@ import React from "react";
 import { Theme } from "../../../../theme";
 import WhoAreYou from "../Forms/WhoAreYou";
 import EmailPassword from "../Forms/EmailPassword";
-import { SlideFormProps } from "../index";
+import { BaseControllerProps } from "../../../../utils/types";
 
 interface SlideData {
   title: string;
-  Form: React.FC<SlideFormProps>;
+  Form: React.FC<BaseControllerProps>;
   buttonBackgroundColor: string;
   buttonLabel: string;
   enabled: boolean;

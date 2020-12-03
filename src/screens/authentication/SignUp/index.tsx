@@ -10,6 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useFocusEffect } from "@react-navigation/native";
+import * as faker from "faker";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import { Box, Text, Theme } from "../../../theme";
@@ -18,6 +19,11 @@ import ProgressIndicator from "../../../components/animated/ProgressIndicator";
 import RippleButton from "../../../components/static/RippleButton";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
+import { api } from "../../../services/api";
+import {
+  TeacherSchedule,
+  User,
+} from "../../../context/reducers/authenticationReducer";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";
@@ -70,8 +76,25 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
 
   const slideData = useSlideData(scrollEnabled, submitEnabled);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
+
+    const { name, lastName, email, password } = data;
+
+    await api.post("users", {
+      id: faker.random.uuid(),
+      firstName: name,
+      lastName,
+      email,
+      password,
+      avatarUrl: "",
+      whatsapp: "",
+      bio: "",
+      schedule: [],
+      favoriteTeachersIds: [],
+      isTeacher: false,
+    });
+
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {

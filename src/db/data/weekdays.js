@@ -1,9 +1,1 @@
-module.exports = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-];
+module.exports = ["monday", "tuesday", "wednesday", "thursday", "friday"];
