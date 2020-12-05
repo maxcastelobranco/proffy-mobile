@@ -73,13 +73,15 @@ const Avatar: React.FC<AvatarProps> = ({ isFullScreen }) => {
       width: imageWidth.value,
       height: imageHeight.value,
       borderRadius: borderRadius.value,
-      transform: transformOrigin(
-        { x: origin.x.value, y: origin.y.value },
-        {
-          scale: imageScale.value,
-        },
-        { translateY: translateY.value }
-      ),
+      transform: [
+        ...transformOrigin(
+          { x: origin.x.value, y: origin.y.value },
+          {
+            scale: imageScale.value,
+          },
+          { translateY: translateY.value }
+        ),
+      ],
     };
   });
 

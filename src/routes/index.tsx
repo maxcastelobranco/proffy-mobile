@@ -17,7 +17,7 @@ export type AppRoutes = {
 
 const AppStack = createStackNavigator<AppRoutes>();
 
-export const AppStackNavigator = () => {
+const AppStackNavigator: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const [loadingUser, setLoadingUser] = useState(true);
 
@@ -57,3 +57,5 @@ export const AppStackNavigator = () => {
     </>
   );
 };
+
+export default AppStackNavigator;

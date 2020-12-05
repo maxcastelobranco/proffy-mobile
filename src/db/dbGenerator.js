@@ -18,7 +18,7 @@ for (let i = 0; i < DATA_LENGTH; i++) {
 
 for (let i = 0; i < DATA_LENGTH; i++) {
   const schedule = [];
-  for (let w = 0; w < 7; w++) {
+  for (let w = 0; w < 5; w++) {
     const worksToday = faker.random.boolean();
     worksToday &&
       schedule.push({

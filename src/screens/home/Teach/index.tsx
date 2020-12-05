@@ -42,6 +42,7 @@ const Teach: React.FC = () => {
   const navigation = useNavigation();
   const { control, errors, handleSubmit, formState } = useForm();
   const {
+    containerStyles,
     teacherRegistrationContainerStyles,
     pageDescriptionContainerStyles,
     pageTitleStyles,
@@ -133,7 +134,7 @@ const Teach: React.FC = () => {
   };
 
   return (
-    <>
+    <Box {...containerStyles}>
       {user.isTeacher ? (
         <TeacherAlready />
       ) : (
@@ -166,7 +167,7 @@ const Teach: React.FC = () => {
           </Box>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

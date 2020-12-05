@@ -22,14 +22,14 @@ const TeacherAlready: React.FC = () => {
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {
-        name: "teacherSignUpIllustration",
+        name: "proffyAlready",
       },
     });
   }, [dispatch]);
 
   return (
     <>
-      {state.activeIllustration.name === "teacherSignUpIllustration" && (
+      {state.activeIllustration.name === "proffyAlready" && (
         <Success
           title="No need to sign up!"
           description="You're already a Proffy!"

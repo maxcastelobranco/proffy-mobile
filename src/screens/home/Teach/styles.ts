@@ -3,6 +3,10 @@ import { BoxProps, TextProps } from "@shopify/restyle";
 import { Theme } from "../../../theme";
 
 export const useStyles = () => {
+  const containerStyles: BoxProps<Theme> = {
+    flex: 1,
+    backgroundColor: "primary",
+  };
   const teacherRegistrationContainerStyles: BoxProps<Theme> = {
     flex: 2.4,
     backgroundColor: "background3",
@@ -23,6 +27,7 @@ export const useStyles = () => {
   };
 
   return {
+    containerStyles,
     teacherRegistrationContainerStyles,
     pageDescriptionContainerStyles,
     pageTitleStyles,

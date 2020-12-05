@@ -11,7 +11,8 @@ type IllustrationNames =
   | "forgotPasswordSuccessIllustration"
   | "homeIllustration"
   | "profileIllustration"
-  | "teacherSignUpIllustration";
+  | "teacherSignUpIllustration"
+  | "proffyAlready";
 
 export type ActiveIllustrationState = {
   name: IllustrationNames;

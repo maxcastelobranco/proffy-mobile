@@ -27,9 +27,6 @@
     },
     "androidNavigationBar": {
       "visible": "sticky-immersive"
-    },
-    "experiments": {
-      "turboModules": true
     }
   }
 }
