@@ -20,10 +20,6 @@ import RippleButton from "../../../components/static/RippleButton";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
 import { api } from "../../../services/api";
-import {
-  TeacherSchedule,
-  User,
-} from "../../../context/reducers/authenticationReducer";
 
 import useSlideData from "./hooks/useSlideData";
 import { useStyles } from "./styles";

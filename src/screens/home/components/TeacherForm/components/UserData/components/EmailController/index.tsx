@@ -33,6 +33,12 @@ const EmailController: React.FC<TeacherFormProps> = ({
             iconName: "mail",
             placeholderText: "Email",
           }}
+          inputProps={{
+            autoCorrect: false,
+            autoCapitalize: "none",
+            keyboardType: "email-address",
+            returnKeyType: "next",
+          }}
         />
       )}
     />
