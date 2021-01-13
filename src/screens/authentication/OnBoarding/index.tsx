@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Animated, {
+  interpolateColor,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -7,7 +8,6 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { Dimensions } from "react-native";
-import { interpolateColor } from "react-native-redash";
 
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import ProgressIndicator from "../../../components/animated/ProgressIndicator";
@@ -65,6 +65,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
       });
       navigation.navigate("Login");
     } else {
+      //TODO: Reanimated 2 scrollTo()
       // @ts-ignore
       scrollViewRef.current?.scrollTo({
         x: width * (index + 1),
@@ -80,6 +81,7 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
         name: "onBoardingIllustration",
       },
     });
+    //TODO: Reanimated 2 scrollTo()
     // @ts-ignore
     scrollViewRef.current?.scrollTo({
       x: 0,

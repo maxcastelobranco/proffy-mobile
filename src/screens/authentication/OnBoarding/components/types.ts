@@ -6,7 +6,8 @@ import { AnimatedSvgProps } from "../../../../components/svgs/animated/types";
 export interface SlideProps {
   SvgComponent: React.FC<AnimatedSvgProps>;
   svgParticleColor: string;
-  backgroundColor: Animated.SharedValue<string>;
+  // backgroundColor: Animated.SharedValue<string>;
+  backgroundColor: Animated.SharedValue<React.ReactText>;
   translationX: Animated.SharedValue<number>;
   descriptionText: string;
   index: number;

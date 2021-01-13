@@ -3,11 +3,11 @@ const fs = require("fs");
 const faker = require("faker");
 faker.seed(69);
 
-const images = require("./data/images");
-const subjects = require("./data/subjects");
-const weekdays = require("./data/weekdays");
+const { userImages } = require("./data/userImages");
+const { subjects } = require("./data/subjects");
+const { weekdays } = require("./data/weekdays");
 
-const DATA_LENGTH = images.length;
+const DATA_LENGTH = userImages.length;
 
 const userIds = [];
 const data = { users: [] };
@@ -50,9 +50,9 @@ for (let i = 0; i < DATA_LENGTH; i++) {
     lastName,
     email: faker.internet.email(firstName, lastName),
     password: "123456",
-    avatarUrl: images[i],
+    avatarUrl: userImages[i],
     whatsapp: faker.phone.phoneNumber(),
-    bio: faker.lorem.words(10),
+    bio: faker.lorem.words(5),
     isTeacher: true,
     subject: subjects[Math.round(Math.random() * subjects.length)],
     perHourCost: faker.random.number({ min: 10, max: 1000, precision: 2 }),

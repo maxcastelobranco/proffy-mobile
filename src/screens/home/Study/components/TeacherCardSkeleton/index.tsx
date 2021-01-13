@@ -57,7 +57,7 @@ const TeacherCardSkeleton: React.FC = () => {
       <Box marginBottom="xs" alignItems="center">
         <Skeleton
           width={CARD_WIDTH - theme.spacing.m * 2}
-          height={responsivePixelSize(16)}
+          height={12}
           boxProps={{
             backgroundColor: "baseTextDark",
             borderRadius: "default",
@@ -65,7 +65,7 @@ const TeacherCardSkeleton: React.FC = () => {
         />
         <Skeleton
           width={CARD_WIDTH - theme.spacing.m * 2}
-          height={responsivePixelSize(16)}
+          height={12}
           boxProps={{
             marginTop: "xxs",
             backgroundColor: "baseTextDark",
@@ -74,7 +74,7 @@ const TeacherCardSkeleton: React.FC = () => {
         />
         <Skeleton
           width={CARD_WIDTH - theme.spacing.m * 2}
-          height={responsivePixelSize(16)}
+          height={12}
           boxProps={{
             marginTop: "xxs",
             backgroundColor: "baseTextDark",
@@ -90,7 +90,7 @@ const TeacherCardSkeleton: React.FC = () => {
       <Box {...rowStyles} marginHorizontal="xxs">
         <Skeleton
           width={responsivePixelSize(150)}
-          height={16}
+          height={12}
           boxProps={{
             backgroundColor: "baseTextDark",
             borderRadius: "default",
@@ -98,7 +98,7 @@ const TeacherCardSkeleton: React.FC = () => {
         />
         <Skeleton
           width={responsivePixelSize(107)}
-          height={16}
+          height={12}
           boxProps={{
             backgroundColor: "primary",
             borderRadius: "default",
@@ -107,7 +107,7 @@ const TeacherCardSkeleton: React.FC = () => {
       </Box>
       <Skeleton
         width={CARD_WIDTH - theme.spacing.l * 2}
-        height={responsivePixelSize(40)}
+        height={responsivePixelSize(32)}
         boxProps={{
           backgroundColor: "secondary",
           borderRadius: "default",

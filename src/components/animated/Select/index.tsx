@@ -10,7 +10,6 @@ import responsivePixelSize from "../../../utils/responsivePixelSize";
 import { Box, Text, Theme } from "../../../theme";
 import { INPUT_HEIGHT } from "../Input";
 import { Weekday } from "../../../screens/home/components/TeacherForm/components/AvailableHours/components/WeekdayController/weekdays";
-import RippleButton from "../../static/RippleButton";
 
 import FocusIndicator from "./components/FocusIndicator";
 import { useStyles } from "./styles";
@@ -37,12 +36,7 @@ const Select: React.FC<SelectProps> = ({
     defaultValue ? defaultValue : ""
   );
 
-  const {
-    rectButtonStyles,
-    containerStyles,
-    labelStyles,
-    chooseTextStyles,
-  } = useStyles();
+  const { containerStyles, labelStyles, chooseTextStyles } = useStyles();
 
   const openTimingTransition = useTiming(open);
   const openSpringTransition = useSpring(open);

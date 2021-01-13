@@ -2,9 +2,9 @@ import React from "react";
 import Animated, {
   Extrapolate,
   interpolate,
+  interpolateColor,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { interpolateColor } from "react-native-redash";
 import { useTheme } from "@shopify/restyle";
 
 import { Theme } from "../../../theme";
@@ -37,7 +37,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       currentIndex.value,
       inputRange,
       outputRange
-    ),
+    ) as string,
     transform: [
       {
         scale: interpolate(
