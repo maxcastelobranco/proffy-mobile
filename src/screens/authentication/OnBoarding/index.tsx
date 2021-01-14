@@ -59,12 +59,6 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
     const isLast = index === slideData.length - 1;
 
     if (isLast) {
-      dispatch({
-        type: ActiveIllustrationActionTypes.Update,
-        payload: {
-          name: "loginIllustration",
-        },
-      });
       navigation.navigate("Login");
     } else {
       runOnUI(() => {

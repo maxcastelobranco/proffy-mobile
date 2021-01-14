@@ -4,3 +4,5 @@
     <img src="assets/splash.png" width="300" alt="Proffy Splash">
 </h1>
 
+## Technologies used in this project
+

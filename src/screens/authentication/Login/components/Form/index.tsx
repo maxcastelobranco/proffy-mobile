@@ -38,7 +38,7 @@ const Form: React.FC = () => {
   const { control, errors, setValue, formState, handleSubmit } = useForm<
     FormValues
   >({
-    mode: "onChange",
+    mode: "onTouched",
     criteriaMode: "all",
   });
   const enabled =
@@ -58,13 +58,13 @@ const Form: React.FC = () => {
     setValue("remember", !value);
   };
   const navigateToResetPassword = () => {
+    navigation.navigate("ResetPassword");
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "forgotPasswordIllustration",
       },
     });
-    navigation.navigate("ResetPassword");
   };
   const navigateToSignUp = () => {
     navigation.navigate("SignUp");
@@ -147,7 +147,10 @@ const Form: React.FC = () => {
       />
       <Notification
         {...{ shouldRenderNotification }}
-        position={{ top: -responsivePixelSize(379) + theme.spacing.s }}
+        position={{
+          top: -responsivePixelSize(379) + theme.spacing.s,
+          left: theme.spacing.s,
+        }}
         message={state.authentication.error}
         iconName="alert-triangle"
         iconColor="title"

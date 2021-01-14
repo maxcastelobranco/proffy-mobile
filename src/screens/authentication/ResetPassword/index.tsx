@@ -33,29 +33,29 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
   const { state, dispatch } = useAppContext();
 
   const { control, errors, formState, handleSubmit } = useForm<FormValues>({
-    mode: "onBlur",
+    mode: "onTouched",
     criteriaMode: "all",
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
+    navigation.navigate("ResetPasswordSuccessful");
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "forgotPasswordSuccessIllustration",
       },
     });
-    navigation.navigate("ResetPasswordSuccessful");
   };
 
   const onPress = () => {
+    navigation.goBack();
     dispatch({
       type: ActiveIllustrationActionTypes.Update,
       payload: {
         name: "loginIllustration",
       },
     });
-    navigation.goBack();
   };
 
   useFocusEffect(
@@ -97,7 +97,10 @@ const ResetPassword: React.FC<AuthenticationNavigationProps<
       )}
       <Box {...containerStyles}>
         <Box {...chevronContainerStyles}>
-          <RippleButton {...{ onPress }} extraButtonStyles={{ paddingLeft: 0 }}>
+          <RippleButton
+            {...{ onPress }}
+            extraButtonStyles={{ padding: theme.spacing.s }}
+          >
             <Feather
               name="chevrons-left"
               size={24}

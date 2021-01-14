@@ -18253,6 +18253,32 @@
         "eef64d07-a6c7-4a65-81ec-c591ee313389",
         "86c61d5f-9d37-4aa8-9427-ddc631bf4aeb"
       ]
+    },
+    {
+      "id": "79ae2b37-925e-4277-a31c-47e086fda51e",
+      "firstName": "Max",
+      "lastName": "Branco",
+      "email": "max_castelo_branco@hotmail.com",
+      "password": "123456",
+      "avatarUrl": "",
+      "whatsapp": "",
+      "bio": "",
+      "schedule": [],
+      "favoriteTeachersIds": [],
+      "isTeacher": false
+    },
+    {
+      "id": "8da05098-4618-4b1e-a2fe-07a9d925ddb2",
+      "firstName": "Max",
+      "lastName": "Branco",
+      "email": "maxbranco08@gmail.com",
+      "password": "123456",
+      "avatarUrl": "",
+      "whatsapp": "",
+      "bio": "",
+      "schedule": [],
+      "favoriteTeachersIds": [],
+      "isTeacher": false
     }
   ]
 }

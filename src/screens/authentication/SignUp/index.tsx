@@ -56,7 +56,7 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
   });
   const currentIndex = useDerivedValue(() => translationX.value / width);
   const { control, errors, formState, handleSubmit } = useForm<FormValues>({
-    mode: "onBlur",
+    mode: "onTouched",
     criteriaMode: "all",
   });
   const scrollEnabled =

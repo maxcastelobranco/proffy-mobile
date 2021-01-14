@@ -6,7 +6,7 @@ import { useTheme } from "@shopify/restyle";
 import { AuthenticationNavigationProps } from "../../../routes/authentication";
 import { useAppContext } from "../../../context";
 import { ActiveIllustrationActionTypes } from "../../../context/reducers/activeIllustrationReducer";
-import { Theme } from "../../../theme";
+import { Box, Theme } from "../../../theme";
 import Loading from "../../../components/static/Loading";
 
 import Illustration from "./components/Illustration";
@@ -54,7 +54,9 @@ const Login: React.FC<AuthenticationNavigationProps<"Login">> = ({
       {state.activeIllustration.name === "loginIllustration" ? (
         <Illustration />
       ) : (
-        <Loading color="primaryDark" />
+        <Box padding="l" alignItems="center" justifyContent="center">
+          <Loading color="primaryDark" />
+        </Box>
       )}
       <Form />
     </KeyboardAvoidingView>
