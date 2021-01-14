@@ -4,5 +4,11 @@
     <img src="assets/splash.png" width="300" alt="Proffy Splash">
 </h1>
 
-## Technologies used in this project
+## Some technologies used in this project
 
+* React Native <img src="assets/readme/react-native-logo.svg"></img>
+
+* Expo
+* Reanimated 2
+* Shopify's Restyle
+* React Hook Form
