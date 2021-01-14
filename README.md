@@ -6,8 +6,7 @@
 
 ## Some technologies used in this project
 
-* React Native <img src="assets/readme/react-native-logo.svg"></img>
-
+* React Native <img width="32" height="32" src="assets/readme/react-native-logo.svg"></img>
 * Expo
 * Reanimated 2
 * Shopify's Restyle
