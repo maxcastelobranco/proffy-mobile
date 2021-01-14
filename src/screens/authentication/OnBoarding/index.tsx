@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Animated, {
   interpolateColor,
+  runOnUI,
+  scrollTo,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -65,12 +67,10 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
       });
       navigation.navigate("Login");
     } else {
-      //TODO: Reanimated 2 scrollTo()
-      // @ts-ignore
-      scrollViewRef.current?.scrollTo({
-        x: width * (index + 1),
-        animated: true,
-      });
+      runOnUI(() => {
+        "worklet";
+        scrollTo(scrollViewRef, width * (index + 1), 0, true);
+      })();
     }
   };
 
@@ -81,12 +81,10 @@ const OnBoarding: React.FC<AuthenticationNavigationProps<"OnBoarding">> = ({
         name: "onBoardingIllustration",
       },
     });
-    //TODO: Reanimated 2 scrollTo()
-    // @ts-ignore
-    scrollViewRef.current?.scrollTo({
-      x: 0,
-      animated: true,
-    });
+    runOnUI(() => {
+      "worklet";
+      scrollTo(scrollViewRef, 0, 0, true);
+    })();
   }, [dispatch, scrollViewRef]);
 
   const shouldDisplayIllustration =

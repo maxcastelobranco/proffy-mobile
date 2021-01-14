@@ -3,6 +3,8 @@ import { BackHandler, Dimensions, KeyboardAvoidingView } from "react-native";
 import { useTheme } from "@shopify/restyle";
 import { Feather } from "@expo/vector-icons";
 import Animated, {
+  runOnUI,
+  scrollTo,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useDerivedValue,
@@ -105,11 +107,10 @@ const SignUp: React.FC<AuthenticationNavigationProps<"SignUp">> = ({
     if (last) {
       handleSubmit(onSubmit)();
     } else {
-      // @ts-ignore
-      scrollViewRef.current?.scrollTo({
-        x: width * (index + 1),
-        animated: true,
-      });
+      runOnUI(() => {
+        "worklet";
+        scrollTo(scrollViewRef, width * (index + 1), 0, true);
+      })();
     }
   };
   const handleGoBack = () => {
