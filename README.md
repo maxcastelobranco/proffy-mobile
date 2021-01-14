@@ -22,5 +22,5 @@ Shopify's Restyle
 <img src="https://avatars1.githubusercontent.com/u/8085?v=3&amp;s=100" width="16" height="16" alt="shopify" style="margin-left: 8px;"></div> 
 <div style="display: flex; align-items: center; padding-top: 8px;padding-bottom: 8px">
 React Hook Form 
-<img src="assets/readme/react-hook-form-logo.svg" alt="react native" width="16" height="16" style="margin-left: 8px">
+<img src="assets/readme/react-hook-form-logo.svg" alt="react hook form" width="16" height="16" style="margin-left: 8px">
 </div> 
