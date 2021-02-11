@@ -53,7 +53,12 @@
         "b0cb4478-c825-4868-903e-0e3f126ecbb0",
         "9344aa32-be9d-490b-b869-e954cd41ad09",
         "63ee29a1-1d6e-436c-889f-fea7793ce740",
-        "16ae0751-68ed-46cb-a697-cbf4793a5a41"
+        "16ae0751-68ed-46cb-a697-cbf4793a5a41",
+        "46c952cd-8244-41a0-8aab-1b0c1135eba5",
+        "17d295c7-b874-4740-a836-a069605b87f5",
+        "17d295c7-b874-4740-a836-a069605b87f5",
+        "8aa2631b-b267-4775-a107-0c73b793f1a0",
+        "047edba3-8f34-471e-a433-813b2512c3dd"
       ]
     },
     {
@@ -18269,6 +18274,32 @@
     },
     {
       "id": "8da05098-4618-4b1e-a2fe-07a9d925ddb2",
+      "firstName": "Max",
+      "lastName": "Branco",
+      "email": "maxbranco08@gmail.com",
+      "password": "123456",
+      "avatarUrl": "",
+      "whatsapp": "",
+      "bio": "",
+      "schedule": [],
+      "favoriteTeachersIds": [],
+      "isTeacher": false
+    },
+    {
+      "id": "e2607ffb-c101-4282-9358-01b6749a4ecd",
+      "firstName": "Max",
+      "lastName": "Branco",
+      "email": "maxbranco08@gmail.com",
+      "password": "123456",
+      "avatarUrl": "",
+      "whatsapp": "",
+      "bio": "",
+      "schedule": [],
+      "favoriteTeachersIds": [],
+      "isTeacher": false
+    },
+    {
+      "id": "98e990d3-1463-476f-ab8f-d9252e9cd3be",
       "firstName": "Max",
       "lastName": "Branco",
       "email": "maxbranco08@gmail.com",

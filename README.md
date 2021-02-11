@@ -12,3 +12,6 @@
 * [React Hook Form](https://github.com/react-hook-form/react-hook-form)
 * [JSON Server](https://github.com/typicode/json-server)
 * [FakerJs](https://github.com/Marak/faker.js)
+
+### OnBoarding animation
+![OnBoarding animation](/assets/readme/onBoarding.gif)
