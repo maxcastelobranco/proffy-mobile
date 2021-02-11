@@ -15,3 +15,24 @@
 
 ### OnBoarding animation
 ![OnBoarding animation](/assets/readme/onBoarding.gif)
+
+### Login page demo
+![OnBoarding animation](/assets/readme/loginPage.gif)
+
+### Sign Up page demo
+![OnBoarding animation](/assets/readme/signUp.gif)
+
+### Reset Password page demo
+![OnBoarding animation](/assets/readme/resetPassword.gif)
+
+### Login success
+![OnBoarding animation](/assets/readme/login.gif)
+
+### Profile page
+![OnBoarding animation](/assets/readme/profile.gif)
+
+### Study page tinder like animation
+![OnBoarding animation](/assets/readme/study.gif)
+
+### Study page dropdown filter
+![OnBoarding animation](/assets/readme/filter.gif)
