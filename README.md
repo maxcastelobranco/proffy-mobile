@@ -17,26 +17,26 @@
 * [JSON Server](https://github.com/typicode/json-server)
 * [FakerJs](https://github.com/Marak/faker.js)
 
-### OnBoarding animation
+## OnBoarding animation
 ![OnBoarding animation](/.github/onBoarding.gif)
 
-### Login page demo
+## Login page demo
 ![OnBoarding animation](/.github/loginPage.gif)
 
-### Sign Up page demo
+## Sign Up page demo
 ![OnBoarding animation](/.github/signUp.gif)
 
-### Reset Password page demo
+## Reset Password page demo
 ![OnBoarding animation](/.github/resetPassword.gif)
 
-### Login success
+## Login success
 ![OnBoarding animation](/.github/login.gif)
 
-### Profile page
+## Profile page
 ![OnBoarding animation](/.github/profile.gif)
 
-### Study page tinder like animation
+## Study page tinder like animation
 ![OnBoarding animation](/.github/study.gif)
 
-### Study page dropdown filter
+## Study page dropdown filter
 ![OnBoarding animation](/.github/filter.gif)
