@@ -1,8 +1,12 @@
-# Proffy 2.0
-
-<div style="display: flex; justify-content: center">
-    <img src="assets/splash.png" width="300" alt="Proffy Splash">
+<div align="center">
+  <img src=".github/proffy-logo.svg" alt="Proffy logo">
 </div>
+
+## Proffy
+
+<h4 align="center">
+  Proffy is a mobile app to find teachers.
+</h4>
 
 ## Technologies used in this project
 * [React Native](https://github.com/facebook/react-native)
@@ -14,25 +18,25 @@
 * [FakerJs](https://github.com/Marak/faker.js)
 
 ### OnBoarding animation
-![OnBoarding animation](/assets/readme/onBoarding.gif)
+![OnBoarding animation](/.github/onBoarding.gif)
 
 ### Login page demo
-![OnBoarding animation](/assets/readme/loginPage.gif)
+![OnBoarding animation](/.github/loginPage.gif)
 
 ### Sign Up page demo
-![OnBoarding animation](/assets/readme/signUp.gif)
+![OnBoarding animation](/.github/signUp.gif)
 
 ### Reset Password page demo
-![OnBoarding animation](/assets/readme/resetPassword.gif)
+![OnBoarding animation](/.github/resetPassword.gif)
 
 ### Login success
-![OnBoarding animation](/assets/readme/login.gif)
+![OnBoarding animation](/.github/login.gif)
 
 ### Profile page
-![OnBoarding animation](/assets/readme/profile.gif)
+![OnBoarding animation](/.github/profile.gif)
 
 ### Study page tinder like animation
-![OnBoarding animation](/assets/readme/study.gif)
+![OnBoarding animation](/.github/study.gif)
 
 ### Study page dropdown filter
-![OnBoarding animation](/assets/readme/filter.gif)
+![OnBoarding animation](/.github/filter.gif)

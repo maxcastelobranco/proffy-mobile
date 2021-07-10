@@ -1,8 +1,7 @@
 import { Dimensions, StyleSheet } from "react-native";
 import { BoxProps, useTheme } from "@shopify/restyle";
-import React from "react";
 
-import { Box, Theme } from "../../../theme";
+import { Theme } from "../../../theme";
 
 const { width } = Dimensions.get("window");
 

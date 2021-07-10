@@ -7,6 +7,6 @@ export const fonts = {
   "Poppins-Medium": require("./Poppins-Medium.ttf"),
   "Poppins-Regular": require("./Poppins-Regular.ttf"),
   "Poppins-SemiBold": require("./Poppins-SemiBold.ttf"),
-  Feather: require("../../node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Feather.ttf"),
-  FontAwesome: require("../../node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome.ttf"),
+  Feather: require("@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Feather.ttf"),
+  FontAwesome: require("@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome.ttf"),
 };
